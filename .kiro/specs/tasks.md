@@ -160,10 +160,10 @@ Reference: #[[file:docs/PRD_Maction_v2.md]]
 
 ## Phase 10: Module 11 — Audit & Fraud Telemetry
 
-- [ ] Implement Elysia.js audit interceptor — auto-log mutations to `audit_mutation_logs`
-- [ ] Implement fraud telemetry service — structured writes to `audit_fraud_telemetry`
-- [ ] Implement ERP sync audit logging within the sync worker
-- [ ] Implement visit lifecycle audit stream (timestamp progression tracking for Salesman & MR)
+- [x] Implement Elysia.js audit interceptor — auto-log mutations to `audit_mutation_logs`
+- [x] Implement fraud telemetry service — structured writes to `audit_fraud_telemetry`
+- [x] Implement ERP sync audit logging within the sync worker
+- [x] Implement visit lifecycle audit stream (timestamp progression tracking for Salesman & MR)
 
 ---
 

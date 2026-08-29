@@ -32,6 +32,10 @@ mock.module('../../db', () => ({
       }),
     }),
   },
+  withRLS: (_ctx: unknown, cb: (tx: unknown) => Promise<unknown>) =>
+    cb({
+      insert: () => ({ values: () => Promise.resolve() }),
+    }),
 }))
 
 mock.module('../../config/session', () => ({

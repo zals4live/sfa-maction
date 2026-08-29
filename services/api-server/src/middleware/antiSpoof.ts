@@ -174,6 +174,7 @@ async function handleFraudDetected(
   const telemetryParams: FraudTelemetryParams = {
     companyId: claims.company_id,
     userId: claims.user_id,
+    userRole: claims.role_label,
     fraudType: fraud.type,
     gps,
     calculatedSpeedKmh: extraParams?.calculatedSpeedKmh,

@@ -20,15 +20,16 @@ mock.module('../../config/redis', () => ({
 }))
 
 mock.module('../../db', () => ({
-  db: {
-    insert: () => ({
-      values: () => ({
-        execute: () => {
+  withRLS: async (_ctx: unknown, cb: (tx: unknown) => Promise<unknown>) => {
+    const tx = {
+      insert: () => ({
+        values: () => {
           mockInsertCalled = true
           return Promise.resolve()
         },
       }),
-    }),
+    }
+    return cb(tx)
   },
 }))
 
@@ -71,6 +72,7 @@ describe('fraudResponse', () => {
     const baseTelemetryParams = {
       companyId: '11111111-1111-1111-1111-111111111111',
       userId: '22222222-2222-2222-2222-222222222222',
+      userRole: 'SALESMAN',
       fraudType: 'MOCK_LOCATION' as const,
       gps: {
         lat: -6.2088,
@@ -132,6 +134,8 @@ describe('fraudResponse', () => {
 
     it('logs telemetry to audit_fraud_telemetry', async () => {
       await buildGraduatedFraudResponse(baseTelemetryParams, baseFraudDetection)
+      // Telemetry is fire-and-forget; allow the floating promise to settle.
+      await new Promise((resolve) => setTimeout(resolve, 0))
 
       expect(mockInsertCalled).toBe(true)
     })

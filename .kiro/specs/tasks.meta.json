@@ -952,6 +952,54 @@
         "chatSessionId": "sess_065da0d3-392c-48a5-bae1-76fbe904bfd8",
         "timestamp": 1788003896035
       }
+    ],
+    "Implement Elysia.js audit interceptor — auto-log mutations to `audit_mutation_logs`": [
+      {
+        "executionId": "79826da0-aa29-4986-862f-8a8f0314b83d",
+        "chatSessionId": "sess_8f7a22e9-d296-416f-8485-bea574364b46",
+        "timestamp": 1788004100199
+      },
+      {
+        "executionId": "79826da0-aa29-4986-862f-8a8f0314b83d",
+        "chatSessionId": "sess_8f7a22e9-d296-416f-8485-bea574364b46",
+        "timestamp": 1788004426184
+      }
+    ],
+    "Implement fraud telemetry service — structured writes to `audit_fraud_telemetry`": [
+      {
+        "executionId": "e885fa2a-cce8-4b74-9994-4081ed931802",
+        "chatSessionId": "sess_c6465943-afad-4b3a-ac69-0a05c44ee174",
+        "timestamp": 1788004472947
+      },
+      {
+        "executionId": "e885fa2a-cce8-4b74-9994-4081ed931802",
+        "chatSessionId": "sess_c6465943-afad-4b3a-ac69-0a05c44ee174",
+        "timestamp": 1788004993271
+      }
+    ],
+    "Implement ERP sync audit logging within the sync worker": [
+      {
+        "executionId": "2ebcee16-69e5-4107-b4e0-f241d011b6cb",
+        "chatSessionId": "sess_130457a5-2d09-4c51-9630-d988643b3205",
+        "timestamp": 1788005118244
+      },
+      {
+        "executionId": "2ebcee16-69e5-4107-b4e0-f241d011b6cb",
+        "chatSessionId": "sess_130457a5-2d09-4c51-9630-d988643b3205",
+        "timestamp": 1788005226505
+      }
+    ],
+    "Implement visit lifecycle audit stream (timestamp progression tracking for Salesman & MR)": [
+      {
+        "executionId": "176ee190-1247-4e51-8001-af887146beb2",
+        "chatSessionId": "sess_e10cce86-e05e-4d5d-96b7-b05af5e905ed",
+        "timestamp": 1788005333889
+      },
+      {
+        "executionId": "176ee190-1247-4e51-8001-af887146beb2",
+        "chatSessionId": "sess_e10cce86-e05e-4d5d-96b7-b05af5e905ed",
+        "timestamp": 1788005597837
+      }
     ]
   }
 }

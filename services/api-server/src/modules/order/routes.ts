@@ -1,6 +1,7 @@
 import { Elysia } from 'elysia'
 
 import { tenantGuard } from '../../middleware/tenantGuard'
+import { auditInterceptor } from '../../middleware/auditInterceptor'
 import { requireRole, SALESMAN_ONLY, ORDER_READERS } from '../../middleware/roleGuard'
 import {
   CreateOrderBody,
@@ -43,13 +44,21 @@ function buildCtx(claims: {
 const orderWriteRoutes = new Elysia()
   .use(tenantGuard)
   .use(requireRole(...SALESMAN_ONLY))
+  .use(auditInterceptor)
   // --- Create a new DRAFT order ---
   .post(
     '/',
-    async ({ body, claims, set }) => {
+    async ({ body, claims, set, audit }) => {
       try {
         const result = await createOrder(body, buildCtx(claims!))
         set.status = 201
+        // Register the mutation for the Layer 1 audit trail (auto-flushed on 2xx).
+        audit({
+          entityName: 'orders',
+          recordId: result.id,
+          actionType: 'INSERT',
+          afterSnapshot: result as unknown as Record<string, unknown>,
+        })
         return { data: result }
       } catch (err) {
         if (err instanceof ServiceError) {

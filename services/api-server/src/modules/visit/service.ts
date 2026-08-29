@@ -5,6 +5,11 @@ import { generateUploadUrl, buildS3Key, type AllowedMimeType } from '../../confi
 import { visits, visitAgendas, visitStockAudits, visitCompetitorAudits } from '../../db/schema/visit'
 import { companies } from '../../db/schema/tenant'
 import { classifyVisitType } from '../call-plan/service'
+import {
+  recordLifecycleStep,
+  VisitLifecycleStep,
+  type LifecycleContext,
+} from '../audit/visitLifecycleService'
 import type {
   StartVisitInput,
   EndVisitInput,
@@ -116,8 +121,21 @@ export async function startVisit(
 
     if (!row) throw new Error('Insert returned no rows')
 
+    await recordLifecycleStep(tx, toLifecycleContext(ctx), {
+      visitId: row.id,
+      stepName: VisitLifecycleStep.VISIT_IN,
+      stepTimestamp: row.visitInAt,
+      coordinates: { latitude: input.latitude, longitude: input.longitude },
+      metadata: { distance_meters: distanceMeters, visit_type: visitType },
+    })
+
     return mapVisitRow(row, input.latitude, input.longitude)
   })
+}
+
+/** Maps a visit context to the lifecycle audit context (shared by Salesman & MR). */
+function toLifecycleContext(ctx: VisitContext): LifecycleContext {
+  return { companyId: ctx.companyId, userId: ctx.userId, userRole: ctx.userRole }
 }
 
 /** Ensures no open visit exists for the user today. Exported for testability. */
@@ -241,6 +259,14 @@ export async function endVisit(
       .returning()
 
     if (!updated) throw new Error('Update returned no rows')
+
+    await recordLifecycleStep(tx, toLifecycleContext(ctx), {
+      visitId: updated.id,
+      stepName: VisitLifecycleStep.VISIT_OUT,
+      stepTimestamp: updated.visitOutAt ?? new Date().toISOString(),
+      coordinates: { latitude: input.latitude, longitude: input.longitude },
+      metadata: { signature_s3_key: input.signature_s3_key },
+    })
 
     return mapVisitRowWithGeom(tx, updated)
   })
@@ -422,6 +448,13 @@ export async function createAgenda(
       .returning()
 
     if (!row) throw new Error('Insert returned no rows')
+
+    await recordLifecycleStep(tx, toLifecycleContext(ctx), {
+      visitId,
+      stepName: VisitLifecycleStep.DETAILING,
+      metadata: { agenda_id: row.id, topic: row.topic },
+    })
+
     return mapAgendaRow(row)
   })
 }
@@ -515,6 +548,13 @@ export async function createStockAudit(
       .returning()
 
     if (!row) throw new Error('Insert returned no rows')
+
+    await recordLifecycleStep(tx, toLifecycleContext(ctx), {
+      visitId,
+      stepName: VisitLifecycleStep.STOCK_AUDIT,
+      metadata: { stock_audit_id: row.id, material_id: row.materialId },
+    })
+
     return mapStockAuditRow(row)
   })
 }
@@ -610,6 +650,13 @@ export async function createCompetitorAudit(
       .returning()
 
     if (!row) throw new Error('Insert returned no rows')
+
+    await recordLifecycleStep(tx, toLifecycleContext(ctx), {
+      visitId,
+      stepName: VisitLifecycleStep.COMPETITOR_AUDIT,
+      metadata: { competitor_audit_id: row.id, competitor_brand: row.competitorBrand },
+    })
+
     return mapCompetitorAuditRow(row)
   })
 }

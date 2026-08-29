@@ -1,6 +1,5 @@
 import { redis } from '../config/redis'
-import { db } from '../db'
-import { auditFraudTelemetry } from '../db/schema/audit'
+import { recordFraudTelemetry } from '../modules/audit/fraudTelemetryService'
 import type { GpsSubmission } from './antiSpoof'
 
 // --- Constants ---
@@ -39,6 +38,7 @@ export interface FraudResponseResult {
 export interface FraudTelemetryParams {
   companyId: string
   userId: string
+  userRole: string
   fraudType: FraudType
   gps: GpsSubmission
   calculatedSpeedKmh?: number
@@ -105,14 +105,23 @@ function buildErrorResponse(fraudType: FraudType, details: Record<string, unknow
 
 // --- Telemetry logging (fire-and-forget, non-blocking) ---
 
+/**
+ * Maps a fraud detection to the structured telemetry service, which performs
+ * an RLS-scoped insert into audit_fraud_telemetry. Non-blocking by design —
+ * the soft-rejection flow must never be delayed or failed by telemetry writes.
+ */
 function logFraudTelemetry(params: FraudTelemetryParams, severity: Severity): void {
-  const { companyId, userId, fraudType, gps } = params
+  const { gps } = params
 
-  db.insert(auditFraudTelemetry)
-    .values({
-      companyId,
-      userId,
-      fraudType,
+  recordFraudTelemetry(
+    {
+      companyId: params.companyId,
+      userId: params.userId,
+      userRole: params.userRole,
+      clientIp: params.clientIp ?? null,
+    },
+    {
+      fraudType: params.fraudType,
       severity,
       claimedLat: gps.lat,
       claimedLng: gps.lng,
@@ -125,13 +134,9 @@ function logFraudTelemetry(params: FraudTelemetryParams, severity: Severity): vo
       isMockProvider: gps.is_mock_provider ?? false,
       rawPayload: gps as unknown as Record<string, unknown>,
       requestEndpoint: params.requestEndpoint ?? null,
-      clientIp: params.clientIp ?? null,
       actionTaken: 'SOFT_REJECT',
-    })
-    .execute()
-    .catch(() => {
-      // Non-blocking: silently ignore telemetry insert failures
-    })
+    },
+  )
 }
 
 // --- Main graduated fraud response function ---
