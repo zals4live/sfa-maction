@@ -1,0 +1,73 @@
+# =============================================================================
+# KF Maction v2.0 — Nuxt SSR Web Portal
+# =============================================================================
+# Systemd service unit for the admin web portal (Nuxt 4 SSR).
+#
+# Installation:
+#   1. Copy to /etc/systemd/system/maction-portal.service
+#   2. Create service user (if not done): useradd --system --no-create-home --shell /usr/sbin/nologin maction
+#   3. Build the portal: cd /opt/maction/web-portal && node_modules/.bin/nuxt build
+#   4. Set ownership: chown -R maction:maction /opt/maction/web-portal
+#   5. Create env file: cp .env.production /opt/maction/web-portal/.env
+#   6. Enable & start: systemctl enable --now maction-portal.service
+#   7. Check status: systemctl status maction-portal.service
+#   8. View logs: journalctl -u maction-portal.service -f
+# =============================================================================
+
+[Unit]
+Description=KF Maction v2.0 — Nuxt SSR Web Portal
+Documentation=https://github.com/kimiafarma/maction-v2
+After=network-online.target maction-api.service
+Wants=network-online.target maction-api.service
+
+[Service]
+Type=simple
+User=maction
+Group=maction
+WorkingDirectory=/opt/maction/web-portal
+
+# Environment file containing NUXT_PUBLIC_API_BASE, session secrets, etc.
+EnvironmentFile=/opt/maction/web-portal/.env
+
+# Run the Nuxt production server from the build output
+ExecStart=/usr/bin/node .output/server/index.mjs
+
+# Bind to localhost only — Nginx handles public traffic and SSL
+Environment=HOST=127.0.0.1
+Environment=PORT=3001
+Environment=NITRO_HOST=127.0.0.1
+Environment=NITRO_PORT=3001
+Environment=NODE_ENV=production
+
+# Restart policy
+Restart=on-failure
+RestartSec=5
+StartLimitBurst=5
+StartLimitIntervalSec=60
+
+# Graceful shutdown
+TimeoutStopSec=30
+KillMode=mixed
+KillSignal=SIGTERM
+
+# Security hardening
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+ReadWritePaths=/opt/maction/web-portal/.output
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+
+# Resource limits
+LimitNOFILE=65536
+MemoryMax=512M
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=maction-portal
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,36 @@
+{
+  "name": "maction-v2",
+  "version": "0.0.1",
+  "private": true,
+  "description": "KF Maction v2.0 — Sales Force Automation & Field Force Activity Monitoring",
+  "type": "module",
+  "packageManager": "pnpm@11.22.0",
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=9.0.0"
+  },
+  "scripts": {
+    "dev": "pnpm -r --parallel run dev",
+    "dev:api": "pnpm --filter api-server run dev",
+    "dev:portal": "pnpm --filter web-portal run dev",
+    "dev:pwa": "pnpm --filter field-pwa run dev",
+    "build": "pnpm -r run build",
+    "build:api": "pnpm --filter api-server run build",
+    "build:portal": "pnpm --filter web-portal run build",
+    "build:pwa": "pnpm --filter field-pwa run build",
+    "lint": "pnpm -r run lint",
+    "lint:api": "pnpm --filter api-server run lint",
+    "lint:portal": "pnpm --filter web-portal run lint",
+    "lint:pwa": "pnpm --filter field-pwa run lint",
+    "typecheck": "pnpm -r run typecheck",
+    "typecheck:portal": "pnpm --filter web-portal run typecheck",
+    "typecheck:pwa": "pnpm --filter field-pwa run typecheck",
+    "typecheck:api": "pnpm --filter api-server run typecheck",
+    "test": "pnpm -r run test",
+    "test:api": "pnpm --filter api-server run test",
+    "test:portal": "pnpm --filter web-portal run test",
+    "test:pwa": "pnpm --filter field-pwa run test",
+    "clean": "pnpm -r exec rm -rf node_modules dist .nuxt .output",
+    "postinstall": "pnpm -r run --if-present postinstall"
+  }
+}

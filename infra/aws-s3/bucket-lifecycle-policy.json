@@ -1,0 +1,81 @@
+{
+  "Rules": [
+    {
+      "ID": "TransitionBulkImportsToIA",
+      "Status": "Enabled",
+      "Filter": {
+        "Prefix": "bulk-imports/"
+      },
+      "Transitions": [
+        {
+          "Days": 30,
+          "StorageClass": "STANDARD_IA"
+        }
+      ],
+      "Expiration": {
+        "Days": 365
+      }
+    },
+    {
+      "ID": "CleanupIncompleteMultipartUploads",
+      "Status": "Enabled",
+      "Filter": {
+        "Prefix": ""
+      },
+      "AbortIncompleteMultipartUpload": {
+        "DaysAfterInitiation": 7
+      }
+    },
+    {
+      "ID": "TransitionOldQuotationsToIA",
+      "Status": "Enabled",
+      "Filter": {
+        "Prefix": "orders/quotations/"
+      },
+      "Transitions": [
+        {
+          "Days": 90,
+          "StorageClass": "STANDARD_IA"
+        },
+        {
+          "Days": 365,
+          "StorageClass": "GLACIER"
+        }
+      ]
+    },
+    {
+      "ID": "TransitionOldAttendancePhotosToIA",
+      "Status": "Enabled",
+      "Filter": {
+        "Prefix": "attendance/"
+      },
+      "Transitions": [
+        {
+          "Days": 90,
+          "StorageClass": "STANDARD_IA"
+        },
+        {
+          "Days": 730,
+          "StorageClass": "GLACIER"
+        }
+      ]
+    },
+    {
+      "ID": "TransitionOldVisitPhotosToIA",
+      "Status": "Enabled",
+      "Filter": {
+        "Prefix": "visits/"
+      },
+      "Transitions": [
+        {
+          "Days": 90,
+          "StorageClass": "STANDARD_IA"
+        },
+        {
+          "Days": 730,
+          "StorageClass": "GLACIER"
+        }
+      ]
+    }
+  ]
+}

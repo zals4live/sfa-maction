@@ -1,0 +1,29 @@
+# Dependencies
+node_modules
+.pnpm-store
+
+# Environment & secrets
+.env
+.env.*
+!.env.example
+
+# Nuxt / Vite build output
+.nuxt
+.output
+.nitro
+.cache
+dist
+.vite
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+
+# Test / coverage
+coverage
+.vitest

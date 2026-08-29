@@ -1,0 +1,53 @@
+name: AI Code Reviewer
+
+permissions:
+  contents: read
+  pull-requests: write
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened]
+  pull_request_review_comment:
+    types: [created]
+
+concurrency:
+  group: ${{ github.repository }}-${{ github.event.number || github.head_ref || github.sha }}-${{ github.workflow }}-${{ github.event_name == 'pull_request_review_comment' && 'pr_comment' || 'pr' }}
+  cancel-in-progress: ${{ github.event_name != 'pull_request_review_comment' }}
+
+jobs:
+  review:
+    name: AI PR Review
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: AI Code Review
+        uses: coderabbitai/ai-pr-reviewer@latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        with:
+          debug: false
+          review_simple_changes: false
+          review_comment_lgtm: false
+          openai_light_model: gpt-4o-mini
+          openai_heavy_model: gpt-4o
+          system_message: |
+            You are a senior code reviewer for a TypeScript monorepo (KF Maction v2.0).
+            The project uses:
+            - Backend: Elysia.js on Bun with Drizzle ORM and PostgreSQL (PostGIS)
+            - Frontend: Nuxt 4 (Vue 3 Composition API) with Nuxt UI and Tailwind CSS
+            - Package manager: pnpm workspaces
+            - Multi-tenant architecture with PostgreSQL RLS
+
+            Focus on:
+            - TypeScript type safety and strict mode compliance
+            - Security: SQL injection, RLS bypass, credential exposure, input validation
+            - Multi-tenant isolation (company_id scoping via RLS)
+            - Role-based access control (SALESMAN, MR, ADMIN_CABANG, ADMIN_PUSAT, SUPER_ADMIN)
+            - Performance: N+1 queries, missing indexes, unoptimized PostGIS operations
+            - Offline-first patterns in PWA code (Dexie.js, Background Sync)
+            - Convention adherence: Conventional Commits, file naming, module structure

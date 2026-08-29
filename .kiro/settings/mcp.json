@@ -1,0 +1,19 @@
+{
+  "mcpServers": {
+    "nuxt-core-docs": {
+      "command": "npx",
+      "args": ["-y", "@nuxtjs/mcp-toolkit"],
+      "disabled": false
+    },
+    "nuxt-ui-docs": {
+      "command": "npx",
+      "args": ["-y", "@nuxt/ui-mcp"],
+      "disabled": false
+    },
+    "context7-docs": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp"],
+      "disabled": false
+    }
+  }
+}

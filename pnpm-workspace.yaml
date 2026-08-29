@@ -1,0 +1,12 @@
+packages:
+  - "apps/*"
+  - "services/*"
+  - "packages/*"
+allowBuilds:
+  esbuild: set this to true or false
+  msgpackr-extract: set this to true or false
+  unrs-resolver: set this to true or false
+  vue-demi: set this to true or false
+minimumReleaseAgeExclude:
+  - bullmq@6.3.1
+  - elysia@1.4.30

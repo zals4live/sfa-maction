@@ -1,0 +1,267 @@
+# =============================================================================
+# KF Maction v2.0 — Production Deployment (Build & SSH Deploy to AWS EC2)
+# =============================================================================
+# Triggers on push to main branch. Runs quality gate (lint, typecheck),
+# builds all packages, deploys via SSH to EC2, runs migrations,
+# restarts systemd services, and performs smoke tests.
+#
+# Required GitHub Secrets:
+#   EC2_HOST       - EC2 instance IP or hostname
+#   EC2_USER       - SSH user for deployment (e.g., ubuntu or deploy)
+#   EC2_SSH_KEY    - Private SSH key (PEM format) for EC2 access
+#   DATABASE_URL   - Production PostgreSQL connection string for Drizzle migrations
+# =============================================================================
+
+name: Deploy to EC2
+
+on:
+  push:
+    branches: [main]
+
+# Prevent parallel deployments to production
+concurrency:
+  group: production-deploy
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Job 1: Quality Gate — Lint & Typecheck
+  # ─────────────────────────────────────────────────────────────────────────────
+  quality-gate:
+    name: Quality Gate
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm run lint
+
+      - name: Typecheck
+        run: pnpm run typecheck
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Job 2: Build — Compile all packages and create deployment artifacts
+  # ─────────────────────────────────────────────────────────────────────────────
+  build:
+    name: Build Artifacts
+    runs-on: ubuntu-latest
+    needs: quality-gate
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build shared packages
+        run: pnpm --filter @maction/types build && pnpm --filter @maction/utils build
+
+      - name: Build API server
+        run: pnpm --filter api-server build
+
+      - name: Build Web Portal
+        run: pnpm --filter web-portal build
+
+      - name: Build Field PWA
+        run: pnpm --filter field-pwa build
+
+      # Package API server artifact
+      - name: Package API server artifact
+        run: |
+          tar -czf api-server.tar.gz \
+            -C services/api-server \
+            src/ \
+            package.json \
+            drizzle.config.ts \
+            migrations/ \
+            node_modules/
+
+      # Package Web Portal artifact (Nuxt build output)
+      - name: Package Web Portal artifact
+        run: |
+          tar -czf web-portal.tar.gz \
+            -C apps/web-portal \
+            .output/ \
+            package.json \
+            node_modules/
+
+      # Package Field PWA artifact (Nuxt build output)
+      - name: Package Field PWA artifact
+        run: |
+          tar -czf field-pwa.tar.gz \
+            -C apps/field-pwa \
+            .output/ \
+            package.json \
+            node_modules/
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: deploy-artifacts
+          path: |
+            api-server.tar.gz
+            web-portal.tar.gz
+            field-pwa.tar.gz
+          retention-days: 3
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Job 3: Deploy — SSH to EC2, upload artifacts, migrate, restart services
+  # ─────────────────────────────────────────────────────────────────────────────
+  deploy:
+    name: Deploy to EC2
+    runs-on: ubuntu-latest
+    needs: build
+    environment: production
+
+    steps:
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: deploy-artifacts
+
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Upload artifacts to EC2
+        run: |
+          scp -i ~/.ssh/deploy_key \
+            api-server.tar.gz \
+            web-portal.tar.gz \
+            field-pwa.tar.gz \
+            ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/tmp/maction-deploy/
+
+      - name: Deploy API server
+        run: |
+          ssh -i ~/.ssh/deploy_key ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+            set -e
+            sudo systemctl stop maction-api.service || true
+            sudo mkdir -p /opt/maction/api-server
+            sudo tar -xzf /tmp/maction-deploy/api-server.tar.gz -C /opt/maction/api-server
+            sudo chown -R maction:maction /opt/maction/api-server
+          EOF
+
+      - name: Deploy Web Portal
+        run: |
+          ssh -i ~/.ssh/deploy_key ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+            set -e
+            sudo systemctl stop maction-portal.service || true
+            sudo mkdir -p /opt/maction/web-portal
+            sudo tar -xzf /tmp/maction-deploy/web-portal.tar.gz -C /opt/maction/web-portal
+            sudo chown -R maction:maction /opt/maction/web-portal
+          EOF
+
+      - name: Deploy Field PWA
+        run: |
+          ssh -i ~/.ssh/deploy_key ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+            set -e
+            sudo mkdir -p /opt/maction/field-pwa
+            sudo tar -xzf /tmp/maction-deploy/field-pwa.tar.gz -C /opt/maction/field-pwa
+            sudo chown -R maction:maction /opt/maction/field-pwa
+          EOF
+
+      - name: Run Drizzle migrations
+        run: |
+          ssh -i ~/.ssh/deploy_key ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+            set -e
+            cd /opt/maction/api-server
+            DATABASE_URL="${{ secrets.DATABASE_URL }}" \
+              /usr/local/bin/bun run drizzle-kit migrate
+          EOF
+
+      - name: Restart services
+        run: |
+          ssh -i ~/.ssh/deploy_key ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+            set -e
+            sudo systemctl start maction-api.service
+            sudo systemctl start maction-portal.service
+            sudo systemctl reload nginx
+          EOF
+
+      - name: Wait for services to be ready
+        run: sleep 10
+
+      - name: Smoke test — API health check
+        run: |
+          ssh -i ~/.ssh/deploy_key ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+            set -e
+            echo "Checking API server health..."
+            HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:3000/health)
+            if [ "$HTTP_STATUS" != "200" ]; then
+              echo "API health check failed with status: $HTTP_STATUS"
+              exit 1
+            fi
+            echo "API server is healthy (HTTP 200)"
+          EOF
+
+      - name: Smoke test — Web Portal health check
+        run: |
+          ssh -i ~/.ssh/deploy_key ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+            set -e
+            echo "Checking Web Portal health..."
+            HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:3001)
+            if [ "$HTTP_STATUS" != "200" ]; then
+              echo "Web Portal health check failed with status: $HTTP_STATUS"
+              exit 1
+            fi
+            echo "Web Portal is healthy (HTTP 200)"
+          EOF
+
+      - name: Smoke test — Nginx public endpoint
+        run: |
+          ssh -i ~/.ssh/deploy_key ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+            set -e
+            echo "Checking Nginx reverse proxy..."
+            HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" -k https://localhost/api/health)
+            if [ "$HTTP_STATUS" != "200" ]; then
+              echo "Nginx proxy health check failed with status: $HTTP_STATUS"
+              exit 1
+            fi
+            echo "Nginx reverse proxy is healthy (HTTP 200)"
+          EOF
+
+      - name: Cleanup deployment artifacts
+        if: always()
+        run: |
+          ssh -i ~/.ssh/deploy_key ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} \
+            "rm -rf /tmp/maction-deploy" || true
+
+      - name: Cleanup SSH key
+        if: always()
+        run: rm -f ~/.ssh/deploy_key

@@ -1,0 +1,24 @@
+services:
+  postgres:
+    image: postgis/postgis:16-3.4
+    platform: linux/amd64  # <-- Ditambahkan untuk mengamankan jalannya PostGIS Intel di Mac Apple Silicon
+    container_name: maction-postgres
+    restart: always
+    environment:
+      POSTGRES_DB: dbmaction_v2
+      POSTGRES_USER: dbmaction_v2
+      POSTGRES_PASSWORD: MasukinMac@250826
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    container_name: maction-redis
+    restart: always
+    ports:
+      - "6379:6379"
+
+volumes:
+  pgdata:

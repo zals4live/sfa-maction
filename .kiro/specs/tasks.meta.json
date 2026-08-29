@@ -1,0 +1,681 @@
+{
+  "pbtResults": {},
+  "executionHistory": {
+    "Initialize pnpm monorepo with `pnpm-workspace.yaml` defining `apps/*`, `services/*`, `packages/*`": [
+      {
+        "executionId": "fd73f230-1b70-4199-90a6-01dd03ea0515",
+        "chatSessionId": "sess_5268826f-ec80-4aab-9d19-c93fc4b64ae0",
+        "timestamp": 1787804738333
+      },
+      {
+        "executionId": "fd73f230-1b70-4199-90a6-01dd03ea0515",
+        "chatSessionId": "sess_5268826f-ec80-4aab-9d19-c93fc4b64ae0",
+        "timestamp": 1787804840974
+      }
+    ],
+    "Create root `package.json` with workspace scripts (dev, build, lint, typecheck, test)": [
+      {
+        "executionId": "b7fe9077-6272-410a-8ba9-1ee04f6d5b6f",
+        "chatSessionId": "sess_5646e189-13d7-412c-be56-c5e4867c03e2",
+        "timestamp": 1787805832342
+      },
+      {
+        "executionId": "b7fe9077-6272-410a-8ba9-1ee04f6d5b6f",
+        "chatSessionId": "sess_5646e189-13d7-412c-be56-c5e4867c03e2",
+        "timestamp": 1787805985542
+      }
+    ],
+    "Create `packages/utils/` with barrel `index.ts` (placeholder for spatial helpers, formatters)": [
+      {
+        "executionId": "771a5fc6-1160-42ea-b41d-8aad1c64300a",
+        "chatSessionId": "sess_fa06242a-ba78-4707-a936-40b92baf6fc3",
+        "timestamp": 1787807115401
+      },
+      {
+        "executionId": "771a5fc6-1160-42ea-b41d-8aad1c64300a",
+        "chatSessionId": "sess_fa06242a-ba78-4707-a936-40b92baf6fc3",
+        "timestamp": 1787807300874
+      }
+    ],
+    "Set up `infra/docker/docker-compose.yml` with PostgreSQL 16 + PostGIS and Redis containers": [
+      {
+        "executionId": "ff693ef9-22c1-4d5c-b1e1-88d8e9542231",
+        "chatSessionId": "sess_b3210247-7127-4dab-9491-36b817456382",
+        "timestamp": 1787807316232
+      },
+      {
+        "executionId": "ff693ef9-22c1-4d5c-b1e1-88d8e9542231",
+        "chatSessionId": "sess_b3210247-7127-4dab-9491-36b817456382",
+        "timestamp": 1787807479498
+      }
+    ],
+    "Create `infra/postgres/init-scripts/03_reporting_views.sql` (materialized views & indexes)": [
+      {
+        "executionId": "29373244-f11e-4293-96ce-b745aef2ec14",
+        "chatSessionId": "sess_475cafef-b32b-4269-9b5e-f12163035527",
+        "timestamp": 1787832930566
+      },
+      {
+        "executionId": "29373244-f11e-4293-96ce-b745aef2ec14",
+        "chatSessionId": "sess_475cafef-b32b-4269-9b5e-f12163035527",
+        "timestamp": 1787837677847
+      }
+    ],
+    "Create `infra/postgres/init-scripts/04_audit_tables.sql` (audit & fraud telemetry schemas)": [
+      {
+        "executionId": "9263304f-8ae7-4d9e-a961-15034049b6a6",
+        "chatSessionId": "sess_65927d99-d114-471b-ae19-1c072343ac18",
+        "timestamp": 1787843562993
+      },
+      {
+        "executionId": "9263304f-8ae7-4d9e-a961-15034049b6a6",
+        "chatSessionId": "sess_65927d99-d114-471b-ae19-1c072343ac18",
+        "timestamp": 1787843770007
+      }
+    ],
+    "Create `infra/postgres/init-scripts/05_rls_policies.sql` (RLS policies for all tenant-scoped tables, lini-scoped material policy, orders role restriction)": [
+      {
+        "executionId": "0c04c5a0-4449-4e17-a0fa-5a1f86b02fec",
+        "chatSessionId": "sess_b69e28ae-0322-4f93-b13c-9612ffcd6774",
+        "timestamp": 1787843831666
+      },
+      {
+        "executionId": "0c04c5a0-4449-4e17-a0fa-5a1f86b02fec",
+        "chatSessionId": "sess_b69e28ae-0322-4f93-b13c-9612ffcd6774",
+        "timestamp": 1787844210993
+      }
+    ],
+    "Set up `infra/nginx/` with reverse proxy config template (SSL, compression, WebSocket upstream)": [
+      {
+        "executionId": "4768e911-2419-4f77-ba0f-daebad93b3ae",
+        "chatSessionId": "sess_65d7c2ca-c88a-41e9-a7a1-934396106f7a",
+        "timestamp": 1787844272319
+      },
+      {
+        "executionId": "4768e911-2419-4f77-ba0f-daebad93b3ae",
+        "chatSessionId": "sess_65d7c2ca-c88a-41e9-a7a1-934396106f7a",
+        "timestamp": 1787844472775
+      }
+    ],
+    "Set up `infra/systemd/` service unit files for Elysia API and Nuxt SSR": [
+      {
+        "executionId": "02e4d396-b21e-4de2-9107-261b343387ff",
+        "chatSessionId": "sess_59c54557-48cd-46c5-b2a8-e85bbb98e78b",
+        "timestamp": 1787844512937
+      }
+    ],
+    "Create `infra/aws-s3/bucket-cors-policy.json` with CORS rules for PWA origins": [
+      {
+        "executionId": "a805440f-18c9-46da-b4d2-5b0560b5d4f9",
+        "chatSessionId": "sess_b94f48a8-06c9-4701-9515-d2c26d514ce1",
+        "timestamp": 1787844681372
+      },
+      {
+        "executionId": "a805440f-18c9-46da-b4d2-5b0560b5d4f9",
+        "chatSessionId": "sess_b94f48a8-06c9-4701-9515-d2c26d514ce1",
+        "timestamp": 1787844810412
+      }
+    ],
+    "Create `.github/workflows/ci-test.yml` (lint, typecheck, unit test on PR)": [
+      {
+        "executionId": "92a8a0d7-e7b5-40c7-8d43-c229ae7b076a",
+        "chatSessionId": "sess_d8a743c2-dfb1-43f4-903c-c9a6e7a697c4",
+        "timestamp": 1787844844692
+      },
+      {
+        "executionId": "92a8a0d7-e7b5-40c7-8d43-c229ae7b076a",
+        "chatSessionId": "sess_d8a743c2-dfb1-43f4-903c-c9a6e7a697c4",
+        "timestamp": 1787844958098
+      }
+    ],
+    "Create `.github/workflows/ai-pr-reviewer.yml` (automated AI code reviewer)": [
+      {
+        "executionId": "0d76d560-fb64-4fa4-83b3-191b775fa8c8",
+        "chatSessionId": "sess_03e5f296-8ca3-4958-a3a6-1c7ad338945c",
+        "timestamp": 1787844984258
+      },
+      {
+        "executionId": "0d76d560-fb64-4fa4-83b3-191b775fa8c8",
+        "chatSessionId": "sess_03e5f296-8ca3-4958-a3a6-1c7ad338945c",
+        "timestamp": 1787845163847
+      }
+    ],
+    "Create `.github/workflows/deploy-ec2.yml` (build + SSH deploy pipeline)": [
+      {
+        "executionId": "bcde7bc8-1952-47c7-9597-7ca97589dfa8",
+        "chatSessionId": "sess_21094ec1-747f-4a17-9676-766cf4036188",
+        "timestamp": 1787845204089
+      },
+      {
+        "executionId": "bcde7bc8-1952-47c7-9597-7ca97589dfa8",
+        "chatSessionId": "sess_21094ec1-747f-4a17-9676-766cf4036188",
+        "timestamp": 1787845390252
+      }
+    ],
+    "Configure `src/config/s3.ts` — AWS S3 client with pre-signed URL generation utility": [
+      {
+        "executionId": "4b5455ff-17eb-4ab3-a6c1-fa308173d1f0",
+        "chatSessionId": "sess_d6efb7a5-181e-4be6-a3c2-d5827234009b",
+        "timestamp": 1787846407211
+      },
+      {
+        "executionId": "4b5455ff-17eb-4ab3-a6c1-fa308173d1f0",
+        "chatSessionId": "sess_d6efb7a5-181e-4be6-a3c2-d5827234009b",
+        "timestamp": 1787846531429
+      }
+    ],
+    "Implement `src/db/index.ts` — Drizzle DB instance with RLS transaction helper": [
+      {
+        "executionId": "1700f508-669c-4035-9294-4926c3462b6e",
+        "chatSessionId": "sess_a4a4a4ab-88fc-4a3d-8d98-bda0c6f29aba",
+        "timestamp": 1787884782773
+      },
+      {
+        "executionId": "1700f508-669c-4035-9294-4926c3462b6e",
+        "chatSessionId": "sess_a4a4a4ab-88fc-4a3d-8d98-bda0c6f29aba",
+        "timestamp": 1787885654638
+      }
+    ],
+    "Implement `src/middleware/tenantGuard.ts` — extract JWT claims, set all three RLS session variables": [
+      {
+        "executionId": "c4dc7cd9-7c7c-4c6e-a16b-c5d3cd786704",
+        "chatSessionId": "sess_3af98e59-8c2f-4ef6-8404-dc85b75f4c58",
+        "timestamp": 1787886399567
+      },
+      {
+        "executionId": "c4dc7cd9-7c7c-4c6e-a16b-c5d3cd786704",
+        "chatSessionId": "sess_3af98e59-8c2f-4ef6-8404-dc85b75f4c58",
+        "timestamp": 1787888681141
+      }
+    ],
+    "Implement `src/middleware/roleGuard.ts` — RBAC role-based route access enforcement (Salesman-only, Admin-only gates)": [
+      {
+        "executionId": "fb3c5e78-fcd1-4186-bb47-6b6666922246",
+        "chatSessionId": "sess_3a75aaef-6ac3-4b1f-b3e5-25bdbc3a528f",
+        "timestamp": 1787889409745
+      },
+      {
+        "executionId": "fb3c5e78-fcd1-4186-bb47-6b6666922246",
+        "chatSessionId": "sess_3a75aaef-6ac3-4b1f-b3e5-25bdbc3a528f",
+        "timestamp": 1787889540078
+      }
+    ],
+    "Implement `src/middleware/rateLimiter.ts` — Redis-backed rate limiting plugin": [
+      {
+        "executionId": "62483c90-c461-41c5-bcb2-dc9e500b484d",
+        "chatSessionId": "sess_402b621e-6a94-403f-ad2c-962d65e92472",
+        "timestamp": 1787890445907
+      },
+      {
+        "executionId": "62483c90-c461-41c5-bcb2-dc9e500b484d",
+        "chatSessionId": "sess_402b621e-6a94-403f-ad2c-962d65e92472",
+        "timestamp": 1787890649445
+      }
+    ],
+    "Create `.env.example` with all required environment variable placeholders": [
+      {
+        "executionId": "1a60f204-426b-4636-9fe2-4b1c9d2ffb43",
+        "chatSessionId": "sess_58ae282f-397a-4180-abc8-cd11d97ebd97",
+        "timestamp": 1787897429921
+      },
+      {
+        "executionId": "1a60f204-426b-4636-9fe2-4b1c9d2ffb43",
+        "chatSessionId": "sess_58ae282f-397a-4180-abc8-cd11d97ebd97",
+        "timestamp": 1787897539811
+      }
+    ],
+    "Implement `src/modules/tenant/schemas.ts` — TypeBox schemas for Company CRUD": [
+      {
+        "executionId": "ba976e85-996a-42db-a48c-616cee840645",
+        "chatSessionId": "sess_5a5e6d3f-2db9-4683-abc6-aa7bfe3dc5a3",
+        "timestamp": 1787897908909
+      },
+      {
+        "executionId": "ba976e85-996a-42db-a48c-616cee840645",
+        "chatSessionId": "sess_5a5e6d3f-2db9-4683-abc6-aa7bfe3dc5a3",
+        "timestamp": 1787898057337
+      }
+    ],
+    "Implement `src/modules/tenant/service.ts` — create, list, update, deactivate companies": [
+      {
+        "executionId": "0004ffe9-bfb6-45fc-a6ed-73d029215b60",
+        "chatSessionId": "sess_c25fb81f-e703-405f-b3fc-ec680afb3080",
+        "timestamp": 1787899401040
+      },
+      {
+        "executionId": "0004ffe9-bfb6-45fc-a6ed-73d029215b60",
+        "chatSessionId": "sess_c25fb81f-e703-405f-b3fc-ec680afb3080",
+        "timestamp": 1787899605578
+      }
+    ],
+    "Implement `src/modules/tenant/routes.ts` — `GET/POST/PATCH /tenants`, deactivate endpoint": [
+      {
+        "executionId": "1ac843ee-eca8-4f54-81aa-15f1f7f2ae7a",
+        "chatSessionId": "sess_8aaeea57-f5fa-4352-b9d3-d937b00d0167",
+        "timestamp": 1787899695755
+      },
+      {
+        "executionId": "1ac843ee-eca8-4f54-81aa-15f1f7f2ae7a",
+        "chatSessionId": "sess_8aaeea57-f5fa-4352-b9d3-d937b00d0167",
+        "timestamp": 1787899897898
+      }
+    ],
+    "Implement ERP config endpoint `PUT /tenants/:id/erp-config`": [
+      {
+        "executionId": "133bd585-d7e7-43d8-ad15-22c087213122",
+        "chatSessionId": "sess_dfff5e71-d594-4a8d-b6ec-ddc1cbcdcf3a",
+        "timestamp": 1787899955365
+      },
+      {
+        "executionId": "133bd585-d7e7-43d8-ad15-22c087213122",
+        "chatSessionId": "sess_dfff5e71-d594-4a8d-b6ec-ddc1cbcdcf3a",
+        "timestamp": 1787900080033
+      }
+    ],
+    "Implement tenant kill-switch logic — invalidate Redis sessions on deactivation": [
+      {
+        "executionId": "a927a16b-e004-48b3-bdd0-c8663ecb1a97",
+        "chatSessionId": "sess_c41cd7ee-a5be-4382-b0af-5a2a35d60011",
+        "timestamp": 1787900258955
+      },
+      {
+        "executionId": "a927a16b-e004-48b3-bdd0-c8663ecb1a97",
+        "chatSessionId": "sess_c41cd7ee-a5be-4382-b0af-5a2a35d60011",
+        "timestamp": 1787900644927
+      }
+    ],
+    "Add tenant branding fields (logo, tax rate, geofence radius) to create/update flows": [
+      {
+        "executionId": "e92aaa27-a3f8-456a-aedc-3095dd6d3e29",
+        "chatSessionId": "sess_200a173e-5f2c-48eb-9e71-6baa78ce3930",
+        "timestamp": 1787900945365
+      }
+    ],
+    "Implement `src/modules/auth/service.ts` — password verification, JWT generation (including `lini_ids` in payload), session management": [
+      {
+        "executionId": "b29585ef-d2d5-485c-81df-dc557e5e27eb",
+        "chatSessionId": "sess_7e409820-3008-477d-b4b3-fc2e6911245b",
+        "timestamp": 1787901271837
+      },
+      {
+        "executionId": "b29585ef-d2d5-485c-81df-dc557e5e27eb",
+        "chatSessionId": "sess_7e409820-3008-477d-b4b3-fc2e6911245b",
+        "timestamp": 1787901630438
+      }
+    ],
+    "Implement single-session enforcement — Redis session tracking, invalidation on new login": [
+      {
+        "executionId": "e75c8498-113f-4128-bb84-c16566c84340",
+        "chatSessionId": "sess_cb33eaca-99b2-40fc-bf7e-3bda98c68b33",
+        "timestamp": 1787902290775
+      },
+      {
+        "executionId": "e75c8498-113f-4128-bb84-c16566c84340",
+        "chatSessionId": "sess_cb33eaca-99b2-40fc-bf7e-3bda98c68b33",
+        "timestamp": 1787902960306
+      }
+    ],
+    "Implement graduated fraud response — soft rejection + telemetry logging to `audit_fraud_telemetry`": [
+      {
+        "executionId": "2d6ddeb8-00f7-462e-bd1b-6e5f8d628829",
+        "chatSessionId": "sess_ed87e00e-c2b1-44ee-89b4-a53abdb0bb0f",
+        "timestamp": 1787904769068
+      },
+      {
+        "executionId": "2d6ddeb8-00f7-462e-bd1b-6e5f8d628829",
+        "chatSessionId": "sess_ed87e00e-c2b1-44ee-89b4-a53abdb0bb0f",
+        "timestamp": 1787905454771
+      }
+    ],
+    "Implement MR order restriction — `403 Forbidden` on order-taking endpoints for `MR` role": [
+      {
+        "executionId": "42fd845a-90ef-4d03-a0bb-b5d0927e6c1a",
+        "chatSessionId": "sess_8107ca0d-f62b-43c4-aeb1-a85f913192b2",
+        "timestamp": 1787906008165
+      },
+      {
+        "executionId": "42fd845a-90ef-4d03-a0bb-b5d0927e6c1a",
+        "chatSessionId": "sess_8107ca0d-f62b-43c4-aeb1-a85f913192b2",
+        "timestamp": 1787906754732
+      }
+    ],
+    "Implement `src/modules/attendance/schemas.ts` — check-in/out validation schemas with geom + accuracy": [
+      {
+        "executionId": "7ebe295c-acfd-4052-84ce-f6c891c3d75e",
+        "chatSessionId": "sess_d405055a-c07c-4055-a512-ef04a355cbcd",
+        "timestamp": 1787906920628
+      },
+      {
+        "executionId": "7ebe295c-acfd-4052-84ce-f6c891c3d75e",
+        "chatSessionId": "sess_d405055a-c07c-4055-a512-ef04a355cbcd",
+        "timestamp": 1787907219941
+      }
+    ],
+    "Implement `src/modules/attendance/service.ts` — check-in with geofence validation, check-out with time rule": [
+      {
+        "executionId": "a8e3d4c8-a312-4605-9a24-e4c7ba8c3c3e",
+        "chatSessionId": "sess_95867d94-346a-4450-bceb-ffd88251324c",
+        "timestamp": 1787907253694
+      },
+      {
+        "executionId": "a8e3d4c8-a312-4605-9a24-e4c7ba8c3c3e",
+        "chatSessionId": "sess_95867d94-346a-4450-bceb-ffd88251324c",
+        "timestamp": 1787907469808
+      }
+    ],
+    "Implement PostGIS distance calculation between submitted coords and `master_soffice.location_geom`": [
+      {
+        "executionId": "0af148e2-2a55-499d-b8bd-0deae58ffa64",
+        "chatSessionId": "sess_63e445a2-b470-4eef-945b-f5ee71ec4732",
+        "timestamp": 1787917809112
+      },
+      {
+        "executionId": "0af148e2-2a55-499d-b8bd-0deae58ffa64",
+        "chatSessionId": "sess_63e445a2-b470-4eef-945b-f5ee71ec4732",
+        "timestamp": 1787918975667
+      }
+    ],
+    "Implement conditional checkout rule — enable only after 16:00 or shift end": [
+      {
+        "executionId": "68a906a1-e749-40b9-a2d5-e31d136e220a",
+        "chatSessionId": "sess_ded4a30c-38ee-431f-9793-07d5ad50b8b3",
+        "timestamp": 1787919855617
+      },
+      {
+        "executionId": "68a906a1-e749-40b9-a2d5-e31d136e220a",
+        "chatSessionId": "sess_ded4a30c-38ee-431f-9793-07d5ad50b8b3",
+        "timestamp": 1787919895648
+      }
+    ],
+    "Implement S3 pre-signed URL flow for selfie upload with photo key persistence": [
+      {
+        "executionId": "ea788ac0-eaa4-40da-84f3-6da60b6c3016",
+        "chatSessionId": "sess_37d3bb71-0387-4ed6-ab47-5dd4f8557fe9",
+        "timestamp": 1787919916862
+      },
+      {
+        "executionId": "ea788ac0-eaa4-40da-84f3-6da60b6c3016",
+        "chatSessionId": "sess_37d3bb71-0387-4ed6-ab47-5dd4f8557fe9",
+        "timestamp": 1787920307409
+      }
+    ],
+    "Implement `src/modules/lini/schemas.ts` — TypeBox schemas for Lini and Varian CRUD": [
+      {
+        "executionId": "20f4db84-b5d6-4913-924e-5ac44012e480",
+        "chatSessionId": "sess_b172eae9-96a0-41ca-8729-890cac2aaa91",
+        "timestamp": 1787920417502
+      },
+      {
+        "executionId": "20f4db84-b5d6-4913-924e-5ac44012e480",
+        "chatSessionId": "sess_b172eae9-96a0-41ca-8729-890cac2aaa91",
+        "timestamp": 1787920526962
+      }
+    ],
+    "Implement `src/modules/lini/routes.ts` — `GET/POST/PATCH/DELETE /lini`, `GET/POST/PATCH/DELETE /varian`": [
+      {
+        "executionId": "0ba0ec68-91b6-4db3-89cd-ea139c5f4de4",
+        "chatSessionId": "sess_58604cf3-4628-4d6d-a5f1-a3d2ee6767be",
+        "timestamp": 1787920824136
+      },
+      {
+        "executionId": "0ba0ec68-91b6-4db3-89cd-ea139c5f4de4",
+        "chatSessionId": "sess_58604cf3-4628-4d6d-a5f1-a3d2ee6767be",
+        "timestamp": 1787921022134
+      }
+    ],
+    "Implement user-lini assignment endpoints — `GET/POST/DELETE /users/:id/lini`": [
+      {
+        "executionId": "793e52d7-be9e-4f17-94c4-208ec45aea9d",
+        "chatSessionId": "sess_8a6bc226-137f-4b24-a373-78505b616a39",
+        "timestamp": 1787921096399
+      },
+      {
+        "executionId": "793e52d7-be9e-4f17-94c4-208ec45aea9d",
+        "chatSessionId": "sess_8a6bc226-137f-4b24-a373-78505b616a39",
+        "timestamp": 1787922707555
+      }
+    ],
+    "Implement `src/modules/customer/schemas.ts` — CRUD schemas for Outlet and Doctor types": [
+      {
+        "executionId": "bcaa84e5-b4a2-4dd0-8590-50232a734301",
+        "chatSessionId": "sess_124c2853-1946-46d1-9488-ff0494064c10",
+        "timestamp": 1787922840645
+      },
+      {
+        "executionId": "bcaa84e5-b4a2-4dd0-8590-50232a734301",
+        "chatSessionId": "sess_124c2853-1946-46d1-9488-ff0494064c10",
+        "timestamp": 1787923017296
+      }
+    ],
+    "Implement `src/modules/customer/service.ts` — full CRUD with soft-delete, spatial pinpoint, PIC management": [
+      {
+        "executionId": "9eef1c9f-2099-48dd-818a-c6fc6d8fd7e6",
+        "chatSessionId": "sess_53a92786-ad77-42de-9938-8a88c5a782f7",
+        "timestamp": 1787923096697
+      },
+      {
+        "executionId": "9eef1c9f-2099-48dd-818a-c6fc6d8fd7e6",
+        "chatSessionId": "sess_53a92786-ad77-42de-9938-8a88c5a782f7",
+        "timestamp": 1787923267142
+      }
+    ],
+    "Implement `src/modules/customer/routes.ts` — all `/customers` endpoints including bulk import": [
+      {
+        "executionId": "9c63d0fa-da0c-4778-9aa7-a1a217842c91",
+        "chatSessionId": "sess_48dbd889-69c8-41f2-a4b0-2cba1c1f1be6",
+        "timestamp": 1787923461365
+      },
+      {
+        "executionId": "9c63d0fa-da0c-4778-9aa7-a1a217842c91",
+        "chatSessionId": "sess_48dbd889-69c8-41f2-a4b0-2cba1c1f1be6",
+        "timestamp": 1787923828315
+      }
+    ],
+    "Implement `src/modules/doctor/schemas.ts` — doctor profile and assignment schemas": [
+      {
+        "executionId": "9560735c-6d0a-4637-8c23-7535fea88a28",
+        "chatSessionId": "sess_49353cc0-5c71-474d-b32d-15dd2e651a32",
+        "timestamp": 1787923889921
+      },
+      {
+        "executionId": "9560735c-6d0a-4637-8c23-7535fea88a28",
+        "chatSessionId": "sess_49353cc0-5c71-474d-b32d-15dd2e651a32",
+        "timestamp": 1787924140363
+      }
+    ],
+    "Implement `src/modules/doctor/service.ts` — profile management, multi-outlet assignment CRUD": [
+      {
+        "executionId": "f0e2e23c-befd-42fc-8632-c93dc1e2713b",
+        "chatSessionId": "sess_98984343-77bc-47c1-bdde-d35d7c9e37ff",
+        "timestamp": 1787924212268
+      },
+      {
+        "executionId": "f0e2e23c-befd-42fc-8632-c93dc1e2713b",
+        "chatSessionId": "sess_98984343-77bc-47c1-bdde-d35d7c9e37ff",
+        "timestamp": 1787924454248
+      }
+    ],
+    "Implement `src/modules/doctor/routes.ts` — `/doctors` endpoints with assignments sub-resource": [
+      {
+        "executionId": "f1a3bed2-b3c7-4949-8b45-697b77bb5b09",
+        "chatSessionId": "sess_fbd5ef62-a905-475d-bbac-49ec1750f912",
+        "timestamp": 1787924507292
+      },
+      {
+        "executionId": "f1a3bed2-b3c7-4949-8b45-697b77bb5b09",
+        "chatSessionId": "sess_fbd5ef62-a905-475d-bbac-49ec1750f912",
+        "timestamp": 1787924704283
+      }
+    ],
+    "Implement geofence inheritance logic — resolve outlet coordinates for doctor visits": [
+      {
+        "executionId": "8f138977-f0a5-498d-a747-5525301637ea",
+        "chatSessionId": "sess_72618dd8-43cb-45dc-aac3-a3ae2b61a641",
+        "timestamp": 1787924901789
+      },
+      {
+        "executionId": "8f138977-f0a5-498d-a747-5525301637ea",
+        "chatSessionId": "sess_72618dd8-43cb-45dc-aac3-a3ae2b61a641",
+        "timestamp": 1787925081461
+      }
+    ],
+    "Implement bulk import endpoint with XLSX/CSV parsing and validation streaming": [
+      {
+        "executionId": "fc25b4fe-0258-4d6f-a824-1534f9ce5c8e",
+        "chatSessionId": "sess_609f7d96-588b-4ff9-b20e-2045b9d7a674",
+        "timestamp": 1787925222886
+      },
+      {
+        "executionId": "fc25b4fe-0258-4d6f-a824-1534f9ce5c8e",
+        "chatSessionId": "sess_609f7d96-588b-4ff9-b20e-2045b9d7a674",
+        "timestamp": 1787925281054
+      }
+    ],
+    "Implement `src/modules/call-plan/schemas.ts` — plan upload and query schemas": [
+      {
+        "executionId": "cd3f6c7b-bdd5-4989-b367-696a29f3e43f",
+        "chatSessionId": "sess_b328a9e7-1d36-4f3b-9de4-1d0c2693ac11",
+        "timestamp": 1787925367300
+      },
+      {
+        "executionId": "cd3f6c7b-bdd5-4989-b367-696a29f3e43f",
+        "chatSessionId": "sess_b328a9e7-1d36-4f3b-9de4-1d0c2693ac11",
+        "timestamp": 1787925560664
+      }
+    ],
+    "Implement `src/modules/call-plan/service.ts` — bulk create plans (for both Salesman & MR), today's plan query, analytics computation": [
+      {
+        "executionId": "9399c2e9-30d0-410c-821b-c7359fb611a1",
+        "chatSessionId": "sess_ff70c735-38fc-4303-83ec-69deeb2e08ad",
+        "timestamp": 1787925849570
+      },
+      {
+        "executionId": "9399c2e9-30d0-410c-821b-c7359fb611a1",
+        "chatSessionId": "sess_ff70c735-38fc-4303-83ec-69deeb2e08ad",
+        "timestamp": 1787926052861
+      }
+    ],
+    "Implement call rate calculation: `(actual_visits / target_plans) × 100` segmented by role": [
+      {
+        "executionId": "a186d407-3323-4ebb-8ac7-1cb0c1ef5890",
+        "chatSessionId": "sess_f1e1527d-2d54-4323-97dd-ff2736c360a9",
+        "timestamp": 1787926592640
+      }
+    ],
+    "Implement visit type auto-classification (PLANNED vs EXTRA) based on matching plan records": [
+      {
+        "executionId": "82d60c93-d19c-4cdf-9c78-efe4824735e9",
+        "chatSessionId": "sess_bc0fa3d9-3b2a-496f-8566-42fff7b7b09d",
+        "timestamp": 1787926918943
+      },
+      {
+        "executionId": "82d60c93-d19c-4cdf-9c78-efe4824735e9",
+        "chatSessionId": "sess_bc0fa3d9-3b2a-496f-8566-42fff7b7b09d",
+        "timestamp": 1787927152754
+      }
+    ],
+    "Implement `src/modules/visit/schemas.ts` — visit start/end, agenda, audit schemas": [
+      {
+        "executionId": "4b20921a-7e15-4e4e-a8d6-bfe48848bbd8",
+        "chatSessionId": "sess_e38766d0-2f74-4ca0-9b2d-ef9d695bc672",
+        "timestamp": 1787927260962
+      },
+      {
+        "executionId": "4b20921a-7e15-4e4e-a8d6-bfe48848bbd8",
+        "chatSessionId": "sess_e38766d0-2f74-4ca0-9b2d-ef9d695bc672",
+        "timestamp": 1787927607232
+      }
+    ],
+    "Implement `src/modules/visit/routes.ts` — `POST /visits/start`, `POST /visits/:id/end`, sub-resource endpoints": [
+      {
+        "executionId": "28e0323e-38a5-4098-b507-ae41d5357f1c",
+        "chatSessionId": "sess_c9f13b5e-2776-4aad-b59b-2e05e87c1030",
+        "timestamp": 1787929401676
+      },
+      {
+        "executionId": "28e0323e-38a5-4098-b507-ae41d5357f1c",
+        "chatSessionId": "sess_c9f13b5e-2776-4aad-b59b-2e05e87c1030",
+        "timestamp": 1787929559043
+      }
+    ],
+    "Implement geofence validation at visit-in using PostGIS `ST_DWithin` against target outlet": [
+      {
+        "executionId": "e0254b93-e8b1-4230-a6cb-87f683ef9341",
+        "chatSessionId": "sess_56f59859-9ba6-42a2-9238-e4d354361fc3",
+        "timestamp": 1787929686005
+      },
+      {
+        "executionId": "e0254b93-e8b1-4230-a6cb-87f683ef9341",
+        "chatSessionId": "sess_56f59859-9ba6-42a2-9238-e4d354361fc3",
+        "timestamp": 1787930033350
+      }
+    ],
+    "Implement concurrent visit lock — prevent new visit if prior is still open": [
+      {
+        "executionId": "f3b2dc48-b2b0-4181-8707-43db87acb3b1",
+        "chatSessionId": "sess_49d0d7f6-9936-4f67-aeab-0647fef6802e",
+        "timestamp": 1787930098389
+      }
+    ],
+    "Implement agenda/detailing CRUD (`visit_agendas` table) — accessible by both Salesman & MR": [
+      {
+        "executionId": "ada8ce07-332f-457d-bb3d-14ec82caa1bc",
+        "chatSessionId": "sess_807f0ef1-c5d8-420a-bb22-3ec8758e1c96",
+        "timestamp": 1787930372442
+      },
+      {
+        "executionId": "ada8ce07-332f-457d-bb3d-14ec82caa1bc",
+        "chatSessionId": "sess_807f0ef1-c5d8-420a-bb22-3ec8758e1c96",
+        "timestamp": 1787930433054
+      }
+    ],
+    "Implement stock audit CRUD (`visit_stock_audits` table) — accessible by both Salesman & MR": [
+      {
+        "executionId": "2fabf89c-893f-49c7-9615-944e2ddf76db",
+        "chatSessionId": "sess_1fb22d39-69de-460c-a3c8-c3e3edd2efd7",
+        "timestamp": 1787963624905
+      },
+      {
+        "executionId": "2fabf89c-893f-49c7-9615-944e2ddf76db",
+        "chatSessionId": "sess_1fb22d39-69de-460c-a3c8-c3e3edd2efd7",
+        "timestamp": 1787968711426
+      }
+    ],
+    "Implement competitor audit CRUD (`visit_competitor_audits` table) — accessible by both Salesman & MR": [
+      {
+        "executionId": "47adbfdf-ac02-4446-b457-da556d5a84fd",
+        "chatSessionId": "sess_5dff9851-654b-4289-b7fc-0431dc7b808f",
+        "timestamp": 1787968861994
+      },
+      {
+        "executionId": "47adbfdf-ac02-4446-b457-da556d5a84fd",
+        "chatSessionId": "sess_5dff9851-654b-4289-b7fc-0431dc7b808f",
+        "timestamp": 1787969821556
+      }
+    ],
+    "Implement digital signature capture — S3 key storage on visit completion": [
+      {
+        "executionId": "15e9b0b5-8d14-49f0-8b30-f9745448fa6f",
+        "chatSessionId": "sess_966f8770-5be6-4539-aa4d-5a674f8dda6c",
+        "timestamp": 1787970049727
+      },
+      {
+        "executionId": "15e9b0b5-8d14-49f0-8b30-f9745448fa6f",
+        "chatSessionId": "sess_966f8770-5be6-4539-aa4d-5a674f8dda6c",
+        "timestamp": 1787970566801
+      }
+    ],
+    "Implement `src/modules/order/schemas.ts` — create order, submit order schemas": [
+      {
+        "executionId": "dcc7a984-5a1a-4e77-9ec3-192ceaa97ad2",
+        "chatSessionId": "sess_f1d777ee-ef9e-4efe-821d-f358688b61d5",
+        "timestamp": 1787970716344
+      },
+      {
+        "executionId": "dcc7a984-5a1a-4e77-9ec3-192ceaa97ad2",
+        "chatSessionId": "sess_f1d777ee-ef9e-4efe-821d-f358688b61d5",
+        "timestamp": 1787970878539
+      }
+    ]
+  }
+}

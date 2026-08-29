@@ -1,0 +1,34 @@
+{
+  "CORSRules": [
+    {
+      "ID": "AllowPWAPreSignedUploads",
+      "AllowedOrigins": [
+        "https://maction.kimiafarma.co.id",
+        "https://admin.maction.kimiafarma.co.id"
+      ],
+      "AllowedMethods": [
+        "PUT",
+        "POST",
+        "GET",
+        "HEAD"
+      ],
+      "AllowedHeaders": [
+        "Content-Type",
+        "Content-Disposition",
+        "x-amz-acl",
+        "x-amz-content-sha256",
+        "x-amz-date",
+        "x-amz-security-token",
+        "x-amz-server-side-encryption",
+        "x-amz-meta-*",
+        "Authorization"
+      ],
+      "ExposeHeaders": [
+        "ETag",
+        "x-amz-request-id",
+        "x-amz-server-side-encryption"
+      ],
+      "MaxAgeSeconds": 86400
+    }
+  ]
+}

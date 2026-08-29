@@ -1,0 +1,71 @@
+# =============================================================================
+# KF Maction v2.0 — Elysia.js API Server (Bun Runtime)
+# =============================================================================
+# Systemd service unit for the backend API server.
+#
+# Installation:
+#   1. Copy to /etc/systemd/system/maction-api.service
+#   2. Create service user: useradd --system --no-create-home --shell /usr/sbin/nologin maction
+#   3. Set ownership: chown -R maction:maction /opt/maction/api-server
+#   4. Create env file: cp .env.production /opt/maction/api-server/.env
+#   5. Enable & start: systemctl enable --now maction-api.service
+#   6. Check status: systemctl status maction-api.service
+#   7. View logs: journalctl -u maction-api.service -f
+# =============================================================================
+
+[Unit]
+Description=KF Maction v2.0 — Elysia.js API Server
+Documentation=https://github.com/kimiafarma/maction-v2
+After=network-online.target postgresql.service redis.service
+Wants=network-online.target
+Requires=postgresql.service
+
+[Service]
+Type=simple
+User=maction
+Group=maction
+WorkingDirectory=/opt/maction/api-server
+
+# Environment file containing DATABASE_URL, REDIS_URL, JWT_SECRET, AWS_* etc.
+EnvironmentFile=/opt/maction/api-server/.env
+
+# Bun runtime executing the Elysia.js entrypoint
+ExecStart=/usr/local/bin/bun run src/index.ts
+
+# Bind to localhost only — Nginx handles public traffic and SSL
+Environment=HOST=127.0.0.1
+Environment=PORT=3000
+Environment=NODE_ENV=production
+
+# Restart policy
+Restart=on-failure
+RestartSec=5
+StartLimitBurst=5
+StartLimitIntervalSec=60
+
+# Graceful shutdown (allow in-flight requests to complete)
+TimeoutStopSec=30
+KillMode=mixed
+KillSignal=SIGTERM
+
+# Security hardening
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+ReadWritePaths=/opt/maction/api-server/logs
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+
+# Resource limits
+LimitNOFILE=65536
+MemoryMax=1G
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=maction-api
+
+[Install]
+WantedBy=multi-user.target
