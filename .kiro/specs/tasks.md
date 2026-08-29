@@ -144,17 +144,17 @@ Reference: #[[file:docs/PRD_Maction_v2.md]]
 ## Phase 9: Module 9 — ERP Integration
 
 - [x] Implement `src/modules/erp-sync/schemas.ts` — webhook payload schemas for all inbound types
-- [ ] Implement `src/modules/erp-sync/routes.ts` — webhook endpoints for customers, materials, prices, stock (with batch/SLED), promos, leads
-- [ ] Implement inbound customer/doctor delta sync (upsert matching `erp_customer_code`)
-- [ ] Implement inbound material/SKU sync (upsert matching `erp_material_code`, including `lini_id`)
-- [ ] Implement inbound price list sync (upsert `master_price` records with `varian_id` and `per`)
-- [ ] Implement inbound stock ATP sync (upsert `stock_inventory_atp` with batch & SLED)
-- [ ] Implement inbound promotion sync (upsert `master_promotions` with UOM references)
-- [ ] Implement inbound leads → auto-create `visit_plans` for relevant salesmen or MRs
-- [ ] Implement `src/queues/erpSyncWorker.ts` — BullMQ worker for outbound order → ERP Sales Quotation
-- [ ] Implement idempotency key generation and Redis duplicate detection
-- [ ] Implement exponential backoff retry logic on ERP sync failure
-- [ ] Implement `audit_erp_sync_logs` recording for every sync operation
+- [x] Implement `src/modules/erp-sync/routes.ts` — webhook endpoints for customers, materials, prices, stock (with batch/SLED), promos, leads
+- [x] Implement inbound customer/doctor delta sync (upsert matching `erp_customer_code`)
+- [x] Implement inbound material/SKU sync (upsert matching `erp_material_code`, including `lini_id`)
+- [x] Implement inbound price list sync (upsert `master_price` records with `varian_id` and `per`)
+- [x] Implement inbound stock ATP sync (upsert `stock_inventory_atp` with batch & SLED)
+- [x] Implement inbound promotion sync (upsert `master_promotions` with UOM references)
+- [x] Implement inbound leads → auto-create `visit_plans` for relevant salesmen or MRs
+- [x] Implement `src/queues/erpSyncWorker.ts` — BullMQ worker for outbound order → ERP Sales Quotation
+- [x] Implement idempotency key generation and Redis duplicate detection
+- [x] Implement exponential backoff retry logic on ERP sync failure
+- [x] Implement `audit_erp_sync_logs` recording for every sync operation
 
 ---
 

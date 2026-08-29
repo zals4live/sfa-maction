@@ -513,7 +513,7 @@ export async function submitOrder(
 ): Promise<OrderDetailResponseType> {
   const rlsCtx: RLSContext = { companyId: ctx.companyId, userId: ctx.userId, userRole: ctx.userRole }
 
-  return withRLS(rlsCtx, async (tx) => {
+  const detail = await withRLS(rlsCtx, async (tx) => {
     const header = await fetchOwnedOrder(tx, orderId, ctx)
 
     if (header.orderStatus !== 'DRAFT') {
@@ -535,6 +535,13 @@ export async function submitOrder(
     const items = await fetchOrderItems(tx, orderId)
     return { ...mapOrderRow(updated), items }
   })
+
+  // Enqueue outbound ERP sync only after the SUBMITTED transition has committed.
+  // Dynamically imported so the BullMQ/Redis queue graph is not pulled into the
+  // module at load time (keeps the order module lightweight and testable).
+  const { enqueueOrderSync } = await import('../../queues/erpSyncWorker')
+  await enqueueOrderSync(orderId, ctx.companyId)
+  return detail
 }
 
 // =============================================================================

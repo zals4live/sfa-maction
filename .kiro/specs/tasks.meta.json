@@ -820,6 +820,138 @@
         "chatSessionId": "sess_5b1672b1-4867-4ba1-a806-b56f3038adb2",
         "timestamp": 1787984070557
       }
+    ],
+    "Implement `src/modules/erp-sync/routes.ts` — webhook endpoints for customers, materials, prices, stock (with batch/SLED), promos, leads": [
+      {
+        "executionId": "5b4e9f02-08a4-4522-b143-ce2bfe2e9492",
+        "chatSessionId": "sess_365d30cc-6432-4051-8a8a-01ac173cd3a9",
+        "timestamp": 1787999160901
+      },
+      {
+        "executionId": "5b4e9f02-08a4-4522-b143-ce2bfe2e9492",
+        "chatSessionId": "sess_365d30cc-6432-4051-8a8a-01ac173cd3a9",
+        "timestamp": 1788000024144
+      }
+    ],
+    "Implement inbound customer/doctor delta sync (upsert matching `erp_customer_code`)": [
+      {
+        "executionId": "82785271-5d38-466f-afdd-c8f7ba3a9173",
+        "chatSessionId": "sess_75c3a0a4-ffbe-420a-b95e-07ae74265656",
+        "timestamp": 1788000140176
+      },
+      {
+        "executionId": "82785271-5d38-466f-afdd-c8f7ba3a9173",
+        "chatSessionId": "sess_75c3a0a4-ffbe-420a-b95e-07ae74265656",
+        "timestamp": 1788000376702
+      }
+    ],
+    "Implement inbound material/SKU sync (upsert matching `erp_material_code`, including `lini_id`)": [
+      {
+        "executionId": "a0c9a826-9cda-4297-bf09-1796b9a7a955",
+        "chatSessionId": "sess_d8774a97-2cd6-4415-bcfc-b9a15a26f1f8",
+        "timestamp": 1788000466046
+      },
+      {
+        "executionId": "a0c9a826-9cda-4297-bf09-1796b9a7a955",
+        "chatSessionId": "sess_d8774a97-2cd6-4415-bcfc-b9a15a26f1f8",
+        "timestamp": 1788000641664
+      }
+    ],
+    "Implement inbound price list sync (upsert `master_price` records with `varian_id` and `per`)": [
+      {
+        "executionId": "49fc02e1-cf70-4ade-ba88-5a002c9b9c92",
+        "chatSessionId": "sess_1afc4b16-d17e-4bc8-86b6-b68458df83aa",
+        "timestamp": 1788000689504
+      },
+      {
+        "executionId": "49fc02e1-cf70-4ade-ba88-5a002c9b9c92",
+        "chatSessionId": "sess_1afc4b16-d17e-4bc8-86b6-b68458df83aa",
+        "timestamp": 1788000842731
+      }
+    ],
+    "Implement inbound stock ATP sync (upsert `stock_inventory_atp` with batch & SLED)": [
+      {
+        "executionId": "4296308a-6fd1-479e-9dd9-a73fd37ea2d9",
+        "chatSessionId": "sess_090cd087-5fb2-4eed-922c-25c994333cec",
+        "timestamp": 1788000959533
+      },
+      {
+        "executionId": "4296308a-6fd1-479e-9dd9-a73fd37ea2d9",
+        "chatSessionId": "sess_090cd087-5fb2-4eed-922c-25c994333cec",
+        "timestamp": 1788001171635
+      }
+    ],
+    "Implement inbound promotion sync (upsert `master_promotions` with UOM references)": [
+      {
+        "executionId": "891d3ea4-e879-40dc-882d-ca8577c87275",
+        "chatSessionId": "sess_de9b1a5a-aecf-40c2-8812-1e4b607811eb",
+        "timestamp": 1788001451120
+      },
+      {
+        "executionId": "891d3ea4-e879-40dc-882d-ca8577c87275",
+        "chatSessionId": "sess_de9b1a5a-aecf-40c2-8812-1e4b607811eb",
+        "timestamp": 1788001621503
+      }
+    ],
+    "Implement inbound leads → auto-create `visit_plans` for relevant salesmen or MRs": [
+      {
+        "executionId": "21afe748-557e-4eae-acac-d749a2073364",
+        "chatSessionId": "sess_306b0c2e-dc7c-4c91-a6f7-9b4394bd227c",
+        "timestamp": 1788001724476
+      },
+      {
+        "executionId": "21afe748-557e-4eae-acac-d749a2073364",
+        "chatSessionId": "sess_306b0c2e-dc7c-4c91-a6f7-9b4394bd227c",
+        "timestamp": 1788001939093
+      }
+    ],
+    "Implement `src/queues/erpSyncWorker.ts` — BullMQ worker for outbound order → ERP Sales Quotation": [
+      {
+        "executionId": "e198987e-cb4b-4c5f-a847-6f56e5694674",
+        "chatSessionId": "sess_e77e994a-53e4-484a-ae10-8d645680d8b1",
+        "timestamp": 1788002007542
+      },
+      {
+        "executionId": "e198987e-cb4b-4c5f-a847-6f56e5694674",
+        "chatSessionId": "sess_e77e994a-53e4-484a-ae10-8d645680d8b1",
+        "timestamp": 1788002601746
+      }
+    ],
+    "Implement idempotency key generation and Redis duplicate detection": [
+      {
+        "executionId": "c8b302c3-879d-4d56-9d23-d6773ac113c3",
+        "chatSessionId": "sess_d261deb5-8172-4db3-b0a5-ea3f34bb9ec8",
+        "timestamp": 1788002674247
+      },
+      {
+        "executionId": "c8b302c3-879d-4d56-9d23-d6773ac113c3",
+        "chatSessionId": "sess_d261deb5-8172-4db3-b0a5-ea3f34bb9ec8",
+        "timestamp": 1788003281649
+      }
+    ],
+    "Implement exponential backoff retry logic on ERP sync failure": [
+      {
+        "executionId": "9cb20b97-6adb-4f42-8cb1-824ccb0d1a38",
+        "chatSessionId": "sess_65e91d6f-a317-47d7-a9c3-f60120099b85",
+        "timestamp": 1788003381268
+      },
+      {
+        "executionId": "9cb20b97-6adb-4f42-8cb1-824ccb0d1a38",
+        "chatSessionId": "sess_65e91d6f-a317-47d7-a9c3-f60120099b85",
+        "timestamp": 1788003564962
+      }
+    ],
+    "Implement `audit_erp_sync_logs` recording for every sync operation": [
+      {
+        "executionId": "f3afe933-65ab-4649-896f-39bedb613a0a",
+        "chatSessionId": "sess_065da0d3-392c-48a5-bae1-76fbe904bfd8",
+        "timestamp": 1788003613368
+      },
+      {
+        "executionId": "f3afe933-65ab-4649-896f-39bedb613a0a",
+        "chatSessionId": "sess_065da0d3-392c-48a5-bae1-76fbe904bfd8",
+        "timestamp": 1788003896035
+      }
     ]
   }
 }
