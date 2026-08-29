@@ -52,6 +52,32 @@ export async function generateUploadUrl(options: UploadUrlOptions): Promise<stri
   return getSignedUrl(s3Client, command, { expiresIn })
 }
 
+interface UploadObjectOptions {
+  key: string
+  body: Uint8Array
+  contentType: AllowedMimeType
+}
+
+/**
+ * Uploads a server-generated object (e.g., a rendered PDF quotation) directly to
+ * S3 via PutObject. Used for artifacts the API server produces itself — never for
+ * client uploads, which must go through pre-signed URLs. The S3 key is not exposed
+ * to clients; callers persist it and hand out pre-signed GET URLs via
+ * generateDownloadUrl.
+ */
+export async function uploadObject(options: UploadObjectOptions): Promise<void> {
+  const { key, body, contentType } = options
+
+  const command = new PutObjectCommand({
+    Bucket: S3_BUCKET,
+    Key: key,
+    Body: body,
+    ContentType: contentType,
+  })
+
+  await s3Client.send(command)
+}
+
 interface DownloadUrlOptions {
   key: string
   expiresIn?: number // seconds, default 3600 (1 hour)

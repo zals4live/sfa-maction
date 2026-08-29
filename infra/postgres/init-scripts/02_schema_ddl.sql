@@ -431,3 +431,15 @@ CREATE TABLE order_items (
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
 CREATE INDEX idx_order_items_order ON order_items(order_id);
+
+-- Per-tenant, per-day monotonic counter for gap-free order numbering.
+-- Upserted atomically (INSERT ... ON CONFLICT DO UPDATE ... RETURNING) so
+-- concurrent order creation serializes on the row lock, guaranteeing unique
+-- ORD-YYYYMMDD-NNNN numbers without a COUNT-based race.
+CREATE TABLE order_sequences (
+    company_id UUID NOT NULL REFERENCES companies(id) ON DELETE CASCADE,
+    order_date DATE NOT NULL,
+    last_sequence INT NOT NULL DEFAULT 0,
+    updated_at TIMESTAMPTZ DEFAULT NOW(),
+    CONSTRAINT pk_order_sequences PRIMARY KEY (company_id, order_date)
+);

@@ -399,6 +399,26 @@ CREATE POLICY tenant_isolation_order_items ON order_items
         )
     );
 
+-- --------------------------------------------------------------------------
+-- order_sequences — tenant isolation + MR role exclusion
+--
+-- Mirrors the orders policy: MR cannot touch the counter (MR never creates
+-- orders), and all counter rows are scoped to the caller's company_id.
+-- --------------------------------------------------------------------------
+ALTER TABLE order_sequences ENABLE ROW LEVEL SECURITY;
+ALTER TABLE order_sequences FORCE ROW LEVEL SECURITY;
+
+CREATE POLICY tenant_isolation_order_sequences ON order_sequences
+    FOR ALL
+    USING (
+        company_id = NULLIF(current_setting('app.current_company_id', true), '')::uuid
+        AND NULLIF(current_setting('app.current_user_role', true), '') != 'MR'
+    )
+    WITH CHECK (
+        company_id = NULLIF(current_setting('app.current_company_id', true), '')::uuid
+        AND NULLIF(current_setting('app.current_user_role', true), '') != 'MR'
+    );
+
 
 -- ============================================================================
 -- 7. AUDIT TABLES

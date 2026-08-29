@@ -29,6 +29,7 @@ import {
   // Order
   orders,
   orderItems,
+  orderSequences,
   // Audit
   auditMutationLogs,
   auditFraudTelemetry,
@@ -55,6 +56,7 @@ export const companiesRelations = relations(companies, ({ many }) => ({
   visitPlans: many(visitPlans),
   visits: many(visits),
   orders: many(orders),
+  orderSequences: many(orderSequences),
   absensi: many(absensi),
   auditMutationLogs: many(auditMutationLogs),
   auditFraudTelemetry: many(auditFraudTelemetry),
@@ -410,6 +412,13 @@ export const orderItemsRelations = relations(orderItems, ({ one }) => ({
   promotion: one(masterPromotions, {
     fields: [orderItems.promotionId],
     references: [masterPromotions.id],
+  }),
+}))
+
+export const orderSequencesRelations = relations(orderSequences, ({ one }) => ({
+  company: one(companies, {
+    fields: [orderSequences.companyId],
+    references: [companies.id],
   }),
 }))
 

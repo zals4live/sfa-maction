@@ -17,3 +17,26 @@ export {
 } from './report-exporters.js';
 
 export type { ExportOptions } from './report-exporters.js';
+
+export {
+  getUomFactor,
+  convertToBaseUnits,
+  convertFromBaseUnits,
+  UOMConversionError,
+} from './uom-converter.js';
+
+export type { UOMConversionRules } from './uom-converter.js';
+
+export {
+  roundMoney,
+  computeLinePricing,
+  computeOrderTotals,
+  computeTax,
+} from './pricing.js';
+
+export type {
+  LinePricingInput,
+  LinePricingResult,
+  OrderTotalsInput,
+  OrderTotalsResult,
+} from './pricing.js';

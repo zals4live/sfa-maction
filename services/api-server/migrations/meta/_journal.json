@@ -1,0 +1,13 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1787983460861,
+      "tag": "0000_add_order_sequences",
+      "breakpoints": true
+    }
+  ]
+}

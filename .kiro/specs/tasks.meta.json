@@ -676,6 +676,150 @@
         "chatSessionId": "sess_f1d777ee-ef9e-4efe-821d-f358688b61d5",
         "timestamp": 1787970878539
       }
+    ],
+    "Implement `src/modules/order/service.ts` — order creation with price lookup, UOM conversion, tax calc": [
+      {
+        "executionId": "570941bf-4c66-4638-98b1-996c64eb3eb3",
+        "chatSessionId": "sess_37a58f13-4816-4798-8ce0-ed37d1badf45",
+        "timestamp": 1787971971925
+      },
+      {
+        "executionId": "570941bf-4c66-4638-98b1-996c64eb3eb3",
+        "chatSessionId": "sess_37a58f13-4816-4798-8ce0-ed37d1badf45",
+        "timestamp": 1787972509356
+      }
+    ],
+    "Implement `src/modules/order/routes.ts` — `POST/GET /orders`, `POST /orders/:id/submit`, PDF endpoint": [
+      {
+        "executionId": "02785f8d-12c5-47c5-a8f5-06ce175b8824",
+        "chatSessionId": "sess_758ebb8b-9a65-4df4-afdf-3ed739b554d7",
+        "timestamp": 1787972613502
+      },
+      {
+        "executionId": "02785f8d-12c5-47c5-a8f5-06ce175b8824",
+        "chatSessionId": "sess_758ebb8b-9a65-4df4-afdf-3ed739b554d7",
+        "timestamp": 1787972990289
+      }
+    ],
+    "Implement role guard on all order write routes — `SALESMAN` only, `MR` gets `403`": [
+      {
+        "executionId": "a289b084-228b-40c7-a824-acd35635dea1",
+        "chatSessionId": "sess_338d407d-4f36-45b8-a45a-b2de3b7ae6ae",
+        "timestamp": 1787973074325
+      },
+      {
+        "executionId": "a289b084-228b-40c7-a824-acd35635dea1",
+        "chatSessionId": "sess_338d407d-4f36-45b8-a45a-b2de3b7ae6ae",
+        "timestamp": 1787973434944
+      }
+    ],
+    "Implement `src/modules/material/schemas.ts` — material query schemas with lini filter": [
+      {
+        "executionId": "3f318d24-d94e-4d54-b598-76b0b1ef432f",
+        "chatSessionId": "sess_1c7317ec-c357-43ef-ace3-180f0b81d439",
+        "timestamp": 1787973537653
+      },
+      {
+        "executionId": "3f318d24-d94e-4d54-b598-76b0b1ef432f",
+        "chatSessionId": "sess_1c7317ec-c357-43ef-ace3-180f0b81d439",
+        "timestamp": 1787973643906
+      }
+    ],
+    "Implement `src/modules/material/service.ts` — material list (lini-filtered by RLS), price lookup, stock ATP lookup": [
+      {
+        "executionId": "2ead1a00-9be9-4c67-8b8f-711b8779d806",
+        "chatSessionId": "sess_806525f1-c400-4d36-92d7-8524d4ae25ae",
+        "timestamp": 1787973692088
+      },
+      {
+        "executionId": "2ead1a00-9be9-4c67-8b8f-711b8779d806",
+        "chatSessionId": "sess_806525f1-c400-4d36-92d7-8524d4ae25ae",
+        "timestamp": 1787973828495
+      }
+    ],
+    "Implement `src/modules/material/routes.ts` — `GET /materials`, `GET /materials/:id/price`, `GET /materials/:id/stock`, `GET /promotions`": [
+      {
+        "executionId": "9f3d362d-4472-453e-b7e2-b4be732c3297",
+        "chatSessionId": "sess_7eed6a36-f482-404b-a5de-bdfcde78bf52",
+        "timestamp": 1787973867682
+      },
+      {
+        "executionId": "9f3d362d-4472-453e-b7e2-b4be732c3297",
+        "chatSessionId": "sess_7eed6a36-f482-404b-a5de-bdfcde78bf52",
+        "timestamp": 1787973965331
+      }
+    ],
+    "Implement multi-tier UOM conversion using `master_material.uom_conversion_rules` JSON": [
+      {
+        "executionId": "50bba772-d6a9-4053-8a5b-3eac442e9bd0",
+        "chatSessionId": "sess_4f9dbee9-ca48-418c-82d2-560c2c9fbbf9",
+        "timestamp": 1787974017349
+      },
+      {
+        "executionId": "50bba772-d6a9-4053-8a5b-3eac442e9bd0",
+        "chatSessionId": "sess_4f9dbee9-ca48-418c-82d2-560c2c9fbbf9",
+        "timestamp": 1787974820512
+      }
+    ],
+    "Implement regional price lookup from `master_price` by soffice + material + varian + valid date range": [
+      {
+        "executionId": "4e202bf7-4857-4b84-b281-b86cc8d6b115",
+        "chatSessionId": "sess_262cd7d7-5ae1-4844-b292-4f2057719040",
+        "timestamp": 1787975572714
+      },
+      {
+        "executionId": "4e202bf7-4857-4b84-b281-b86cc8d6b115",
+        "chatSessionId": "sess_262cd7d7-5ae1-4844-b292-4f2057719040",
+        "timestamp": 1787975743933
+      }
+    ],
+    "Implement promotion/discount application logic from `master_promotions`": [
+      {
+        "executionId": "bf327b3a-6075-4778-b66a-ccaf2e03480e",
+        "chatSessionId": "sess_5c7c8101-f921-4895-a322-96341a786eef",
+        "timestamp": 1787975815914
+      },
+      {
+        "executionId": "bf327b3a-6075-4778-b66a-ccaf2e03480e",
+        "chatSessionId": "sess_5c7c8101-f921-4895-a322-96341a786eef",
+        "timestamp": 1787976226443
+      }
+    ],
+    "Implement automated PPN tax calculation with tenant `default_tax_rate`": [
+      {
+        "executionId": "3fd334c8-33fe-4009-9eca-8fe600d4d1bf",
+        "chatSessionId": "sess_3cf55e6b-3efc-49df-8a07-fe4cdaf39baf",
+        "timestamp": 1787976300197
+      },
+      {
+        "executionId": "3fd334c8-33fe-4009-9eca-8fe600d4d1bf",
+        "chatSessionId": "sess_3cf55e6b-3efc-49df-8a07-fe4cdaf39baf",
+        "timestamp": 1787976395088
+      }
+    ],
+    "Implement order number generation (sequential per tenant)": [
+      {
+        "executionId": "d7fd93b4-98c1-4690-8518-e1974dd16b16",
+        "chatSessionId": "sess_e5f04016-9322-42d0-9562-19b04cfa0194",
+        "timestamp": 1787983188636
+      },
+      {
+        "executionId": "d7fd93b4-98c1-4690-8518-e1974dd16b16",
+        "chatSessionId": "sess_e5f04016-9322-42d0-9562-19b04cfa0194",
+        "timestamp": 1787983593829
+      }
+    ],
+    "Implement PDF quotation generation with tenant branding → upload to S3": [
+      {
+        "executionId": "a4444809-2cda-4fe8-be8b-288b85670002",
+        "chatSessionId": "sess_5b1672b1-4867-4ba1-a806-b56f3038adb2",
+        "timestamp": 1787983638482
+      },
+      {
+        "executionId": "a4444809-2cda-4fe8-be8b-288b85670002",
+        "chatSessionId": "sess_5b1672b1-4867-4ba1-a806-b56f3038adb2",
+        "timestamp": 1787984070557
+      }
     ]
   }
 }

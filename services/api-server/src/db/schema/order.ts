@@ -11,6 +11,7 @@ import {
   date,
   jsonb,
   index,
+  primaryKey,
 } from 'drizzle-orm/pg-core'
 import { companies, masterSoffice } from './tenant'
 import { appUsers } from './auth'
@@ -57,6 +58,26 @@ export const orders = pgTable(
   },
   (table) => [
     index('idx_orders_company_status').on(table.companyId, table.orderStatus, table.orderDate),
+  ],
+)
+
+/**
+ * Per-tenant, per-day monotonic counter backing gap-free order numbering.
+ * A row is upserted atomically per (company_id, order_date); the returned
+ * `last_sequence` becomes the NNNN suffix of an `ORD-YYYYMMDD-NNNN` number.
+ * The atomic upsert serializes concurrent order creation on the row lock,
+ * guaranteeing uniqueness without relying on a COUNT of existing orders.
+ */
+export const orderSequences = pgTable(
+  'order_sequences',
+  {
+    companyId: uuid('company_id').notNull().references(() => companies.id, { onDelete: 'cascade' }),
+    orderDate: date('order_date').notNull(),
+    lastSequence: integer('last_sequence').notNull().default(0),
+    updatedAt: timestamp('updated_at', { withTimezone: true, mode: 'string' }).defaultNow(),
+  },
+  (table) => [
+    primaryKey({ name: 'pk_order_sequences', columns: [table.companyId, table.orderDate] }),
   ],
 )
 

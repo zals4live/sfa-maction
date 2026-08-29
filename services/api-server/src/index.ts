@@ -7,7 +7,7 @@ import { tenantRoutes } from './modules/tenant/routes'
 import { attendanceRoutes } from './modules/attendance/routes'
 import { visitRoutes } from './modules/visit/routes'
 import { orderRoutes } from './modules/order/routes'
-import { materialRoutes } from './modules/material/routes'
+import { materialRoutes, promotionRoutes } from './modules/material/routes'
 import { customerRoutes } from './modules/customer/routes'
 import { doctorRoutes } from './modules/doctor/routes'
 import { liniRoutes, varianRoutes, userLiniRoutes } from './modules/lini/routes'
@@ -34,6 +34,7 @@ const app = new Elysia()
   .use(visitRoutes)
   .use(orderRoutes)
   .use(materialRoutes)
+  .use(promotionRoutes)
   .use(customerRoutes)
   .use(doctorRoutes)
   .use(liniRoutes)

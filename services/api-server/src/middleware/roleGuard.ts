@@ -38,8 +38,15 @@ export function requireRole(...allowedRoles: RoleLabel[]) {
     .as('scoped')
 }
 
-/** Only SALESMAN — used for order-taking endpoints */
+/** Only SALESMAN — used for order write endpoints (create, submit, PDF) */
 export const SALESMAN_ONLY: RoleLabel[] = ['SALESMAN']
+
+/**
+ * SALESMAN + admin roles — used for order read endpoints (list, detail).
+ * MR is intentionally excluded: MR is barred from all order access per the
+ * orders RLS policy. Admins need read access for order approval/review.
+ */
+export const ORDER_READERS: RoleLabel[] = ['SALESMAN', 'ADMIN_CABANG', 'ADMIN_PUSAT', 'SUPER_ADMIN']
 
 /** SALESMAN and MR — for visit, attendance, and field operations */
 export const FIELD_FORCE: RoleLabel[] = ['SALESMAN', 'MR']

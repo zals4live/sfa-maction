@@ -126,24 +126,24 @@ Reference: #[[file:docs/PRD_Maction_v2.md]]
 ## Phase 8: Module 7 — SFA & Order Taking (Salesman Exclusive)
 
 - [x] Implement `src/modules/order/schemas.ts` — create order, submit order schemas
-- [ ] Implement `src/modules/order/service.ts` — order creation with price lookup, UOM conversion, tax calc
-- [ ] Implement `src/modules/order/routes.ts` — `POST/GET /orders`, `POST /orders/:id/submit`, PDF endpoint
-- [ ] Implement role guard on all order write routes — `SALESMAN` only, `MR` gets `403`
-- [ ] Implement `src/modules/material/schemas.ts` — material query schemas with lini filter
-- [ ] Implement `src/modules/material/service.ts` — material list (lini-filtered by RLS), price lookup, stock ATP lookup
-- [ ] Implement `src/modules/material/routes.ts` — `GET /materials`, `GET /materials/:id/price`, `GET /materials/:id/stock`, `GET /promotions`
-- [ ] Implement multi-tier UOM conversion using `master_material.uom_conversion_rules` JSON
-- [ ] Implement regional price lookup from `master_price` by soffice + material + varian + valid date range
-- [ ] Implement promotion/discount application logic from `master_promotions`
-- [ ] Implement automated PPN tax calculation with tenant `default_tax_rate`
-- [ ] Implement order number generation (sequential per tenant)
-- [ ] Implement PDF quotation generation with tenant branding → upload to S3
+- [x] Implement `src/modules/order/service.ts` — order creation with price lookup, UOM conversion, tax calc
+- [x] Implement `src/modules/order/routes.ts` — `POST/GET /orders`, `POST /orders/:id/submit`, PDF endpoint
+- [x] Implement role guard on all order write routes — `SALESMAN` only, `MR` gets `403`
+- [x] Implement `src/modules/material/schemas.ts` — material query schemas with lini filter
+- [x] Implement `src/modules/material/service.ts` — material list (lini-filtered by RLS), price lookup, stock ATP lookup
+- [x] Implement `src/modules/material/routes.ts` — `GET /materials`, `GET /materials/:id/price`, `GET /materials/:id/stock`, `GET /promotions`
+- [x] Implement multi-tier UOM conversion using `master_material.uom_conversion_rules` JSON
+- [x] Implement regional price lookup from `master_price` by soffice + material + varian + valid date range
+- [x] Implement promotion/discount application logic from `master_promotions`
+- [x] Implement automated PPN tax calculation with tenant `default_tax_rate`
+- [x] Implement order number generation (sequential per tenant)
+- [x] Implement PDF quotation generation with tenant branding → upload to S3
 
 ---
 
 ## Phase 9: Module 9 — ERP Integration
 
-- [ ] Implement `src/modules/erp-sync/schemas.ts` — webhook payload schemas for all inbound types
+- [x] Implement `src/modules/erp-sync/schemas.ts` — webhook payload schemas for all inbound types
 - [ ] Implement `src/modules/erp-sync/routes.ts` — webhook endpoints for customers, materials, prices, stock (with batch/SLED), promos, leads
 - [ ] Implement inbound customer/doctor delta sync (upsert matching `erp_customer_code`)
 - [ ] Implement inbound material/SKU sync (upsert matching `erp_material_code`, including `lini_id`)
