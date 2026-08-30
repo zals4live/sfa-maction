@@ -169,15 +169,15 @@ Reference: #[[file:docs/PRD_Maction_v2.md]]
 
 ## Phase 11: Module 12 — Reporting & Dashboard API
 
-- [ ] Implement `src/modules/report/routes.ts` — all `/reports/*` endpoints
-- [ ] Implement dashboard KPI aggregation from `mv_daily_branch_performance` materialized view (Salesman vs MR segmented)
-- [ ] Implement `src/queues/mvRefreshWorker.ts` — periodic materialized view refresh via BullMQ
-- [ ] Implement Redis caching layer for dashboard responses (TTL 5-15 min)
-- [ ] Implement branch performance matrix query (ranking by visits, revenue, strike rate — Salesman vs MR)
-- [ ] Implement call rate report with user/branch/tenant level aggregation and role filter
-- [ ] Implement fraud incident report query from `audit_fraud_telemetry`
-- [ ] Implement order/quotation transaction register with multi-variable filtering
-- [ ] Implement streaming Excel export endpoint (`.xlsx` generation without blocking event loop)
+- [x] Implement `src/modules/report/routes.ts` — all `/reports/*` endpoints
+- [x] Implement dashboard KPI aggregation from `mv_daily_branch_performance` materialized view (Salesman vs MR segmented)
+- [x] Implement `src/queues/mvRefreshWorker.ts` — periodic materialized view refresh via BullMQ
+- [x] Implement Redis caching layer for dashboard responses (TTL 5-15 min)
+- [x] Implement branch performance matrix query (ranking by visits, revenue, strike rate — Salesman vs MR)
+- [x] Implement call rate report with user/branch/tenant level aggregation and role filter
+- [x] Implement fraud incident report query from `audit_fraud_telemetry`
+- [x] Implement order/quotation transaction register with multi-variable filtering
+- [x] Implement streaming Excel export endpoint (`.xlsx` generation without blocking event loop)
 - [ ] Implement streaming PDF executive summary export endpoint
 
 ---

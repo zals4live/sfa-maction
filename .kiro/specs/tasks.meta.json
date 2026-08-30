@@ -1000,6 +1000,114 @@
         "chatSessionId": "sess_e10cce86-e05e-4d5d-96b7-b05af5e905ed",
         "timestamp": 1788005597837
       }
+    ],
+    "Implement `src/modules/report/routes.ts` — all `/reports/*` endpoints": [
+      {
+        "executionId": "b1a4b9f8-9813-4c9e-9079-880e6410a8e8",
+        "chatSessionId": "sess_f576b208-3207-45c9-adeb-353011dc9271",
+        "timestamp": 1788005809562
+      },
+      {
+        "executionId": "b1a4b9f8-9813-4c9e-9079-880e6410a8e8",
+        "chatSessionId": "sess_f576b208-3207-45c9-adeb-353011dc9271",
+        "timestamp": 1788005982888
+      }
+    ],
+    "Implement dashboard KPI aggregation from `mv_daily_branch_performance` materialized view (Salesman vs MR segmented)": [
+      {
+        "executionId": "50ae4206-fdbb-46d7-86c3-4d24e6e98a10",
+        "chatSessionId": "sess_c023b1c1-08af-4ac2-8ee7-4e43d8ff765b",
+        "timestamp": 1788006024952
+      },
+      {
+        "executionId": "50ae4206-fdbb-46d7-86c3-4d24e6e98a10",
+        "chatSessionId": "sess_c023b1c1-08af-4ac2-8ee7-4e43d8ff765b",
+        "timestamp": 1788006284632
+      }
+    ],
+    "Implement `src/queues/mvRefreshWorker.ts` — periodic materialized view refresh via BullMQ": [
+      {
+        "executionId": "448836ad-210d-4ea2-a340-44d1b1db5709",
+        "chatSessionId": "sess_2f78805c-c0e0-4085-8230-bcb2d743bdae",
+        "timestamp": 1788006314853
+      },
+      {
+        "executionId": "448836ad-210d-4ea2-a340-44d1b1db5709",
+        "chatSessionId": "sess_2f78805c-c0e0-4085-8230-bcb2d743bdae",
+        "timestamp": 1788006579338
+      }
+    ],
+    "Implement Redis caching layer for dashboard responses (TTL 5-15 min)": [
+      {
+        "executionId": "f19f04b3-ffb8-47c9-9980-2fa20229cdf9",
+        "chatSessionId": "sess_d3145bc4-2410-43f6-a3e9-1cb2d4dd040e",
+        "timestamp": 1788006615708
+      },
+      {
+        "executionId": "f19f04b3-ffb8-47c9-9980-2fa20229cdf9",
+        "chatSessionId": "sess_d3145bc4-2410-43f6-a3e9-1cb2d4dd040e",
+        "timestamp": 1788006874124
+      }
+    ],
+    "Implement branch performance matrix query (ranking by visits, revenue, strike rate — Salesman vs MR)": [
+      {
+        "executionId": "65417bc2-49f8-4e67-a010-9de75febad18",
+        "chatSessionId": "sess_9bb0852e-229e-4612-a9fb-0a08079d6aba",
+        "timestamp": 1788071152918
+      },
+      {
+        "executionId": "65417bc2-49f8-4e67-a010-9de75febad18",
+        "chatSessionId": "sess_9bb0852e-229e-4612-a9fb-0a08079d6aba",
+        "timestamp": 1788071376286
+      }
+    ],
+    "Implement call rate report with user/branch/tenant level aggregation and role filter": [
+      {
+        "executionId": "87b21ed0-7a30-4261-9c01-42e9e0f066c1",
+        "chatSessionId": "sess_9b458805-66f0-4e4d-8a9c-832eaf39afb8",
+        "timestamp": 1788071417441
+      },
+      {
+        "executionId": "87b21ed0-7a30-4261-9c01-42e9e0f066c1",
+        "chatSessionId": "sess_9b458805-66f0-4e4d-8a9c-832eaf39afb8",
+        "timestamp": 1788072351857
+      }
+    ],
+    "Implement fraud incident report query from `audit_fraud_telemetry`": [
+      {
+        "executionId": "db8665a5-08e5-43bb-addc-9819a3e12154",
+        "chatSessionId": "sess_4e6b05d6-1a72-4c3b-9bdd-99e316667ff9",
+        "timestamp": 1788075587599
+      },
+      {
+        "executionId": "db8665a5-08e5-43bb-addc-9819a3e12154",
+        "chatSessionId": "sess_4e6b05d6-1a72-4c3b-9bdd-99e316667ff9",
+        "timestamp": 1788075763142
+      }
+    ],
+    "Implement order/quotation transaction register with multi-variable filtering": [
+      {
+        "executionId": "c4ed333f-180f-4a77-8f35-51dc70e4a4d6",
+        "chatSessionId": "sess_544352be-2ae0-454d-b598-d7d1f44e63de",
+        "timestamp": 1788075797245
+      },
+      {
+        "executionId": "c4ed333f-180f-4a77-8f35-51dc70e4a4d6",
+        "chatSessionId": "sess_544352be-2ae0-454d-b598-d7d1f44e63de",
+        "timestamp": 1788076096900
+      }
+    ],
+    "Implement streaming Excel export endpoint (`.xlsx` generation without blocking event loop)": [
+      {
+        "executionId": "6652ffa7-e921-443c-b2e9-774712f2fe2c",
+        "chatSessionId": "sess_d2199377-abc7-4f6e-9f6e-af86be656f64",
+        "timestamp": 1788076166198
+      },
+      {
+        "executionId": "6652ffa7-e921-443c-b2e9-774712f2fe2c",
+        "chatSessionId": "sess_d2199377-abc7-4f6e-9f6e-af86be656f64",
+        "timestamp": 1788076546084
+      }
     ]
   }
 }

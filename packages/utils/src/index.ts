@@ -14,9 +14,16 @@ export {
 export {
   buildExportFilename,
   getReportTitle,
+  buildWorksheetTable,
+  worksheetTableToAoa,
+  XLSX_CONTENT_TYPE,
 } from './report-exporters.js';
 
-export type { ExportOptions } from './report-exporters.js';
+export type {
+  ExportOptions,
+  WorksheetCell,
+  WorksheetTable,
+} from './report-exporters.js';
 
 export {
   getUomFactor,

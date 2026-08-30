@@ -37,3 +37,47 @@ export function getReportTitle(reportType: string): string {
   };
   return titles[reportType] ?? reportType;
 }
+
+/**
+ * OpenXML spreadsheet MIME type for `.xlsx` downloads.
+ */
+export const XLSX_CONTENT_TYPE =
+  'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+
+/**
+ * A single worksheet cell value. Framework-agnostic — SheetJS accepts these
+ * primitives directly as cell values.
+ */
+export type WorksheetCell = string | number | boolean | null;
+
+/**
+ * A worksheet table as an array-of-arrays (AOA): the first row is the header,
+ * followed by data rows. This is the shape SheetJS's `aoa_to_sheet` consumes,
+ * but the builder itself carries no SheetJS dependency so it stays reusable.
+ */
+export interface WorksheetTable {
+  header: string[];
+  rows: WorksheetCell[][];
+}
+
+/**
+ * Flatten a list of records into a worksheet table by projecting each record
+ * through an ordered set of columns. Keeps column order stable and guarantees
+ * every data row has the same arity as the header.
+ */
+export function buildWorksheetTable<T>(
+  records: readonly T[],
+  columns: ReadonlyArray<{ header: string; value: (record: T) => WorksheetCell }>
+): WorksheetTable {
+  const header = columns.map((column) => column.header);
+  const rows = records.map((record) => columns.map((column) => column.value(record)));
+  return { header, rows };
+}
+
+/**
+ * Merge a worksheet table's header and data rows into a single AOA suitable for
+ * SheetJS `aoa_to_sheet`.
+ */
+export function worksheetTableToAoa(table: WorksheetTable): WorksheetCell[][] {
+  return [table.header, ...table.rows];
+}
