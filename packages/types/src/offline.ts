@@ -1,4 +1,4 @@
-import type { SyncStatus } from './enums.js';
+import type { SyncStatus, UserRole } from './enums.js';
 
 /** Mutation types captured in the PWA offline outbox */
 export type MutationType =
@@ -16,6 +16,8 @@ export interface LocalOutboxMutation {
   id: string;
   company_id: string;
   user_id: string;
+  /** Role of the user that captured the mutation — enables role-adaptive sync (e.g. ORDER_SUBMIT only for SALESMAN). */
+  user_role: UserRole;
   mutation_type: MutationType;
   endpoint: string;
   http_method: 'POST' | 'PUT' | 'PATCH' | 'DELETE';

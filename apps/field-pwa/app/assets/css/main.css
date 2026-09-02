@@ -4,15 +4,16 @@
 @theme static {
   --font-sans: 'Public Sans', sans-serif;
 
-  --color-green-50: #EFFDF5;
-  --color-green-100: #D9FBE8;
-  --color-green-200: #B3F5D1;
-  --color-green-300: #75EDAE;
-  --color-green-400: #00DC82;
-  --color-green-500: #00C16A;
-  --color-green-600: #00A155;
-  --color-green-700: #007F45;
-  --color-green-800: #016538;
-  --color-green-900: #0A5331;
-  --color-green-950: #052E16;
+  /* KF Maction design system primary palette (500 = #1C4173) */
+  --color-primary-50: #EEF3FA;
+  --color-primary-100: #D3E0F1;
+  --color-primary-200: #A7C0E3;
+  --color-primary-300: #6E97CE;
+  --color-primary-400: #3E6DAF;
+  --color-primary-500: #1C4173;
+  --color-primary-600: #17365F;
+  --color-primary-700: #122A4B;
+  --color-primary-800: #0D1F38;
+  --color-primary-900: #081324;
+  --color-primary-950: #040A12;
 }

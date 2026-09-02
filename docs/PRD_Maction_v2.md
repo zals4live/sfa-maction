@@ -2218,6 +2218,9 @@ flowchart TD
 
 ## 16. Future Roadmap
 
-1. **Native Mobile App Implementation (React Native for Android & iOS)**: Transition from PWA to a cross-platform native mobile application built with React Native to leverage advanced OS-level hardware security, enhanced offline performance, robust background synchronization, and native biometric authentication.
+1. **Hybrid Native Mobile App Implementation (Capacitor.js for Android & iOS)**: Wrap and elevate the existing Nuxt 4 codebase into native mobile applications using Capacitor.js to unlock native device runtime capabilities—including deep OS-level hardware security checks, robust background sync workers, native camera and file system access, and biometric authentication (Face ID / Fingerprint)—while maintaining a single unified web and mobile codebase.
 2. **AI Route & Clinic Schedule Optimizer**: Automated daily visit route sequencing driven by doctor clinic consulting hours and real-time traffic data.
 3. **Predictive Doctor Detailing Matrix**: Machine learning recommendations suggesting optimal product detailing topics and collateral based on historical doctor prescription trends and regional outlet sales performance.
+
+---
+

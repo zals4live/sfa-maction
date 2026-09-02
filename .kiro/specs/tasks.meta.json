@@ -1108,6 +1108,371 @@
         "chatSessionId": "sess_d2199377-abc7-4f6e-9f6e-af86be656f64",
         "timestamp": 1788076546084
       }
+    ],
+    "Initialize Nuxt 4 project with `@vite-pwa/nuxt`, Nuxt UI, Tailwind CSS, Pinia": [
+      {
+        "executionId": "db870923-0501-40a4-bc70-192c36fc7abb",
+        "chatSessionId": "sess_139f68e7-a521-4932-b7a2-045ad7fac85a",
+        "timestamp": 1788143255148
+      },
+      {
+        "executionId": "db870923-0501-40a4-bc70-192c36fc7abb",
+        "chatSessionId": "sess_139f68e7-a521-4932-b7a2-045ad7fac85a",
+        "timestamp": 1788143725053
+      }
+    ],
+    "Configure `nuxt.config.ts` with Forced Light Mode (`colorMode: { preference: 'light', fallback: 'light' }`), PWA manifest, Workbox precaching, Leaflet CSS": [
+      {
+        "executionId": "0d7bcc72-058f-4520-82fc-1d7358078211",
+        "chatSessionId": "sess_c9cc2fec-3df4-4519-b9fb-fe776f8e8b04",
+        "timestamp": 1788227643481
+      },
+      {
+        "executionId": "0d7bcc72-058f-4520-82fc-1d7358078211",
+        "chatSessionId": "sess_c9cc2fec-3df4-4519-b9fb-fe776f8e8b04",
+        "timestamp": 1788227760731
+      }
+    ],
+    "Implement `database/index.ts` — Dexie.js schema with all offline tables (customers, doctor_profiles, doctor_outlet_assignments, user_lini_assignments, materials, visit_plans, outbox_mutations) and compound indexes": [
+      {
+        "executionId": "f0b28333-6d38-4905-885e-180b000250c1",
+        "chatSessionId": "sess_91d3dbbf-9e79-45d5-8a8f-07aa9684cb5d",
+        "timestamp": 1788227812484
+      },
+      {
+        "executionId": "f0b28333-6d38-4905-885e-180b000250c1",
+        "chatSessionId": "sess_91d3dbbf-9e79-45d5-8a8f-07aa9684cb5d",
+        "timestamp": 1788228094390
+      }
+    ],
+    "Implement `composables/useOfflineDb.ts` — CRUD wrappers for Dexie.js tables": [
+      {
+        "executionId": "b246810a-dc8c-4f5a-afc9-95d6ae4705d7",
+        "chatSessionId": "sess_ecf9a4c8-2815-4551-9d8e-f526a096a778",
+        "timestamp": 1788228210761
+      },
+      {
+        "executionId": "b246810a-dc8c-4f5a-afc9-95d6ae4705d7",
+        "chatSessionId": "sess_ecf9a4c8-2815-4551-9d8e-f526a096a778",
+        "timestamp": 1788228573530
+      }
+    ],
+    "Implement `composables/useBackgroundSync.ts` — outbox queue management and Service Worker sync (with `user_role` in mutations)": [
+      {
+        "executionId": "d2e16811-3d02-4892-a74e-830ef67f7420",
+        "chatSessionId": "sess_92a97b75-629d-47ce-a889-c45117b2ca1b",
+        "timestamp": 1788228641378
+      },
+      {
+        "executionId": "d2e16811-3d02-4892-a74e-830ef67f7420",
+        "chatSessionId": "sess_92a97b75-629d-47ce-a889-c45117b2ca1b",
+        "timestamp": 1788229135754
+      }
+    ],
+    "Implement `composables/useGeofence.ts` — distance calculation, radar state, proximity validation": [
+      {
+        "executionId": "3613d459-a5ae-456d-9566-30472a77718a",
+        "chatSessionId": "sess_bdfd70ff-37ee-4ded-86a1-f503665a4a6a",
+        "timestamp": 1788229243756
+      },
+      {
+        "executionId": "3613d459-a5ae-456d-9566-30472a77718a",
+        "chatSessionId": "sess_bdfd70ff-37ee-4ded-86a1-f503665a4a6a",
+        "timestamp": 1788229519755
+      }
+    ],
+    "Implement `composables/useAntiSpoof.ts` — mock location detection, monotonic clock anchoring": [
+      {
+        "executionId": "64f2a241-df03-49a8-98fc-f34052853dc1",
+        "chatSessionId": "sess_2026df39-860e-424e-8947-5a40d1208ebc",
+        "timestamp": 1788229590093
+      },
+      {
+        "executionId": "64f2a241-df03-49a8-98fc-f34052853dc1",
+        "chatSessionId": "sess_2026df39-860e-424e-8947-5a40d1208ebc",
+        "timestamp": 1788229851098
+      }
+    ],
+    "Implement `composables/useApiClient.ts` — centralized fetch with offline fallback": [
+      {
+        "executionId": "c6668683-4250-4e1d-92b9-92c9e32146ed",
+        "chatSessionId": "sess_92536602-fd1c-4375-9f1e-4dce5cc48de2",
+        "timestamp": 1788229918115
+      },
+      {
+        "executionId": "c6668683-4250-4e1d-92b9-92c9e32146ed",
+        "chatSessionId": "sess_92536602-fd1c-4375-9f1e-4dce5cc48de2",
+        "timestamp": 1788230392504
+      }
+    ],
+    "Implement `composables/useRoleGuard.ts` — role-adaptive UI logic (conditionally render Salesman vs MR in-visit steps, hide order tab for MR)": [
+      {
+        "executionId": "0d418881-dd8c-4ab2-bb6f-b8514be9d203",
+        "chatSessionId": "sess_77da7127-fbe5-49f2-b8df-039bfc72a56b",
+        "timestamp": 1788230501756
+      },
+      {
+        "executionId": "0d418881-dd8c-4ab2-bb6f-b8514be9d203",
+        "chatSessionId": "sess_77da7127-fbe5-49f2-b8df-039bfc72a56b",
+        "timestamp": 1788230740446
+      }
+    ],
+    "Implement `stores/useAuthStore.ts` — JWT management (including `lini_ids`), login/logout, user profile": [
+      {
+        "executionId": "8ed5058b-1bc1-4718-8830-b2cbdaf8f364",
+        "chatSessionId": "sess_e11bd00a-eb4e-46c3-b6d4-b872e1c27517",
+        "timestamp": 1788230869449
+      },
+      {
+        "executionId": "8ed5058b-1bc1-4718-8830-b2cbdaf8f364",
+        "chatSessionId": "sess_e11bd00a-eb4e-46c3-b6d4-b872e1c27517",
+        "timestamp": 1788231541971
+      }
+    ],
+    "Implement `stores/useAttendanceStore.ts` — today's attendance state, lock/unlock logic": [
+      {
+        "executionId": "a15cfed3-113e-4a28-8b48-176b236b2b32",
+        "chatSessionId": "sess_9e83e917-0301-4eda-a8ed-298102cff12a",
+        "timestamp": 1788231635636
+      },
+      {
+        "executionId": "a15cfed3-113e-4a28-8b48-176b236b2b32",
+        "chatSessionId": "sess_9e83e917-0301-4eda-a8ed-298102cff12a",
+        "timestamp": 1788232229691
+      }
+    ],
+    "Implement `stores/useCartStore.ts` — order cart state with offline persistence (Salesman only, guarded by role)": [
+      {
+        "executionId": "a8650c2e-1791-425a-bb68-10b1485a5744",
+        "chatSessionId": "sess_fa0a8b4a-8b76-4151-a514-b809f722ae51",
+        "timestamp": 1788232513345
+      },
+      {
+        "executionId": "a8650c2e-1791-425a-bb68-10b1485a5744",
+        "chatSessionId": "sess_fa0a8b4a-8b76-4151-a514-b809f722ae51",
+        "timestamp": 1788233001353
+      }
+    ],
+    "Implement auth layout and login page (`/auth/login`)": [
+      {
+        "executionId": "4131c265-309b-433e-9147-f6c7e410f995",
+        "chatSessionId": "sess_a40fa814-987f-4d7a-9063-ba3e72495f45",
+        "timestamp": 1788233731246
+      },
+      {
+        "executionId": "4131c265-309b-433e-9147-f6c7e410f995",
+        "chatSessionId": "sess_a40fa814-987f-4d7a-9063-ba3e72495f45",
+        "timestamp": 1788233939658
+      }
+    ],
+    "Implement main app layout with bottom navigation (conditionally hide \"Order\" tab for MR) and connectivity status bar": [
+      {
+        "executionId": "064f4ec9-e115-49f7-911b-857ce3b75c95",
+        "chatSessionId": "sess_c727d4fe-b4f1-40fa-bef9-63d4939c3075",
+        "timestamp": 1788234197358
+      },
+      {
+        "executionId": "064f4ec9-e115-49f7-911b-857ce3b75c95",
+        "chatSessionId": "sess_c727d4fe-b4f1-40fa-bef9-63d4939c3075",
+        "timestamp": 1788234597595
+      }
+    ],
+    "Implement check-in page (`/app/checkin`) — category selection, selfie camera, geofence display (Salesman & MR)": [
+      {
+        "executionId": "9c769c05-88c5-43c5-8998-da0f6c74240c",
+        "chatSessionId": "sess_0ca30577-2bf8-4ad3-8cbf-8e3f7e5061fe",
+        "timestamp": 1788234719092
+      },
+      {
+        "executionId": "9c769c05-88c5-43c5-8998-da0f6c74240c",
+        "chatSessionId": "sess_0ca30577-2bf8-4ad3-8cbf-8e3f7e5061fe",
+        "timestamp": 1788235193678
+      }
+    ],
+    "Implement visit list page (`/app/visits`) — today's MVP with status indicators (Salesman & MR)": [
+      {
+        "executionId": "a04c9fb1-69e0-43bf-9bd6-95ee2fe391d8",
+        "chatSessionId": "sess_cb6e34d0-bf78-4109-b9d0-4516e72ec19e",
+        "timestamp": 1788235234408
+      },
+      {
+        "executionId": "a04c9fb1-69e0-43bf-9bd6-95ee2fe391d8",
+        "chatSessionId": "sess_cb6e34d0-bf78-4109-b9d0-4516e72ec19e",
+        "timestamp": 1788235915924
+      }
+    ],
+    "Implement visit-in page with Leaflet geofence radar (`components/map/GeofenceRadar.vue`)": [
+      {
+        "executionId": "d786318d-cd7e-4be1-ae14-d4d6daafa35c",
+        "chatSessionId": "sess_f999c449-0af6-4c07-88e0-de3fdc8a26b2",
+        "timestamp": 1788243845390
+      },
+      {
+        "executionId": "d786318d-cd7e-4be1-ae14-d4d6daafa35c",
+        "chatSessionId": "sess_f999c449-0af6-4c07-88e0-de3fdc8a26b2",
+        "timestamp": 1788245871362
+      }
+    ],
+    "Implement in-visit execution hub (`/app/visits/[id]/in-visit`) — role-adaptive tabbed steps:": [
+      {
+        "executionId": "d73c2917-6cae-4228-b72b-21e09440322f",
+        "chatSessionId": "sess_f8e434ec-cb7f-408d-a454-9fe0a50ac1ac",
+        "timestamp": 1788246491923
+      },
+      {
+        "executionId": "d73c2917-6cae-4228-b72b-21e09440322f",
+        "chatSessionId": "sess_f8e434ec-cb7f-408d-a454-9fe0a50ac1ac",
+        "timestamp": 1788248038037
+      }
+    ],
+    "Implement detailing/agenda form (`components/in-visit/AgendaForm.vue`) — shared by Salesman & MR": [
+      {
+        "executionId": "58623bdb-9f6b-49ea-9aed-a5168f4c495b",
+        "chatSessionId": "sess_02913eed-bee0-4194-80d4-5166fbdab6be",
+        "timestamp": 1788248675007
+      },
+      {
+        "executionId": "58623bdb-9f6b-49ea-9aed-a5168f4c495b",
+        "chatSessionId": "sess_02913eed-bee0-4194-80d4-5166fbdab6be",
+        "timestamp": 1788249161176
+      }
+    ],
+    "Implement competitor audit form (`components/in-visit/CompetitorForm.vue`) — shared by Salesman & MR": [
+      {
+        "executionId": "f4f9c07e-8313-4b15-995f-47fd18f7fc8b",
+        "chatSessionId": "sess_964b7f32-acd2-4963-954b-ac5c07396a5e",
+        "timestamp": 1788249662653
+      },
+      {
+        "executionId": "f4f9c07e-8313-4b15-995f-47fd18f7fc8b",
+        "chatSessionId": "sess_964b7f32-acd2-4963-954b-ac5c07396a5e",
+        "timestamp": 1788249900167
+      }
+    ],
+    "Implement stock audit form (`components/in-visit/StockAuditForm.vue`) — shared by Salesman & MR": [
+      {
+        "executionId": "da050c00-f5de-49e7-97b0-7223f4cb678a",
+        "chatSessionId": "sess_12cbb9d9-15c1-4292-acb3-84e17e1830d8",
+        "timestamp": 1788249974480
+      },
+      {
+        "executionId": "da050c00-f5de-49e7-97b0-7223f4cb678a",
+        "chatSessionId": "sess_12cbb9d9-15c1-4292-acb3-84e17e1830d8",
+        "timestamp": 1788250282982
+      }
+    ],
+    "Implement order cart / taking order form (`components/in-visit/OrderCart.vue`) — Salesman only, hidden for MR": [
+      {
+        "executionId": "2997c4b8-322d-45b3-b2ff-401e4ec46aac",
+        "chatSessionId": "sess_76d88f7d-598f-45a4-ac79-76085f5e682a",
+        "timestamp": 1788251030611
+      },
+      {
+        "executionId": "2997c4b8-322d-45b3-b2ff-401e4ec46aac",
+        "chatSessionId": "sess_76d88f7d-598f-45a4-ac79-76085f5e682a",
+        "timestamp": 1788251388129
+      }
+    ],
+    "Implement price & stock lookup (read-only) component (`components/in-visit/PriceStockLookup.vue`) — MR only": [
+      {
+        "executionId": "b325be1b-4d6f-4a13-a454-897205237b75",
+        "chatSessionId": "sess_f9f73b4d-9045-4463-a4f2-9fc78223fbb0",
+        "timestamp": 1788252309031
+      },
+      {
+        "executionId": "b325be1b-4d6f-4a13-a454-897205237b75",
+        "chatSessionId": "sess_f9f73b4d-9045-4463-a4f2-9fc78223fbb0",
+        "timestamp": 1788252724829
+      }
+    ],
+    "Implement digital signature canvas (`components/signature/SignaturePad.vue`)": [
+      {
+        "executionId": "8337475c-7934-4629-b659-6ea027015a53",
+        "chatSessionId": "sess_057aef37-ac33-4765-a13d-2e638b705b58",
+        "timestamp": 1788252800679
+      },
+      {
+        "executionId": "8337475c-7934-4629-b659-6ea027015a53",
+        "chatSessionId": "sess_057aef37-ac33-4765-a13d-2e638b705b58",
+        "timestamp": 1788253377010
+      }
+    ],
+    "Implement visit-out flow — signature capture + GPS + monotonic timestamp": [
+      {
+        "executionId": "94f89da9-0299-4925-a545-62f197156523",
+        "chatSessionId": "sess_97e765dd-be96-4076-846a-7b5353f1af5b",
+        "timestamp": 1788253795937
+      },
+      {
+        "executionId": "94f89da9-0299-4925-a545-62f197156523",
+        "chatSessionId": "sess_97e765dd-be96-4076-846a-7b5353f1af5b",
+        "timestamp": 1788254135757
+      }
+    ],
+    "Implement by-phone order entry page (`/app/orders`) — Salesman only, page guarded by `useRoleGuard`": [
+      {
+        "executionId": "8f827724-d639-46c6-a604-304cae30d0ce",
+        "chatSessionId": "sess_1035b705-5df0-402a-a676-d05f33387021",
+        "timestamp": 1788255393558
+      },
+      {
+        "executionId": "8f827724-d639-46c6-a604-304cae30d0ce",
+        "chatSessionId": "sess_1035b705-5df0-402a-a676-d05f33387021",
+        "timestamp": 1788255863366
+      }
+    ],
+    "Implement profile/settings page (`/app/profile`)": [
+      {
+        "executionId": "465936e6-a86e-4b21-80a7-126a1e2de82c",
+        "chatSessionId": "sess_dc3c2d8c-a12b-45c9-876f-c4a3f1cf52ee",
+        "timestamp": 1788256306133
+      },
+      {
+        "executionId": "465936e6-a86e-4b21-80a7-126a1e2de82c",
+        "chatSessionId": "sess_dc3c2d8c-a12b-45c9-876f-c4a3f1cf52ee",
+        "timestamp": 1788256505202
+      }
+    ],
+    "Implement master data sync on app launch (customers, doctors, assignments, user-lini assignments, materials filtered by lini, visit plans)": [
+      {
+        "executionId": "ae059d62-f3f8-4ba7-b00b-e974abedf30f",
+        "chatSessionId": "sess_30f19bb5-82a8-4c0b-876a-d1b247b99fe4",
+        "timestamp": 1788257344754
+      },
+      {
+        "executionId": "ae059d62-f3f8-4ba7-b00b-e974abedf30f",
+        "chatSessionId": "sess_30f19bb5-82a8-4c0b-876a-d1b247b99fe4",
+        "timestamp": 1788258463966
+      }
+    ],
+    "Implement visual sync status indicator component (Online/Offline/Syncing/Error states)": [
+      {
+        "executionId": "4004d9d7-2ac5-4d20-baea-d26707017bd0",
+        "chatSessionId": "sess_ba6e755a-f303-452c-9149-314a4a88d0d8",
+        "timestamp": 1788315902266
+      },
+      {
+        "executionId": "4004d9d7-2ac5-4d20-baea-d26707017bd0",
+        "chatSessionId": "sess_ba6e755a-f303-452c-9149-314a4a88d0d8",
+        "timestamp": 1788316250090
+      }
+    ],
+    "Implement daily route polyline map view (`components/map/RoutePolyline.vue`)": [
+      {
+        "executionId": "a37f589a-3c36-45d4-969f-7dadb1502b0d",
+        "chatSessionId": "sess_ce1556d8-e4d2-4b1e-a58b-c34167a59032",
+        "timestamp": 1788316308815
+      },
+      {
+        "executionId": "ffeaf01e-b3d9-414e-b7fb-b67a7eeb95de",
+        "chatSessionId": "sess_73b73fe9-77e8-4a41-91d5-eb2acf95934d",
+        "timestamp": 1788317914168
+      },
+      {
+        "executionId": "ffeaf01e-b3d9-414e-b7fb-b67a7eeb95de",
+        "chatSessionId": "sess_73b73fe9-77e8-4a41-91d5-eb2acf95934d",
+        "timestamp": 1788318389574
+      }
     ]
   }
 }

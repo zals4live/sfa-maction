@@ -184,38 +184,38 @@ Reference: #[[file:docs/PRD_Maction_v2.md]]
 
 ## Phase 12: Frontend — Nuxt 4 Field PWA (apps/field-pwa)
 
-- [ ] Initialize Nuxt 4 project with `@vite-pwa/nuxt`, Nuxt UI, Tailwind CSS, Pinia
-- [ ] Configure `nuxt.config.ts` with Forced Light Mode (`colorMode: { preference: 'light', fallback: 'light' }`), PWA manifest, Workbox precaching, Leaflet CSS
-- [ ] Implement `database/index.ts` — Dexie.js schema with all offline tables (customers, doctor_profiles, doctor_outlet_assignments, user_lini_assignments, materials, visit_plans, outbox_mutations) and compound indexes
-- [ ] Implement `composables/useOfflineDb.ts` — CRUD wrappers for Dexie.js tables
-- [ ] Implement `composables/useBackgroundSync.ts` — outbox queue management and Service Worker sync (with `user_role` in mutations)
-- [ ] Implement `composables/useGeofence.ts` — distance calculation, radar state, proximity validation
-- [ ] Implement `composables/useAntiSpoof.ts` — mock location detection, monotonic clock anchoring
-- [ ] Implement `composables/useApiClient.ts` — centralized fetch with offline fallback
-- [ ] Implement `composables/useRoleGuard.ts` — role-adaptive UI logic (conditionally render Salesman vs MR in-visit steps, hide order tab for MR)
-- [ ] Implement `stores/useAuthStore.ts` — JWT management (including `lini_ids`), login/logout, user profile
-- [ ] Implement `stores/useAttendanceStore.ts` — today's attendance state, lock/unlock logic
-- [ ] Implement `stores/useCartStore.ts` — order cart state with offline persistence (Salesman only, guarded by role)
-- [ ] Implement auth layout and login page (`/auth/login`)
-- [ ] Implement main app layout with bottom navigation (conditionally hide "Order" tab for MR) and connectivity status bar
-- [ ] Implement check-in page (`/app/checkin`) — category selection, selfie camera, geofence display (Salesman & MR)
-- [ ] Implement visit list page (`/app/visits`) — today's MVP with status indicators (Salesman & MR)
-- [ ] Implement visit-in page with Leaflet geofence radar (`components/map/GeofenceRadar.vue`)
-- [ ] Implement in-visit execution hub (`/app/visits/[id]/in-visit`) — role-adaptive tabbed steps:
+- [x] Initialize Nuxt 4 project with `@vite-pwa/nuxt`, Nuxt UI, Tailwind CSS, Pinia
+- [x] Configure `nuxt.config.ts` with Forced Light Mode (`colorMode: { preference: 'light', fallback: 'light' }`), PWA manifest, Workbox precaching, Leaflet CSS
+- [x] Implement `database/index.ts` — Dexie.js schema with all offline tables (customers, doctor_profiles, doctor_outlet_assignments, user_lini_assignments, materials, visit_plans, outbox_mutations) and compound indexes
+- [x] Implement `composables/useOfflineDb.ts` — CRUD wrappers for Dexie.js tables
+- [x] Implement `composables/useBackgroundSync.ts` — outbox queue management and Service Worker sync (with `user_role` in mutations)
+- [x] Implement `composables/useGeofence.ts` — distance calculation, radar state, proximity validation
+- [x] Implement `composables/useAntiSpoof.ts` — mock location detection, monotonic clock anchoring
+- [x] Implement `composables/useApiClient.ts` — centralized fetch with offline fallback
+- [x] Implement `composables/useRoleGuard.ts` — role-adaptive UI logic (conditionally render Salesman vs MR in-visit steps, hide order tab for MR)
+- [x] Implement `stores/useAuthStore.ts` — JWT management (including `lini_ids`), login/logout, user profile
+- [x] Implement `stores/useAttendanceStore.ts` — today's attendance state, lock/unlock logic
+- [x] Implement `stores/useCartStore.ts` — order cart state with offline persistence (Salesman only, guarded by role)
+- [x] Implement auth layout and login page (`/auth/login`)
+- [x] Implement main app layout with bottom navigation (conditionally hide "Order" tab for MR) and connectivity status bar
+- [x] Implement check-in page (`/app/checkin`) — category selection, selfie camera, geofence display (Salesman & MR)
+- [x] Implement visit list page (`/app/visits`) — today's MVP with status indicators (Salesman & MR)
+- [x] Implement visit-in page with Leaflet geofence radar (`components/map/GeofenceRadar.vue`)
+- [x] Implement in-visit execution hub (`/app/visits/[id]/in-visit`) — role-adaptive tabbed steps:
   - Salesman: [Detailing] → [Competitor] → [Stock] → [Taking Order]
   - MR: [Detailing] → [Product Info & Stock (read-only)] → [Competitor]
-- [ ] Implement detailing/agenda form (`components/in-visit/AgendaForm.vue`) — shared by Salesman & MR
-- [ ] Implement competitor audit form (`components/in-visit/CompetitorForm.vue`) — shared by Salesman & MR
-- [ ] Implement stock audit form (`components/in-visit/StockAuditForm.vue`) — shared by Salesman & MR
-- [ ] Implement order cart / taking order form (`components/in-visit/OrderCart.vue`) — Salesman only, hidden for MR
-- [ ] Implement price & stock lookup (read-only) component (`components/in-visit/PriceStockLookup.vue`) — MR only
-- [ ] Implement digital signature canvas (`components/signature/SignaturePad.vue`)
-- [ ] Implement visit-out flow — signature capture + GPS + monotonic timestamp
-- [ ] Implement by-phone order entry page (`/app/orders`) — Salesman only, page guarded by `useRoleGuard`
-- [ ] Implement profile/settings page (`/app/profile`)
-- [ ] Implement master data sync on app launch (customers, doctors, assignments, user-lini assignments, materials filtered by lini, visit plans)
-- [ ] Implement visual sync status indicator component (Online/Offline/Syncing/Error states)
-- [ ] Implement daily route polyline map view (`components/map/RoutePolyline.vue`)
+- [x] Implement detailing/agenda form (`components/in-visit/AgendaForm.vue`) — shared by Salesman & MR
+- [x] Implement competitor audit form (`components/in-visit/CompetitorForm.vue`) — shared by Salesman & MR
+- [x] Implement stock audit form (`components/in-visit/StockAuditForm.vue`) — shared by Salesman & MR
+- [x] Implement order cart / taking order form (`components/in-visit/OrderCart.vue`) — Salesman only, hidden for MR
+- [x] Implement price & stock lookup (read-only) component (`components/in-visit/PriceStockLookup.vue`) — MR only
+- [x] Implement digital signature canvas (`components/signature/SignaturePad.vue`)
+- [x] Implement visit-out flow — signature capture + GPS + monotonic timestamp
+- [x] Implement by-phone order entry page (`/app/orders`) — Salesman only, page guarded by `useRoleGuard`
+- [x] Implement profile/settings page (`/app/profile`)
+- [x] Implement master data sync on app launch (customers, doctors, assignments, user-lini assignments, materials filtered by lini, visit plans)
+- [x] Implement visual sync status indicator component (Online/Offline/Syncing/Error states)
+- [x] Implement daily route polyline map view (`components/map/RoutePolyline.vue`)
 
 ---
 

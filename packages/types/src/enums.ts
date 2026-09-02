@@ -12,6 +12,7 @@ export enum UserRole {
   ADMIN_PUSAT = 'ADMIN_PUSAT',
   ADMIN_CABANG = 'ADMIN_CABANG',
   SALESMAN = 'SALESMAN',
+  MR = 'MR',
 }
 
 /** Matches PostgreSQL: business_line_enum */
