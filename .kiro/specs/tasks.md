@@ -221,30 +221,30 @@ Reference: #[[file:docs/PRD_Maction_v2.md]]
 
 ## Phase 13: Frontend — Nuxt 4 Web Portal (apps/web-portal)
 
-- [ ] Initialize Nuxt 4 project with Nuxt UI, Tailwind CSS, Pinia, Leaflet
-- [ ] Configure `nuxt.config.ts` with Forced Light Mode, SSR settings, API proxy, auth middleware
-- [ ] Implement admin dashboard layout with collapsible sidebar navigation
-- [ ] Implement auth layout and login page
-- [ ] Implement `composables/useApiClient.ts` — server-side fetch with tenant context
-- [ ] Implement `composables/useTenant.ts` — tenant selection and context management
-- [ ] Implement `composables/useReporting.ts` — report data fetching and caching
-- [ ] Implement executive KPI dashboard page (`/admin/dashboard`) — metric cards + charts (Salesman vs MR segmented)
-- [ ] Implement live tracking page (`/admin/tracking`) — Leaflet map with real-time Salesman & MR positions
-- [ ] Implement customer management pages (`/admin/customers`) — CRUD table with search/filter (Outlet & Doctor types)
-- [ ] Implement customer 360 view with doctor affiliations, PIC contacts, map pinpoint
-- [ ] Implement doctor management with assignment matrix
-- [ ] Implement lini & varian management pages — CRUD with user assignment interface
-- [ ] Implement call plan management page (`/admin/call-plans`) — upload for Salesman & MR, approval, analytics
-- [ ] Implement order approval/review pages (`/admin/orders`) — Salesman orders only
-- [ ] Implement reporting center (`/admin/reports`) — tabbed reports with date/branch/role filters
-- [ ] Implement Excel/PDF export buttons using streaming download
-- [ ] Implement fraud & audit telemetry viewer (`/admin/audit`)
-- [ ] Implement tenant administration pages (Super Admin only: `/admin/super/tenants`)
-- [ ] Implement ERP configuration page (Super Admin: `/admin/super/erp-config`)
-- [ ] Implement GPS recalibration map tool (`components/map/PinPicker.vue`)
-- [ ] Implement territory clustering map (`components/map/TerritoryCluster.vue`)
-- [ ] Implement branch performance league table component (Salesman & MR ranking)
-- [ ] Implement attendance & fraud incident report page
+- [x] Initialize Nuxt 4 project with Nuxt UI, Tailwind CSS, Pinia, Leaflet
+- [x] Configure `nuxt.config.ts` with Forced Light Mode, SSR settings, API proxy, auth middleware
+- [x] Implement admin dashboard layout with collapsible sidebar navigation
+- [x] Implement auth layout and login page
+- [x] Implement `composables/useApiClient.ts` — server-side fetch with tenant context
+- [x] Implement `composables/useTenant.ts` — tenant selection and context management
+- [x] Implement `composables/useReporting.ts` — report data fetching and caching
+- [x] Implement executive KPI dashboard page (`/admin/dashboard`) — metric cards + charts (Salesman vs MR segmented)
+- [x] Implement live tracking page (`/admin/tracking`) — Leaflet map with real-time Salesman & MR positions
+- [x] Implement customer management pages (`/admin/customers`) — CRUD table with search/filter (Outlet & Doctor types)
+- [x] Implement customer 360 view with doctor affiliations, PIC contacts, map pinpoint
+- [x] Implement doctor management with assignment matrix
+- [x] Implement lini & varian management pages — CRUD with user assignment interface
+- [x] Implement call plan management page (`/admin/call-plans`) — upload for Salesman & MR, approval, analytics
+- [x] Implement order approval/review pages (`/admin/orders`) — Salesman orders only
+- [x] Implement reporting center (`/admin/reports`) — tabbed reports with date/branch/role filters
+- [x] Implement Excel/PDF export buttons using streaming download
+- [x] Implement fraud & audit telemetry viewer (`/admin/audit`)
+- [x] Implement tenant administration pages (Super Admin only: `/admin/super/tenants`)
+- [x] Implement ERP configuration page (Super Admin: `/admin/super/erp-config`)
+- [x] Implement GPS recalibration map tool (`components/map/PinPicker.vue`)
+- [x] Implement territory clustering map (`components/map/TerritoryCluster.vue`)
+- [x] Implement branch performance league table component (Salesman & MR ranking)
+- [x] Implement attendance & fraud incident report page
 
 ---
 

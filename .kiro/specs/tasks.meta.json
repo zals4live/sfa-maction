@@ -1473,6 +1473,299 @@
         "chatSessionId": "sess_73b73fe9-77e8-4a41-91d5-eb2acf95934d",
         "timestamp": 1788318389574
       }
+    ],
+    "Initialize Nuxt 4 project with Nuxt UI, Tailwind CSS, Pinia, Leaflet": [
+      {
+        "executionId": "94e12304-7205-4fd1-8de2-6c019c23dcfc",
+        "chatSessionId": "sess_bbaed777-4ebd-4be2-b866-00da7594e84a",
+        "timestamp": 1788318996735
+      },
+      {
+        "executionId": "94e12304-7205-4fd1-8de2-6c019c23dcfc",
+        "chatSessionId": "sess_bbaed777-4ebd-4be2-b866-00da7594e84a",
+        "timestamp": 1788319211629
+      }
+    ],
+    "Configure `nuxt.config.ts` with Forced Light Mode, SSR settings, API proxy, auth middleware": [
+      {
+        "executionId": "81fe5b20-7f1a-4218-8bb5-071551ec2e71",
+        "chatSessionId": "sess_fb0ebeee-dd6b-441d-b566-c72ae233353a",
+        "timestamp": 1788322438030
+      },
+      {
+        "executionId": "81fe5b20-7f1a-4218-8bb5-071551ec2e71",
+        "chatSessionId": "sess_fb0ebeee-dd6b-441d-b566-c72ae233353a",
+        "timestamp": 1788322638152
+      }
+    ],
+    "Implement admin dashboard layout with collapsible sidebar navigation": [
+      {
+        "executionId": "4cc47501-6dcf-46c6-b39c-6a2b68508672",
+        "chatSessionId": "sess_8badecaf-2f23-443d-ad5c-536c52c57eda",
+        "timestamp": 1788323046503
+      },
+      {
+        "executionId": "4cc47501-6dcf-46c6-b39c-6a2b68508672",
+        "chatSessionId": "sess_8badecaf-2f23-443d-ad5c-536c52c57eda",
+        "timestamp": 1788323393353
+      }
+    ],
+    "Implement auth layout and login page": [
+      {
+        "executionId": "0ad01cd5-637e-427b-9334-50ebcfac8899",
+        "chatSessionId": "sess_f61ab2b9-1ff5-4c0d-89c1-763f60bad569",
+        "timestamp": 1788323473348
+      },
+      {
+        "executionId": "0ad01cd5-637e-427b-9334-50ebcfac8899",
+        "chatSessionId": "sess_f61ab2b9-1ff5-4c0d-89c1-763f60bad569",
+        "timestamp": 1788323647278
+      }
+    ],
+    "Implement `composables/useApiClient.ts` — server-side fetch with tenant context": [
+      {
+        "executionId": "fb8086e7-bb5b-401b-a53f-ab29f67feff0",
+        "chatSessionId": "sess_fa64425e-7fc3-4690-9103-352dec7460b8",
+        "timestamp": 1788324453743
+      },
+      {
+        "executionId": "fb8086e7-bb5b-401b-a53f-ab29f67feff0",
+        "chatSessionId": "sess_fa64425e-7fc3-4690-9103-352dec7460b8",
+        "timestamp": 1788324647107
+      }
+    ],
+    "Implement `composables/useTenant.ts` — tenant selection and context management": [
+      {
+        "executionId": "585fc3fb-239b-4a81-a02e-82ebdb70d2c2",
+        "chatSessionId": "sess_ed072b9a-baf5-46d6-b750-38c1fc519007",
+        "timestamp": 1788325377084
+      },
+      {
+        "executionId": "585fc3fb-239b-4a81-a02e-82ebdb70d2c2",
+        "chatSessionId": "sess_ed072b9a-baf5-46d6-b750-38c1fc519007",
+        "timestamp": 1788325638830
+      }
+    ],
+    "Implement `composables/useReporting.ts` — report data fetching and caching": [
+      {
+        "executionId": "9d788a6f-7e1b-4e4f-9c5c-d0a83bab9419",
+        "chatSessionId": "sess_2252f0fc-9e87-411a-99b8-05ff984c5908",
+        "timestamp": 1788329909512
+      },
+      {
+        "executionId": "9d788a6f-7e1b-4e4f-9c5c-d0a83bab9419",
+        "chatSessionId": "sess_2252f0fc-9e87-411a-99b8-05ff984c5908",
+        "timestamp": 1788330283771
+      }
+    ],
+    "Implement executive KPI dashboard page (`/admin/dashboard`) — metric cards + charts (Salesman vs MR segmented)": [
+      {
+        "executionId": "34a06f68-a25a-43bc-8cdf-6bcf3671ac32",
+        "chatSessionId": "sess_84e5cb80-e6f0-44c0-bd5e-af64814bc9a5",
+        "timestamp": 1788330326412
+      },
+      {
+        "executionId": "34a06f68-a25a-43bc-8cdf-6bcf3671ac32",
+        "chatSessionId": "sess_84e5cb80-e6f0-44c0-bd5e-af64814bc9a5",
+        "timestamp": 1788330579484
+      }
+    ],
+    "Implement live tracking page (`/admin/tracking`) — Leaflet map with real-time Salesman & MR positions": [
+      {
+        "executionId": "98caafd3-0dce-441f-90ba-48fd6fe9b5f7",
+        "chatSessionId": "sess_3a04418c-4b95-4706-9461-61db1d2a676e",
+        "timestamp": 1788330699298
+      },
+      {
+        "executionId": "98caafd3-0dce-441f-90ba-48fd6fe9b5f7",
+        "chatSessionId": "sess_3a04418c-4b95-4706-9461-61db1d2a676e",
+        "timestamp": 1788331710403
+      }
+    ],
+    "Implement customer management pages (`/admin/customers`) — CRUD table with search/filter (Outlet & Doctor types)": [
+      {
+        "executionId": "6347dcfa-d38c-4a9b-9d45-56d4cd45b66a",
+        "chatSessionId": "sess_7df090da-7c91-4a7a-ac09-8bc5dcf2a5c6",
+        "timestamp": 1788332134803
+      },
+      {
+        "executionId": "6347dcfa-d38c-4a9b-9d45-56d4cd45b66a",
+        "chatSessionId": "sess_7df090da-7c91-4a7a-ac09-8bc5dcf2a5c6",
+        "timestamp": 1788332710805
+      }
+    ],
+    "Implement customer 360 view with doctor affiliations, PIC contacts, map pinpoint": [
+      {
+        "executionId": "cfe456b6-7afe-411c-946f-1dd5d2b0e5c3",
+        "chatSessionId": "sess_e315631f-4826-4e74-88ff-0c72fd84b83c",
+        "timestamp": 1788332793684
+      },
+      {
+        "executionId": "cfe456b6-7afe-411c-946f-1dd5d2b0e5c3",
+        "chatSessionId": "sess_e315631f-4826-4e74-88ff-0c72fd84b83c",
+        "timestamp": 1788333561630
+      }
+    ],
+    "Implement doctor management with assignment matrix": [
+      {
+        "executionId": "40aec4ee-473f-4491-8756-52bee6d321ab",
+        "chatSessionId": "sess_63104b35-65ed-4c12-be70-21be2c90597c",
+        "timestamp": 1788333939785
+      },
+      {
+        "executionId": "40aec4ee-473f-4491-8756-52bee6d321ab",
+        "chatSessionId": "sess_63104b35-65ed-4c12-be70-21be2c90597c",
+        "timestamp": 1788335419925
+      }
+    ],
+    "Implement lini & varian management pages — CRUD with user assignment interface": [
+      {
+        "executionId": "44f06e8e-2db7-4c0f-9163-6f23ddf77b58",
+        "chatSessionId": "sess_842b081e-f0a1-43c4-9690-0307fd323827",
+        "timestamp": 1788335472095
+      },
+      {
+        "executionId": "44f06e8e-2db7-4c0f-9163-6f23ddf77b58",
+        "chatSessionId": "sess_842b081e-f0a1-43c4-9690-0307fd323827",
+        "timestamp": 1788336177517
+      }
+    ],
+    "Implement call plan management page (`/admin/call-plans`) — upload for Salesman & MR, approval, analytics": [
+      {
+        "executionId": "5a3d92b0-2c51-4ac5-bab0-964243fabd2f",
+        "chatSessionId": "sess_7cb491f4-a022-4bc5-a615-54844ec8af72",
+        "timestamp": 1788336362917
+      },
+      {
+        "executionId": "5a3d92b0-2c51-4ac5-bab0-964243fabd2f",
+        "chatSessionId": "sess_7cb491f4-a022-4bc5-a615-54844ec8af72",
+        "timestamp": 1788336816180
+      }
+    ],
+    "Implement order approval/review pages (`/admin/orders`) — Salesman orders only": [
+      {
+        "executionId": "50443432-9520-44c4-8f00-2c3d3cb0a2c7",
+        "chatSessionId": "sess_943c2d8c-2989-4b0f-8f33-388834fb29dd",
+        "timestamp": 1788336909672
+      },
+      {
+        "executionId": "50443432-9520-44c4-8f00-2c3d3cb0a2c7",
+        "chatSessionId": "sess_943c2d8c-2989-4b0f-8f33-388834fb29dd",
+        "timestamp": 1788337620689
+      }
+    ],
+    "Implement reporting center (`/admin/reports`) — tabbed reports with date/branch/role filters": [
+      {
+        "executionId": "284682b3-bade-4c29-a480-9b7a09e8a2cd",
+        "chatSessionId": "sess_b2ad8d39-b5d1-49fa-9ced-af22b1e3f1aa",
+        "timestamp": 1788338868302
+      },
+      {
+        "executionId": "284682b3-bade-4c29-a480-9b7a09e8a2cd",
+        "chatSessionId": "sess_b2ad8d39-b5d1-49fa-9ced-af22b1e3f1aa",
+        "timestamp": 1788339227957
+      }
+    ],
+    "Implement Excel/PDF export buttons using streaming download": [
+      {
+        "executionId": "fdcd80bd-5634-4c9c-a19b-21f0d55e5e03",
+        "chatSessionId": "sess_1d6fda79-2ee7-4ad4-8bf7-bc86cb6489c5",
+        "timestamp": 1788339514927
+      },
+      {
+        "executionId": "fdcd80bd-5634-4c9c-a19b-21f0d55e5e03",
+        "chatSessionId": "sess_1d6fda79-2ee7-4ad4-8bf7-bc86cb6489c5",
+        "timestamp": 1788339727158
+      }
+    ],
+    "Implement fraud & audit telemetry viewer (`/admin/audit`)": [
+      {
+        "executionId": "abc1abd6-fdf5-4fdd-ae9f-fa90500587e9",
+        "chatSessionId": "sess_d805fa07-a9e4-4ce5-b187-c10949093ad4",
+        "timestamp": 1788358727673
+      },
+      {
+        "executionId": "e501d0e7-8598-40f8-917a-1b1228aed223",
+        "chatSessionId": "sess_50db1f84-3640-4eb5-a1da-05fce70c9218",
+        "timestamp": 1788403116069
+      },
+      {
+        "executionId": "e501d0e7-8598-40f8-917a-1b1228aed223",
+        "chatSessionId": "sess_50db1f84-3640-4eb5-a1da-05fce70c9218",
+        "timestamp": 1788404155505
+      }
+    ],
+    "Implement tenant administration pages (Super Admin only: `/admin/super/tenants`)": [
+      {
+        "executionId": "68ffe9b6-c0cd-42d2-8ae2-52277ba57bb9",
+        "chatSessionId": "sess_782cfc74-eccd-44ce-ad9e-1929914e2850",
+        "timestamp": 1788405003861
+      },
+      {
+        "executionId": "68ffe9b6-c0cd-42d2-8ae2-52277ba57bb9",
+        "chatSessionId": "sess_782cfc74-eccd-44ce-ad9e-1929914e2850",
+        "timestamp": 1788405478667
+      }
+    ],
+    "Implement ERP configuration page (Super Admin: `/admin/super/erp-config`)": [
+      {
+        "executionId": "f9acaec4-c948-473b-a8ef-d25b731f68c5",
+        "chatSessionId": "sess_09e06e2a-3a4a-4265-aece-9716d47d359f",
+        "timestamp": 1788405532140
+      },
+      {
+        "executionId": "f9acaec4-c948-473b-a8ef-d25b731f68c5",
+        "chatSessionId": "sess_09e06e2a-3a4a-4265-aece-9716d47d359f",
+        "timestamp": 1788405710327
+      }
+    ],
+    "Implement GPS recalibration map tool (`components/map/PinPicker.vue`)": [
+      {
+        "executionId": "8102bdae-7a8e-40b2-ba0f-18a882f611c7",
+        "chatSessionId": "sess_e4fe206d-fe98-4059-9086-606eeaee5f01",
+        "timestamp": 1788405941984
+      },
+      {
+        "executionId": "8102bdae-7a8e-40b2-ba0f-18a882f611c7",
+        "chatSessionId": "sess_e4fe206d-fe98-4059-9086-606eeaee5f01",
+        "timestamp": 1788406641048
+      }
+    ],
+    "Implement territory clustering map (`components/map/TerritoryCluster.vue`)": [
+      {
+        "executionId": "78ff9439-0f18-446c-9f17-39e219116678",
+        "chatSessionId": "sess_86c5a3b1-f2b2-4b05-bed1-85013ecfa921",
+        "timestamp": 1788406734379
+      },
+      {
+        "executionId": "78ff9439-0f18-446c-9f17-39e219116678",
+        "chatSessionId": "sess_86c5a3b1-f2b2-4b05-bed1-85013ecfa921",
+        "timestamp": 1788407136378
+      }
+    ],
+    "Implement branch performance league table component (Salesman & MR ranking)": [
+      {
+        "executionId": "297ad6bd-f90a-4a11-a498-b18d1bdef1bb",
+        "chatSessionId": "sess_81d09a1c-6161-451e-96ee-291678b681e7",
+        "timestamp": 1788407826624
+      },
+      {
+        "executionId": "297ad6bd-f90a-4a11-a498-b18d1bdef1bb",
+        "chatSessionId": "sess_81d09a1c-6161-451e-96ee-291678b681e7",
+        "timestamp": 1788408062794
+      }
+    ],
+    "Implement attendance & fraud incident report page": [
+      {
+        "executionId": "49cfe6d4-2683-4359-8447-e1100fa694f4",
+        "chatSessionId": "sess_901b55de-5773-4d7f-9689-2101aa307de8",
+        "timestamp": 1788408102842
+      },
+      {
+        "executionId": "49cfe6d4-2683-4359-8447-e1100fa694f4",
+        "chatSessionId": "sess_901b55de-5773-4d7f-9689-2101aa307de8",
+        "timestamp": 1788408409932
+      }
     ]
   }
 }
