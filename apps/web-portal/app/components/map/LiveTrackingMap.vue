@@ -15,8 +15,15 @@
  */
 import { computed, ref, watch } from 'vue'
 import { LMap, LTileLayer, LCircleMarker, LPolyline, LTooltip } from '@vue-leaflet/vue-leaflet'
-import { UserRole } from '@maction/types'
 import type { TrackedUser } from '~/composables/useTracking'
+import {
+  type LatLngTuple,
+  colorFor,
+  toLatLng,
+  trailFor,
+  hasTrail,
+  formatTimestamp
+} from '~/lib/map/live-tracking'
 
 const props = withDefaults(
   defineProps<{
@@ -38,44 +45,13 @@ const TILE_ATTRIBUTION = '&copy; OpenStreetMap contributors'
 const FALLBACK_CENTER: [number, number] = [-6.2088, 106.8456]
 const FALLBACK_ZOOM = 11
 
-/**
- * Semantic role colors resolved from the KF Maction design tokens (see main.css). Leaflet
- * vector layers need concrete color values, so the token hexes are referenced here — they
- * mirror `bg-primary-500` (Salesman) and `bg-warning-500` (MR) used elsewhere in the portal.
- */
-const ROLE_COLOR: Record<UserRole.SALESMAN | UserRole.MR, string> = {
-  [UserRole.SALESMAN]: '#1C4173',
-  [UserRole.MR]: '#D97706'
-}
-
-/** Resolve a marker/trail color for a role, defaulting to the Salesman token. */
-function colorFor(role: TrackedUser['role_label']): string {
-  return ROLE_COLOR[role] ?? ROLE_COLOR[UserRole.SALESMAN]
-}
-
-/** Leaflet consumes [lat, lng] tuples. */
-function toLatLng(point: { lat: number, lng: number }): [number, number] {
-  return [point.lat, point.lng]
-}
-
-/** Breadcrumb trail (oldest → newest) as a lat/lng tuple list for the polyline. */
-function trailFor(user: TrackedUser): [number, number][] {
-  return user.breadcrumbs.map(toLatLng)
-}
-
-/** Format an ISO timestamp for the marker tooltip, or a hint when unparseable. */
-function formatTimestamp(iso: string): string {
-  const date = new Date(iso)
-  return Number.isNaN(date.getTime()) ? '—' : date.toLocaleTimeString('id-ID')
-}
-
 /** The live Leaflet map instance, captured once ready so we can fit bounds to markers. */
 const mapRef = ref<{ leafletObject?: {
-  fitBounds: (bounds: [number, number][], opts?: Record<string, unknown>) => void
+  fitBounds: (bounds: LatLngTuple[], opts?: Record<string, unknown>) => void
 } } | null>(null)
 
 /** All current marker positions — drives auto-fit and the "no data" placeholder. */
-const markerLatLngs = computed<[number, number][]>(() => props.users.map(toLatLng))
+const markerLatLngs = computed<LatLngTuple[]>(() => props.users.map(toLatLng))
 
 /**
  * Fit the map to enclose every marker whenever the snapshot changes. A single marker keeps
@@ -109,7 +85,7 @@ watch(markerLatLngs, (latLngs) => {
       >
         <!-- Chronological breadcrumb trail behind the marker. -->
         <LPolyline
-          v-if="showTrails && user.breadcrumbs.length > 1"
+          v-if="showTrails && hasTrail(user)"
           :lat-lngs="trailFor(user)"
           :color="colorFor(user.role_label)"
           :weight="3"

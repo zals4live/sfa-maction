@@ -54,28 +54,57 @@ export default defineNuxtConfig({
       background_color: '#FFFFFF',
       display: 'standalone',
       start_url: '/',
+      // Scope confines the PWA navigation context to the app origin root,
+      // required for a reliable standalone install on Android/iOS.
+      scope: '/',
       icons: [
         {
           src: 'pwa-192x192.png',
           sizes: '192x192',
-          type: 'image/png'
-        },
-        {
-          src: 'pwa-512x512.png',
-          sizes: '512x512',
-          type: 'image/png'
+          type: 'image/png',
+          purpose: 'any'
         },
         {
           src: 'pwa-512x512.png',
           sizes: '512x512',
           type: 'image/png',
-          purpose: 'any maskable'
+          purpose: 'any'
+        },
+        {
+          // Dedicated maskable icon with safe-zone padding for Android
+          // adaptive icons (must be designer-provided, see PWA_INSTALL_TEST.md).
+          src: 'pwa-maskable-512x512.png',
+          sizes: '512x512',
+          type: 'image/png',
+          purpose: 'maskable'
         }
       ]
     },
     workbox: {
-      globPatterns: ['**/*.{js,css,html,png,svg,ico,woff2}'],
-      navigateFallback: '/'
+      // Precache the full app shell: JS/CSS bundles, HTML entry, icons,
+      // fonts, and the generated web manifest. Covers Leaflet marker images
+      // (png/svg) and Nuxt UI font formats (woff/woff2/ttf/eot).
+      globPatterns: [
+        '**/*.{js,css,html,png,svg,ico,json,webmanifest,woff,woff2,ttf,eot}'
+      ],
+      navigateFallback: '/',
+      // Stale-While-Revalidate for same-origin static assets (FR-PWA-02):
+      // serve cached app shell instantly, refresh in the background.
+      runtimeCaching: [
+        {
+          urlPattern: ({ sameOrigin, request }) =>
+            sameOrigin
+            && ['style', 'script', 'worker', 'font', 'image'].includes(request.destination),
+          handler: 'StaleWhileRevalidate',
+          options: {
+            cacheName: 'maction-app-shell',
+            expiration: {
+              maxEntries: 200,
+              maxAgeSeconds: 60 * 60 * 24 * 30
+            }
+          }
+        }
+      ]
     },
     devOptions: {
       enabled: false

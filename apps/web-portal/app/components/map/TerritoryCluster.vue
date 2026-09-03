@@ -15,7 +15,7 @@
  * to avoid SSR `window` access. Leaflet + MarkerCluster CSS is registered globally in
  * nuxt.config. Forced Light Mode is global — no dark-mode classes or `dark:` variants here.
  */
-import { ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { LMap, LTileLayer } from '@vue-leaflet/vue-leaflet'
 
 /** Customer type discriminator — mirrors the PostgreSQL `customer_type_enum` values plotted here. */
@@ -64,6 +64,17 @@ const KIND_COLOR: Record<CustomerKind, string> = {
   DOCTOR: '#D97706'
 }
 
+/** Coverage summary — outlet & doctor counts shown alongside the legend. */
+const coverage = computed(() => {
+  let outlets = 0
+  let doctors = 0
+  for (const point of props.points) {
+    if (point.customer_type === 'OUTLET') outlets++
+    else doctors++
+  }
+  return { outlets, doctors }
+})
+
 /**
  * Minimal structural shapes of the Leaflet APIs we touch. This mirrors the sibling map
  * components (LiveTrackingMap, PinPicker), which deliberately avoid a hard `leaflet` type
@@ -71,6 +82,8 @@ const KIND_COLOR: Record<CustomerKind, string> = {
  */
 interface LeafletLayer { on: (event: string, handler: () => void) => void }
 interface LeafletBounds { isValid: () => boolean }
+/** A markercluster cluster passed to the `iconCreateFunction` — exposes its child count. */
+interface LeafletCluster { getChildCount: () => number }
 interface LeafletClusterGroup {
   addLayer: (layer: LeafletLayer) => void
   clearLayers: () => void
@@ -82,11 +95,16 @@ interface LeafletMap {
 }
 interface LeafletDivIconOptions { html: string, className: string, iconSize: [number, number] }
 interface LeafletMarkerOptions { icon: unknown, title: string }
+interface LeafletClusterGroupOptions {
+  iconCreateFunction: (cluster: LeafletCluster) => unknown
+  showCoverageOnHover: boolean
+  maxClusterRadius: number
+}
 /** The subset of the Leaflet module we call after lazy-loading it. */
 interface LeafletApi {
   divIcon: (opts: LeafletDivIconOptions) => unknown
   marker: (latLng: [number, number], opts: LeafletMarkerOptions) => LeafletLayer
-  markerClusterGroup: () => LeafletClusterGroup
+  markerClusterGroup: (opts?: LeafletClusterGroupOptions) => LeafletClusterGroup
 }
 
 /** The live Leaflet map instance, captured once ready so we can attach the cluster group. */
@@ -95,10 +113,35 @@ const mapRef = ref<{ leafletObject?: LeafletMap } | null>(null)
 /** The active cluster group, retained so re-renders can clear and repopulate its markers. */
 let clusterGroup: LeafletClusterGroup | null = null
 
+/**
+ * Coverage-density tiers for cluster badges. As more customers fall inside a cluster the badge
+ * grows and deepens in color, so an admin reads dense territory (many nearby outlets/doctors)
+ * versus sparse coverage at a glance. Colors derive from the `primary` brand ramp.
+ */
+const DENSITY_TIERS = [
+  { max: 9, size: 34, color: '#3B6BA5' }, // low
+  { max: 49, size: 40, color: '#2A5488' }, // medium
+  { max: Infinity, size: 46, color: '#1C4173' } // high
+] as const
+
+/** Resolve the density tier for a cluster of `count` customers. */
+function densityTier(count: number): (typeof DENSITY_TIERS)[number] {
+  return DENSITY_TIERS.find(tier => count <= tier.max) ?? DENSITY_TIERS[DENSITY_TIERS.length - 1]!
+}
+
 /** Build the HTML for a customer marker's colored divIcon. */
 function markerHtml(kind: CustomerKind): string {
   const color = KIND_COLOR[kind]
   return `<span class="block size-3.5 rounded-full border-2 border-white shadow" style="background:${color}"></span>`
+}
+
+/** Build a density-scaled cluster badge: bigger, darker circle = denser coverage. */
+function clusterHtml(count: number): string {
+  const tier = densityTier(count)
+  return (
+    `<div class="flex items-center justify-center rounded-full font-semibold text-white shadow-md ring-2 ring-white/80" `
+    + `style="width:${tier.size}px;height:${tier.size}px;background:${tier.color}">${count}</div>`
+  )
 }
 
 /** Create a Leaflet marker for a point, wired to emit `select` on click. */
@@ -118,7 +161,16 @@ function fitToMarkers(map: LeafletMap, group: LeafletClusterGroup): void {
 /** Rebuild the cluster group from the current points and re-frame the view. */
 function renderClusters(L: LeafletApi, map: LeafletMap): void {
   if (!clusterGroup) {
-    clusterGroup = L.markerClusterGroup()
+    clusterGroup = L.markerClusterGroup({
+      showCoverageOnHover: true,
+      maxClusterRadius: 60,
+      iconCreateFunction: cluster =>
+        L.divIcon({
+          html: clusterHtml(cluster.getChildCount()),
+          className: '',
+          iconSize: [0, 0]
+        })
+    })
     map.addLayer(clusterGroup)
   }
   clusterGroup.clearLayers()
@@ -177,13 +229,19 @@ watch(() => props.points, () => {
 
     <!-- Legend distinguishing Outlet vs Doctor markers. -->
     <div class="absolute right-3 top-3 z-[500] flex flex-col gap-1.5 rounded-lg border border-default bg-default/90 px-3 py-2 text-xs shadow">
-      <div class="flex items-center gap-2">
-        <span class="size-3 rounded-full bg-primary-500" />
-        <span class="text-muted">Outlet</span>
+      <div class="flex items-center justify-between gap-3">
+        <span class="flex items-center gap-2">
+          <span class="size-3 rounded-full bg-primary-500" />
+          <span class="text-muted">Outlet</span>
+        </span>
+        <span class="font-semibold text-highlighted">{{ coverage.outlets }}</span>
       </div>
-      <div class="flex items-center gap-2">
-        <span class="size-3 rounded-full bg-warning-500" />
-        <span class="text-muted">Dokter</span>
+      <div class="flex items-center justify-between gap-3">
+        <span class="flex items-center gap-2">
+          <span class="size-3 rounded-full bg-warning-500" />
+          <span class="text-muted">Dokter</span>
+        </span>
+        <span class="font-semibold text-highlighted">{{ coverage.doctors }}</span>
       </div>
     </div>
 

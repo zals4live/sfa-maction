@@ -250,26 +250,26 @@ Reference: #[[file:docs/PRD_Maction_v2.md]]
 
 ## Phase 14: Module 10 — Maps & Spatial Visualization (Cross-App)
 
-- [ ] Implement `GeofenceRadar.vue` — Leaflet circle + pulsing marker + distance label (field-pwa, used by Salesman & MR)
-- [ ] Implement `RoutePolyline.vue` — Turf.js geodesic route with MVP waypoints (field-pwa)
-- [ ] Implement `LiveTrackingMap.vue` — real-time Salesman & MR markers + breadcrumb trails (web-portal)
-- [ ] Implement `TerritoryCluster.vue` — markercluster outlet/doctor coverage density (web-portal)
-- [ ] Implement `PinPicker.vue` — interactive coordinate picker modal (web-portal)
-- [ ] Implement GPS deep link integration for navigation to next visit target (field-pwa)
+- [x] Implement `GeofenceRadar.vue` — Leaflet circle + pulsing marker + distance label (field-pwa, used by Salesman & MR)
+- [x] Implement `RoutePolyline.vue` — Turf.js geodesic route with MVP waypoints (field-pwa)
+- [x] Implement `LiveTrackingMap.vue` — real-time Salesman & MR markers + breadcrumb trails (web-portal)
+- [x] Implement `TerritoryCluster.vue` — markercluster outlet/doctor coverage density (web-portal)
+- [x] Implement `PinPicker.vue` — interactive coordinate picker modal (web-portal)
+- [x] Implement GPS deep link integration for navigation to next visit target (field-pwa)
 
 ---
 
 ## Phase 15: PWA Offline & Background Sync Polish
 
-- [ ] Verify full offline workflow: check-in → visit-in → all in-visit activities → visit-out → order (Salesman) / no-order (MR)
-- [ ] Verify role-adaptive outbox: `ORDER_SUBMIT` mutations only created by `SALESMAN`, never by `MR`
-- [ ] Verify Background Sync API triggers correctly on connectivity restore
-- [ ] Verify FIFO ordering of outbox mutations during batch sync
-- [ ] Verify conflict resolution — server timestamp wins, client re-fetches
-- [ ] Verify connectivity indicator transitions (Online ↔ Offline ↔ Syncing ↔ Error)
-- [ ] Verify Workbox precaching covers all critical app shell assets
-- [ ] Verify lini-filtered material sync — only user's assigned lini materials cached locally
-- [ ] Test PWA installation on Android and iOS (Add to Home Screen)
+- [x] Verify full offline workflow: check-in → visit-in → all in-visit activities → visit-out → order (Salesman) / no-order (MR)
+- [x] Verify role-adaptive outbox: `ORDER_SUBMIT` mutations only created by `SALESMAN`, never by `MR`
+- [x] Verify Background Sync API triggers correctly on connectivity restore
+- [x] Verify FIFO ordering of outbox mutations during batch sync
+- [x] Verify conflict resolution — server timestamp wins, client re-fetches
+- [x] Verify connectivity indicator transitions (Online ↔ Offline ↔ Syncing ↔ Error)
+- [x] Verify Workbox precaching covers all critical app shell assets
+- [x] Verify lini-filtered material sync — only user's assigned lini materials cached locally
+- [x] Test PWA installation on Android and iOS (Add to Home Screen)
 
 ---
 

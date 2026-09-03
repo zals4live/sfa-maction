@@ -15,7 +15,7 @@
  * DB, and clock are injectable so the composable can be driven with mocks in tests.
  */
 import { computed, readonly, ref, type Ref } from 'vue'
-import type { LocalOutboxMutation, MasterCustomer, VisitPlan } from '@maction/types'
+import type { GeoPoint, LocalOutboxMutation, MasterCustomer, VisitPlan } from '@maction/types'
 import { useApiClient, type ApiClientApi } from './useApiClient'
 import { useOfflineDb, type OfflineDbApi } from './useOfflineDb'
 import { useAuthStore } from '~/stores/useAuthStore'
@@ -32,6 +32,8 @@ export interface VisitListItem {
   customerName: string
   /** Customer address for the row subtitle, when known. */
   customerAddress: string | null
+  /** Customer coordinates for turn-by-turn navigation, or `null` when not geocoded. */
+  customerLocation: GeoPoint | null
   /** Derived lifecycle status for the status badge. */
   status: VisitListStatus
 }
@@ -93,6 +95,7 @@ export function useVisits(options: UseVisitsOptions = {}): UseVisitsApi {
       plan,
       customerName: customer?.name ?? 'Pelanggan tidak dikenal',
       customerAddress: customer?.address ?? null,
+      customerLocation: customer?.location_geom ?? null,
       status: deriveVisitStatus(plan, pending)
     }
   }

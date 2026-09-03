@@ -1766,6 +1766,181 @@
         "chatSessionId": "sess_901b55de-5773-4d7f-9689-2101aa307de8",
         "timestamp": 1788408409932
       }
+    ],
+    "Implement `GeofenceRadar.vue` — Leaflet circle + pulsing marker + distance label (field-pwa, used by Salesman & MR)": [
+      {
+        "executionId": "79e3b63e-9a46-4790-ae03-81810fa894ef",
+        "chatSessionId": "sess_50a08802-cb37-4eb3-be74-644e2fcac122",
+        "timestamp": 1788408938381
+      },
+      {
+        "executionId": "79e3b63e-9a46-4790-ae03-81810fa894ef",
+        "chatSessionId": "sess_50a08802-cb37-4eb3-be74-644e2fcac122",
+        "timestamp": 1788409080774
+      }
+    ],
+    "Implement `RoutePolyline.vue` — Turf.js geodesic route with MVP waypoints (field-pwa)": [
+      {
+        "executionId": "3409ded7-5c76-49da-bd3b-2b407e781764",
+        "chatSessionId": "sess_21aea139-b12d-44ec-8e92-34b09302b96c",
+        "timestamp": 1788409332516
+      },
+      {
+        "executionId": "3409ded7-5c76-49da-bd3b-2b407e781764",
+        "chatSessionId": "sess_21aea139-b12d-44ec-8e92-34b09302b96c",
+        "timestamp": 1788410032787
+      }
+    ],
+    "Implement `LiveTrackingMap.vue` — real-time Salesman & MR markers + breadcrumb trails (web-portal)": [
+      {
+        "executionId": "835898f1-5dc9-4959-88a7-efe3d8ba880a",
+        "chatSessionId": "sess_a3002f0e-2379-423e-b68a-550016e44c49",
+        "timestamp": 1788411395205
+      },
+      {
+        "executionId": "835898f1-5dc9-4959-88a7-efe3d8ba880a",
+        "chatSessionId": "sess_a3002f0e-2379-423e-b68a-550016e44c49",
+        "timestamp": 1788412673224
+      }
+    ],
+    "Implement `TerritoryCluster.vue` — markercluster outlet/doctor coverage density (web-portal)": [
+      {
+        "executionId": "a304a2a4-ef9d-4896-b02d-43407f352433",
+        "chatSessionId": "sess_8905d78d-a414-4153-ad7b-972694f77966",
+        "timestamp": 1788412874019
+      },
+      {
+        "executionId": "a304a2a4-ef9d-4896-b02d-43407f352433",
+        "chatSessionId": "sess_8905d78d-a414-4153-ad7b-972694f77966",
+        "timestamp": 1788413998100
+      }
+    ],
+    "Implement `PinPicker.vue` — interactive coordinate picker modal (web-portal)": [
+      {
+        "executionId": "83a85b15-6e90-4d02-aa36-2b23da01b7cd",
+        "chatSessionId": "sess_a2236f51-8ad2-49ff-92b6-da9e4f9424cd",
+        "timestamp": 1788416131462
+      },
+      {
+        "executionId": "83a85b15-6e90-4d02-aa36-2b23da01b7cd",
+        "chatSessionId": "sess_a2236f51-8ad2-49ff-92b6-da9e4f9424cd",
+        "timestamp": 1788416255715
+      }
+    ],
+    "Implement GPS deep link integration for navigation to next visit target (field-pwa)": [
+      {
+        "executionId": "45861fd3-016d-45a5-9f8a-6f9f53b4327c",
+        "chatSessionId": "sess_c1e66bee-fcc5-43da-9be6-b4924118c1d2",
+        "timestamp": 1788417177624
+      },
+      {
+        "executionId": "45861fd3-016d-45a5-9f8a-6f9f53b4327c",
+        "chatSessionId": "sess_c1e66bee-fcc5-43da-9be6-b4924118c1d2",
+        "timestamp": 1788417392780
+      }
+    ],
+    "Verify full offline workflow: check-in → visit-in → all in-visit activities → visit-out → order (Salesman) / no-order (MR)": [
+      {
+        "executionId": "b7d24252-3b01-4325-a726-590b31df7369",
+        "chatSessionId": "sess_22a7a6c4-afdb-41e2-8f10-80b2c848d0d5",
+        "timestamp": 1788417503165
+      },
+      {
+        "executionId": "b7d24252-3b01-4325-a726-590b31df7369",
+        "chatSessionId": "sess_22a7a6c4-afdb-41e2-8f10-80b2c848d0d5",
+        "timestamp": 1788418165332
+      }
+    ],
+    "Verify role-adaptive outbox: `ORDER_SUBMIT` mutations only created by `SALESMAN`, never by `MR`": [
+      {
+        "executionId": "7c9c32cc-851c-4d7b-b17d-570ad4a28a9d",
+        "chatSessionId": "sess_fde7a33f-489a-4ccd-94fa-d0009633d2ed",
+        "timestamp": 1788418508312
+      },
+      {
+        "executionId": "7c9c32cc-851c-4d7b-b17d-570ad4a28a9d",
+        "chatSessionId": "sess_fde7a33f-489a-4ccd-94fa-d0009633d2ed",
+        "timestamp": 1788418771569
+      }
+    ],
+    "Verify Background Sync API triggers correctly on connectivity restore": [
+      {
+        "executionId": "7b83078f-dbd5-4d6c-a759-b7083c55cc06",
+        "chatSessionId": "sess_94528882-d9ab-4460-b020-f0f0d6a995c6",
+        "timestamp": 1788419162696
+      }
+    ],
+    "Verify FIFO ordering of outbox mutations during batch sync": [
+      {
+        "executionId": "d656bc6a-6d3f-4fdc-a080-16bcea60d7c6",
+        "chatSessionId": "sess_d2625e4e-7360-4b46-9cc2-416ce48f0cc3",
+        "timestamp": 1788420584100
+      },
+      {
+        "executionId": "d656bc6a-6d3f-4fdc-a080-16bcea60d7c6",
+        "chatSessionId": "sess_d2625e4e-7360-4b46-9cc2-416ce48f0cc3",
+        "timestamp": 1788420925066
+      }
+    ],
+    "Verify conflict resolution — server timestamp wins, client re-fetches": [
+      {
+        "executionId": "59bd46bc-1c85-468e-abaa-0b19bacc4e50",
+        "chatSessionId": "sess_f73d47bb-4b38-427d-8f78-a2df4e6bd946",
+        "timestamp": 1788421188785
+      },
+      {
+        "executionId": "59bd46bc-1c85-468e-abaa-0b19bacc4e50",
+        "chatSessionId": "sess_f73d47bb-4b38-427d-8f78-a2df4e6bd946",
+        "timestamp": 1788421805181
+      }
+    ],
+    "Verify connectivity indicator transitions (Online ↔ Offline ↔ Syncing ↔ Error)": [
+      {
+        "executionId": "943f4a56-05a9-47ee-884c-a02a49202106",
+        "chatSessionId": "sess_7f925f49-783e-46e2-833f-6d1a99aa0d72",
+        "timestamp": 1788421828684
+      },
+      {
+        "executionId": "943f4a56-05a9-47ee-884c-a02a49202106",
+        "chatSessionId": "sess_7f925f49-783e-46e2-833f-6d1a99aa0d72",
+        "timestamp": 1788422742213
+      }
+    ],
+    "Verify Workbox precaching covers all critical app shell assets": [
+      {
+        "executionId": "95262ccb-5953-4f46-829b-c3465f85225b",
+        "chatSessionId": "sess_d5ee95d1-16a0-4b06-b1ff-34a551aac02a",
+        "timestamp": 1788423715836
+      },
+      {
+        "executionId": "95262ccb-5953-4f46-829b-c3465f85225b",
+        "chatSessionId": "sess_d5ee95d1-16a0-4b06-b1ff-34a551aac02a",
+        "timestamp": 1788424336322
+      }
+    ],
+    "Verify lini-filtered material sync — only user's assigned lini materials cached locally": [
+      {
+        "executionId": "a5269e3d-254d-4de3-9b33-ed0b9fe6f0e5",
+        "chatSessionId": "sess_1bca1fea-fb69-4997-a77b-df719c0d53c8",
+        "timestamp": 1788424369531
+      },
+      {
+        "executionId": "a5269e3d-254d-4de3-9b33-ed0b9fe6f0e5",
+        "chatSessionId": "sess_1bca1fea-fb69-4997-a77b-df719c0d53c8",
+        "timestamp": 1788427066992
+      }
+    ],
+    "Test PWA installation on Android and iOS (Add to Home Screen)": [
+      {
+        "executionId": "56ddb9ce-b2aa-4a7c-ae7a-bd3b5ba5bc4a",
+        "chatSessionId": "sess_4fa8d8e4-e92c-46fc-a508-b1034357d50d",
+        "timestamp": 1788427095421
+      },
+      {
+        "executionId": "56ddb9ce-b2aa-4a7c-ae7a-bd3b5ba5bc4a",
+        "chatSessionId": "sess_4fa8d8e4-e92c-46fc-a508-b1034357d50d",
+        "timestamp": 1788427272789
+      }
     ]
   }
 }

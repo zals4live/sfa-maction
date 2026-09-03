@@ -382,7 +382,7 @@ classDiagram
 stateDiagram-v2
     [*] --> Scheduled: Monthly Visit Plan (Target: Outlet or Doctor @ Outlet)
     Scheduled --> InVisit: Visit In (Leaflet Geofence Radar Validated on Target Outlet)
-    
+
     state InVisit {
         [*] --> DetailingAgenda: Medical Detailing + Promo Discussion (Photo to S3)
         DetailingAgenda --> CompetitorTracking: Competitor Price + Promo + Photo (S3)
@@ -2201,7 +2201,73 @@ flowchart TD
 
 ---
 
-## 15. Assumptions, Dependencies & Risk Management
+## 15. Development Lifecycle & Implementation Workflow
+
+```mermaid
+flowchart LR
+    A[1. Plan & Scope] --> B[2. Technical & UI/UX Design]
+    B --> C1[3a. Frontend Development]
+    B --> C2[3b. Backend Engineering]
+    C1 --> D[4. Integration & E2E Testing]
+    C2 --> D
+    D --> E[5. Automated CI/CD & Deployment]
+```
+
+---
+
+### 15.1 Phase Breakdown
+
+* **Phase 1: Planning & Requirements Scoping**
+* Translate high-level business drivers into formal functional specifications using EARS (*Easy Approach to Requirements Syntax*).
+
+* Break down user personas, operational roles (`SALESMAN`, `MR`, `ADMIN_CABANG`, `ADMIN_PUSAT`, `SUPER_ADMIN`), and RBAC boundary matrices.
+
+* Map domain entities, line-of-business segregation (`master_lini`), and doctor-outlet practice relationships into atomic delivery milestones.
+
+* **Phase 2: Technical, API Contract Specification (API-First), and UI/UX Design**
+* Establish type-safe API schema definitions and validation contracts (TypeBox / shared TypeScript types) as the single source of truth across client and server boundaries.
+
+* Design database models, migrations, and PostgreSQL Row-Level Security (RLS) policies via Drizzle ORM and PostGIS.
+
+* Build Figma/UI design tokens and layout wireframes adhering to Forced Light Mode and Nuxt UI design patterns.
+
+* Define Dexie.js offline schema schemas and compound indexed structures (`[company_id+id]`).
+
+* **Phase 3: Parallel Implementation (Contract-Driven Execution)**
+* **Frontend Stream**:
+* Implement Nuxt 4 Web Portal and Mobile PWA views, Leaflet geospatial mapping, digital signature pads, and local Dexie.js mutations.
+
+* Consume mock API adapters adhering strictly to Phase 2 contracts, unblocking client feature delivery independently of backend readiness.
+* Implement local offline state management, monotonic clock verification, and background synchronization queues.
+
+* **Backend Stream**:
+* Build high-throughput Elysia.js HTTP and WebSocket routes on Bun v1.4 with TypeBox request/response validation.
+
+* Integrate Drizzle ORM transactional session context (`SET LOCAL app.current_*`) for PostgreSQL multi-tenant isolation.
+
+* Configure BullMQ workers on AWS ElastiCache Redis for asynchronous ERP/SAP quotation synchronization and background audit telemetry processing.
+
+* **Phase 4: Integration, Shift-Left Testing & Verification**
+* Swap frontend mock layers to live Elysia.js endpoints, verifying end-to-end data contracts and payload idempotency.
+
+* Execute automated static typechecks (`vue-tsc`, `tsc --noEmit`) and linter checks across the monorepo workspace.
+
+* Perform unit and regression tests on critical business logic (UOM multi-tier conversions, VAT calculations, and geofence distance evaluations).
+
+* Validate anti-fraud defenses: mock location injections, monotonic clock drift detection, and GPS velocity anomaly triggers.
+
+* **Phase 5: Automated CI/CD & Cloud Deployment**
+* Trigger automated GitHub Actions pipelines on pull request merge: linting, typecheck gates, and unit test suites.
+
+* Deploy database migration deltas using Drizzle Kit against AWS RDS PostgreSQL with PostGIS.
+
+* Execute zero-downtime rolling deployment via SSH to production AWS EC2 Ubuntu instances managed by systemd and reverse-proxied by Nginx.
+
+* Monitor real-time operational health, mutation audit trails, and ERP synchronization queues via Redis and dedicated log tables.
+
+---
+
+## 16. Assumptions, Dependencies & Risk Management
 
 | Risk Category | Risk Description | Business Impact | Mitigation Strategy |
 | --- | --- | --- | --- |
@@ -2216,10 +2282,8 @@ flowchart TD
 
 ---
 
-## 16. Future Roadmap
+## 17. Future Roadmap
 
 1. **Hybrid Native Mobile App Implementation (Capacitor.js for Android & iOS)**: Wrap and elevate the existing Nuxt 4 codebase into native mobile applications using Capacitor.js to unlock native device runtime capabilities—including deep OS-level hardware security checks, robust background sync workers, native camera and file system access, and biometric authentication (Face ID / Fingerprint)—while maintaining a single unified web and mobile codebase.
 2. **AI Route & Clinic Schedule Optimizer**: Automated daily visit route sequencing driven by doctor clinic consulting hours and real-time traffic data.
 3. **Predictive Doctor Detailing Matrix**: Machine learning recommendations suggesting optimal product detailing topics and collateral based on historical doctor prescription trends and regional outlet sales performance.
-
----

@@ -39,6 +39,7 @@ export interface OfflineDbApi {
   clearCompanyData: (companyId: string) => Promise<void>
   enqueueMutation: (mutation: LocalOutboxMutation) => Promise<string>
   listPendingMutations: (limit?: number) => Promise<LocalOutboxMutation[]>
+  listRetryableMutations: (limit?: number) => Promise<LocalOutboxMutation[]>
   updateMutationStatus: (id: string, changes: Partial<LocalOutboxMutation>) => Promise<number>
   deleteMutation: (id: string) => Promise<void>
 }
@@ -136,6 +137,21 @@ export function useOfflineDb(): OfflineDbApi {
     return (limit ? query.limit(limit) : query).toArray()
   }
 
+  /**
+   * List all not-yet-synced mutations (PENDING + FAILED) awaiting a (re)sync, in FIFO
+   * `captured_at` order. FAILED mutations are included so a retry pass (triggered by the
+   * `online` event, a new enqueue, or the SW replay) re-attempts a previously failed
+   * mutation instead of abandoning it — a SYNCED mutation is the only terminal state.
+   */
+  async function listRetryableMutations(limit?: number): Promise<LocalOutboxMutation[]> {
+    const rows = await db.outbox_mutations
+      .where('sync_status')
+      .anyOf(SyncStatus.PENDING, SyncStatus.FAILED)
+      .toArray()
+    rows.sort((a, b) => a.captured_at.localeCompare(b.captured_at))
+    return typeof limit === 'number' ? rows.slice(0, limit) : rows
+  }
+
   function updateMutationStatus(id: string, changes: Partial<LocalOutboxMutation>): Promise<number> {
     return db.outbox_mutations.update(id, changes)
   }
@@ -162,6 +178,7 @@ export function useOfflineDb(): OfflineDbApi {
     clearCompanyData,
     enqueueMutation,
     listPendingMutations,
+    listRetryableMutations,
     updateMutationStatus,
     deleteMutation
   }

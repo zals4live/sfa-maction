@@ -9,6 +9,7 @@
 // Forced light mode (no dark: variants).
 import { computed, onMounted } from 'vue'
 import { useVisits } from '~/composables/useVisits'
+import { useNavigationDeepLink } from '~/composables/useNavigationDeepLink'
 import { useAttendanceStore } from '~/stores/useAttendanceStore'
 import { visitStatusPresentation } from '~/pages/app/visits/visit-status'
 
@@ -18,6 +19,7 @@ definePageMeta({
 
 const attendance = useAttendanceStore()
 const visits = useVisits()
+const navigation = useNavigationDeepLink()
 
 /** Visit execution is reachable only once a valid check-in exists for today. */
 const isLocked = computed(() => attendance.isLocked)
@@ -124,7 +126,20 @@ onMounted(async () => {
             </UBadge>
           </div>
 
-          <div class="mt-3 flex justify-end">
+          <div class="mt-3 flex justify-end gap-2">
+            <!-- Hand off the target's coordinates to the native maps app (Salesman & MR).
+                 Only rendered when the customer has been geocoded. -->
+            <UButton
+              v-if="item.customerLocation"
+              size="sm"
+              color="neutral"
+              variant="outline"
+              icon="i-lucide-navigation-2"
+              @click="navigation.openNavigation(item.customerLocation, item.customerName)"
+            >
+              Arahkan
+            </UButton>
+
             <UButton
               size="sm"
               icon="i-lucide-navigation"

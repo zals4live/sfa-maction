@@ -1,22 +1,25 @@
 <script setup lang="ts">
 // Presentational Leaflet map of the field user's daily route (SALESMAN & MR). Renders the
-// ordered MVP/SCP waypoints (outlets/doctors) connected by a geodesic polyline, numbered
-// markers with name tooltips, an optional live-position marker, and a total-distance +
-// stop-count readout. It owns NO domain state — the ordered waypoints and current position
-// arrive via props; it only visualizes them. Leaflet touches `window`, so this SFC is meant
-// to be mounted client-only (the parent wraps it in <ClientOnly>). Leaflet CSS is registered
-// globally in nuxt.config. Forced light mode (no dark: variants).
-import { computed } from 'vue'
+// ordered MVP/SCP waypoints (outlets/doctors) connected by a Turf.js geodesic (great-circle)
+// polyline, numbered markers with name tooltips, an optional live-position marker, and a
+// total-distance + stop-count readout. The map fits its bounds to enclose the whole route.
+// It owns NO domain state — the ordered waypoints and current position arrive via props; it
+// only visualizes them. Leaflet touches `window`, so this SFC is meant to be mounted
+// client-only (the parent wraps it in <ClientOnly>). Leaflet CSS is registered globally in
+// nuxt.config. Forced light mode (no dark: variants).
+import { computed, ref, watch } from 'vue'
 import { LMap, LTileLayer, LPolyline, LMarker, LCircleMarker, LTooltip } from '@vue-leaflet/vue-leaflet'
 import type { GeoPoint } from '@maction/types'
 import { formatDistance } from '@maction/utils'
 import {
   routeCenter,
+  routeBounds,
+  routeGeodesicLatLngs,
   totalRouteDistance,
-  waypointLatLngs,
   toLatLng,
   type RouteWaypoint,
-  type LatLngTuple
+  type LatLngTuple,
+  type LatLngBounds
 } from '~/lib/map/route-polyline'
 
 interface Props {
@@ -30,6 +33,11 @@ const props = withDefaults(defineProps<Props>(), {
   currentPosition: null
 })
 
+/** Minimal shape of the Leaflet map we drive imperatively (only `fitBounds`). */
+interface LeafletMap {
+  fitBounds: (bounds: LatLngBounds, opts?: Record<string, unknown>) => void
+}
+
 /** OpenStreetMap raster tiles — the shared basemap for all Field PWA maps. */
 const TILE_URL = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
 const TILE_ATTRIBUTION = '&copy; OpenStreetMap contributors'
@@ -38,11 +46,14 @@ const TILE_ATTRIBUTION = '&copy; OpenStreetMap contributors'
 const ROUTE_COLOR = '#1C4173'
 const POSITION_COLOR = '#10B981'
 
-/** Centroid of all waypoints, or null for an empty route (drives the placeholder). */
+/** The live Leaflet map instance, captured once ready so we can fit bounds to the route. */
+const mapRef = ref<{ leafletObject?: LeafletMap } | null>(null)
+
+/** Centroid of all waypoints, or null for an empty route (drives the placeholder + center). */
 const center = computed<LatLngTuple | null>(() => routeCenter(props.waypoints))
 
-/** Ordered [lat, lng] tuples feeding both the polyline and the numbered markers. */
-const latLngs = computed<LatLngTuple[]>(() => waypointLatLngs(props.waypoints))
+/** Ordered [lat, lng] tuples feeding the numbered stop markers. */
+const geodesicLatLngs = computed<LatLngTuple[]>(() => routeGeodesicLatLngs(props.waypoints))
 
 /** Live-position tuple, or null until a fix arrives / when not tracked. */
 const positionLatLng = computed<LatLngTuple | null>(() =>
@@ -54,6 +65,24 @@ const distanceLabel = computed(() => formatDistance(totalRouteDistance(props.way
 
 /** Stop count for the readout badge. */
 const stopCount = computed(() => props.waypoints.length)
+
+/** Fit the map to enclose the whole route; a single stop keeps the centered default zoom. */
+function fitToRoute(): void {
+  const map = mapRef.value?.leafletObject
+  const bounds = routeBounds(props.waypoints)
+  if (!map || !bounds || props.waypoints.length < 2) return
+  map.fitBounds(bounds, { padding: [48, 48], maxZoom: 16 })
+}
+
+/** Map ready → frame the initial route. */
+function onMapReady(): void {
+  fitToRoute()
+}
+
+/** Re-fit whenever the route changes (map may not be ready yet on the first change). */
+watch(() => props.waypoints, () => {
+  if (mapRef.value?.leafletObject) fitToRoute()
+})
 </script>
 
 <template>
@@ -61,20 +90,22 @@ const stopCount = computed(() => props.waypoints.length)
     <div class="relative h-64 w-full overflow-hidden rounded-lg bg-elevated">
       <LMap
         v-if="center"
+        ref="mapRef"
         :zoom="13"
         :center="center"
         :use-global-leaflet="false"
         :options="{ zoomControl: false, attributionControl: true }"
+        @ready="onMapReady"
       >
         <LTileLayer
           :url="TILE_URL"
           :attribution="TILE_ATTRIBUTION"
         />
 
-        <!-- Geodesic route line connecting the stops in order. -->
+        <!-- Geodesic (great-circle) route line connecting the stops in order. -->
         <LPolyline
-          v-if="latLngs.length > 1"
-          :lat-lngs="latLngs"
+          v-if="geodesicLatLngs.length > 1"
+          :lat-lngs="geodesicLatLngs"
           :color="ROUTE_COLOR"
           :weight="3"
           :opacity="0.8"

@@ -18,15 +18,71 @@
  * client-side merge is attempted here (see the `onConflict` seam below).
  */
 import { readonly, ref, type Ref } from 'vue'
-import type { ConnectivityState, LocalOutboxMutation, UserRole } from '@maction/types'
-import { SyncStatus } from '@maction/types'
+import type { ConnectivityState, LocalOutboxMutation, MutationType, UserRole } from '@maction/types'
+import { SyncStatus, UserRole as UserRoleEnum } from '@maction/types'
 import { useOfflineDb, type OfflineDbApi } from './useOfflineDb'
 
 /** Background Sync tag registered with the Service Worker. */
 export const OUTBOX_SYNC_TAG = 'maction-outbox-sync'
 
+/**
+ * Outbox mutation types that are role-restricted and the sole role permitted to enqueue them.
+ * Order-taking is SALESMAN-exclusive: an `ORDER_SUBMIT` mutation must NEVER originate from an
+ * MR (mirrors the backend `403 Forbidden` and the `useCartStore.assertSalesman` UI gate). This
+ * is the last-line defense at the single chokepoint every offline write flows through, so a bug
+ * or a bypass of the cart-store guard can never persist a forbidden order to the outbox.
+ */
+const ROLE_RESTRICTED_MUTATIONS: Readonly<Record<string, UserRole>> = {
+  ORDER_SUBMIT: UserRoleEnum.SALESMAN
+}
+
+/** Thrown when a role attempts to enqueue a mutation it is not permitted to create. */
+export class OutboxRoleViolationError extends Error {
+  readonly mutationType: MutationType
+  readonly userRole: UserRole
+  readonly requiredRole: UserRole
+
+  constructor(mutationType: MutationType, userRole: UserRole, requiredRole: UserRole) {
+    super(`Role ${userRole} may not enqueue a ${mutationType} mutation (requires ${requiredRole}).`)
+    this.name = 'OutboxRoleViolationError'
+    this.mutationType = mutationType
+    this.userRole = userRole
+    this.requiredRole = requiredRole
+  }
+}
+
+/**
+ * Enforce the role/mutation-type invariant BEFORE persistence. Throws
+ * {@link OutboxRoleViolationError} for a forbidden pairing (e.g. MR + `ORDER_SUBMIT`) so no
+ * mutation is ever written to the outbox for a role that is not allowed to create it.
+ */
+function assertRoleMayEnqueue(mutationType: MutationType, userRole: UserRole): void {
+  const requiredRole = ROLE_RESTRICTED_MUTATIONS[mutationType]
+  if (requiredRole && userRole !== requiredRole) {
+    throw new OutboxRoleViolationError(mutationType, userRole, requiredRole)
+  }
+}
+
 /** Number of mutations pulled per drain pass to bound memory during large backlogs. */
 const DRAIN_BATCH_SIZE = 25
+
+/**
+ * Last `captured_at` epoch-ms issued by {@link nextCapturedAt}. Guarantees a strictly
+ * increasing capture timestamp so the FIFO drain (which sorts by `captured_at`) preserves
+ * enqueue order even when several mutations are captured within the same millisecond — the
+ * normal case during a rapid offline visit (check-in, visit-in, audits, order in quick
+ * succession). Without this, same-ms ties break by the random UUID primary key and scramble
+ * FIFO replay order, violating FR-PWA-06.
+ */
+let lastCapturedAtMs = 0
+
+/** Issue a strictly-monotonic ISO-8601 capture timestamp (bumps 1ms on same-ms collisions). */
+function nextCapturedAt(): string {
+  const wall = Date.now()
+  const monotonic = wall > lastCapturedAtMs ? wall : lastCapturedAtMs + 1
+  lastCapturedAtMs = monotonic
+  return new Date(monotonic).toISOString()
+}
 
 /** Minimal transport contract — satisfied by `useApiClient` once it exists, or `$fetch`. */
 export type SyncFetch = (
@@ -86,20 +142,25 @@ export function useBackgroundSync(options: BackgroundSyncOptions = {}): Backgrou
    * the transient `SYNCING` / `ERROR` states are owned by {@link flush} and left intact.
    */
   async function refreshPendingCount(): Promise<void> {
-    const pending = await db.listPendingMutations()
-    pendingCount.value = pending.length
+    // Backlog = every un-synced mutation (PENDING + FAILED). A FAILED mutation is still
+    // outstanding work awaiting retry, so it belongs in the badge count and keeps the idle
+    // state amber/OFFLINE until it drains.
+    const outstanding = await db.listRetryableMutations()
+    pendingCount.value = outstanding.length
     const isTransient = connectivity.value === 'SYNCING' || connectivity.value === 'ERROR'
     if (!isTransient) {
-      connectivity.value = deriveIdleState(isOnline(), pending.length)
+      connectivity.value = deriveIdleState(isOnline(), outstanding.length)
     }
   }
 
   /** Persist a mutation as PENDING, then attempt an eager flush when online. */
   async function enqueue(draft: OutboxDraft): Promise<string> {
+    // Role-adaptive gate: reject forbidden pairings (e.g. MR + ORDER_SUBMIT) before any write.
+    assertRoleMayEnqueue(draft.mutation_type, draft.user_role)
     const mutation: LocalOutboxMutation = {
       ...draft,
       sync_status: SyncStatus.PENDING,
-      captured_at: new Date().toISOString(),
+      captured_at: nextCapturedAt(),
       synced_at: null,
       error_message: null,
       retry_count: 0
@@ -130,7 +191,7 @@ export function useBackgroundSync(options: BackgroundSyncOptions = {}): Backgrou
     }
   }
 
-  /** Drain the outbox FIFO. No-op (leaves items PENDING) while offline. */
+  /** Drain the outbox FIFO (PENDING + retryable FAILED). No-op while offline. */
   async function flush(): Promise<{ synced: number, failed: number }> {
     if (!isOnline()) {
       await refreshPendingCount()
@@ -139,7 +200,9 @@ export function useBackgroundSync(options: BackgroundSyncOptions = {}): Backgrou
     connectivity.value = 'SYNCING'
     let synced = 0
     let failed = 0
-    const batch = await db.listPendingMutations(DRAIN_BATCH_SIZE)
+    // Drain PENDING and previously-FAILED mutations so a retry pass recovers failures
+    // instead of leaving them stuck; SYNCED is the only terminal state.
+    const batch = await db.listRetryableMutations(DRAIN_BATCH_SIZE)
     for (const mutation of batch) {
       const status = await syncOne(mutation)
       if (status === SyncStatus.SYNCED) {

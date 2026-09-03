@@ -2,7 +2,9 @@ import { describe, expect, it } from 'vitest'
 import type { GeoPoint } from '@maction/types'
 import { distanceBetweenPoints } from '@maction/utils'
 import {
+  routeBounds,
   routeCenter,
+  routeGeodesicLatLngs,
   toLatLng,
   totalRouteDistance,
   waypointLatLngs,
@@ -75,5 +77,50 @@ describe('totalRouteDistance', () => {
       distanceBetweenPoints(A, B),
       6
     )
+  })
+})
+
+describe('routeGeodesicLatLngs', () => {
+  it('should return an empty array for an empty route', () => {
+    expect(routeGeodesicLatLngs([])).toEqual([])
+  })
+
+  it('should return an empty array for a single-stop route (no drawable leg)', () => {
+    expect(routeGeodesicLatLngs([wp('A', A)])).toEqual([])
+  })
+
+  it('should start at the first stop and end at the last stop', () => {
+    const path = routeGeodesicLatLngs([wp('A', A), wp('B', B)])
+    expect(path.length).toBeGreaterThan(2)
+    expect(path[0]![0]).toBeCloseTo(A.lat, 4)
+    expect(path[0]![1]).toBeCloseTo(A.lng, 4)
+    expect(path.at(-1)![0]).toBeCloseTo(B.lat, 4)
+    expect(path.at(-1)![1]).toBeCloseTo(B.lng, 4)
+  })
+
+  it('should not duplicate the shared vertex between consecutive legs', () => {
+    const path = routeGeodesicLatLngs([wp('A', A), wp('B', B), wp('C', C)])
+    // No two consecutive densified points should be identical at the leg join.
+    const duplicates = path.filter((p, i) => i > 0 && p[0] === path[i - 1]![0] && p[1] === path[i - 1]![1])
+    expect(duplicates).toEqual([])
+  })
+})
+
+describe('routeBounds', () => {
+  it('should return null for an empty route', () => {
+    expect(routeBounds([])).toBeNull()
+  })
+
+  it('should enclose every waypoint as [southWest, northEast]', () => {
+    const bounds = routeBounds([wp('A', A), wp('B', B), wp('C', C)])!
+    const [[swLat, swLng], [neLat, neLng]] = bounds
+    expect(swLat).toBeCloseTo(Math.min(A.lat, B.lat, C.lat), 10)
+    expect(swLng).toBeCloseTo(Math.min(A.lng, B.lng, C.lng), 10)
+    expect(neLat).toBeCloseTo(Math.max(A.lat, B.lat, C.lat), 10)
+    expect(neLng).toBeCloseTo(Math.max(A.lng, B.lng, C.lng), 10)
+  })
+
+  it('should return a degenerate box for a single stop', () => {
+    expect(routeBounds([wp('A', A)])).toEqual([[A.lat, A.lng], [A.lat, A.lng]])
   })
 })

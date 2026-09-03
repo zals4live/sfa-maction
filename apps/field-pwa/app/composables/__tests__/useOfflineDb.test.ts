@@ -223,4 +223,35 @@ describe('useOfflineDb', () => {
     await offline.deleteMutation('m1')
     expect(await db.outbox_mutations.get('m1')).toBeUndefined()
   })
+
+  it('should include both PENDING and FAILED mutations in the retryable list, in FIFO order', async () => {
+    // A FAILED mutation must remain retryable so a background-sync retry re-attempts it
+    // instead of abandoning it (see useBackgroundSync retry path).
+    await offline.enqueueMutation(makeMutation('m2', '2024-05-01T10:00:00Z'))
+    await offline.enqueueMutation(makeMutation('m1', '2024-05-01T09:00:00Z'))
+    await offline.updateMutationStatus('m1', {
+      sync_status: SyncStatus.FAILED,
+      error_message: 'server 500',
+      retry_count: 1
+    })
+    const retryable = await offline.listRetryableMutations()
+    expect(retryable.map(m => m.id)).toEqual(['m1', 'm2'])
+  })
+
+  it('should exclude SYNCED mutations from the retryable list', async () => {
+    await offline.enqueueMutation(makeMutation('m1', '2024-05-01T09:00:00Z'))
+    await offline.updateMutationStatus('m1', {
+      sync_status: SyncStatus.SYNCED,
+      synced_at: '2024-05-01T09:05:00Z'
+    })
+    expect(await offline.listRetryableMutations()).toHaveLength(0)
+  })
+
+  it('should respect the limit when listing retryable mutations', async () => {
+    await offline.enqueueMutation(makeMutation('m1', '2024-05-01T09:00:00Z'))
+    await offline.enqueueMutation(makeMutation('m2', '2024-05-01T10:00:00Z'))
+    const retryable = await offline.listRetryableMutations(1)
+    expect(retryable).toHaveLength(1)
+    expect(retryable[0]?.id).toBe('m1')
+  })
 })
