@@ -10,6 +10,9 @@ export const SESSION_TTL_FIELD = 86400
 export const SESSION_TTL_ADMIN = 28800
 
 export interface SessionData {
+  /** Unique per-login identifier. Bound into the JWT so a superseded token
+   *  (from a prior device) can be distinguished and rejected — see FR-AUTH-02. */
+  session_id: string
   company_id: string
   user_id: string
   soffice_id: string

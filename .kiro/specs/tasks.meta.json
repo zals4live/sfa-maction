@@ -1941,6 +1941,162 @@
         "chatSessionId": "sess_4fa8d8e4-e92c-46fc-a508-b1034357d50d",
         "timestamp": 1788427272789
       }
+    ],
+    "End-to-end test: full Salesman daily workflow (check-in → visits → orders → check-out → ERP sync)": [
+      {
+        "executionId": "8dfba3d7-8402-45a5-bd74-1eee33e1029b",
+        "chatSessionId": "sess_f8fe980b-3a09-429d-b7b2-0a5db8b1ed10",
+        "timestamp": 1788427515856
+      },
+      {
+        "executionId": "8dfba3d7-8402-45a5-bd74-1eee33e1029b",
+        "chatSessionId": "sess_f8fe980b-3a09-429d-b7b2-0a5db8b1ed10",
+        "timestamp": 1788428513929
+      }
+    ],
+    "End-to-end test: full MR daily workflow (check-in → visits → detailing → price/stock lookup → no orders → check-out)": [
+      {
+        "executionId": "a8861c58-a465-416a-921a-38794dfd0e45",
+        "chatSessionId": "sess_ecd4e277-c749-4cb5-9d76-fa0fefb23165",
+        "timestamp": 1788481097848
+      },
+      {
+        "executionId": "a8861c58-a465-416a-921a-38794dfd0e45",
+        "chatSessionId": "sess_ecd4e277-c749-4cb5-9d76-fa0fefb23165",
+        "timestamp": 1788481907608
+      }
+    ],
+    "Test MR order restriction — verify `403 Forbidden` on all order creation attempts (API + PWA UI)": [
+      {
+        "executionId": "bb8ddfd7-4620-4719-95af-1ce29f8d8694",
+        "chatSessionId": "sess_e13c57c9-05f1-4131-afc2-5745c7c075d8",
+        "timestamp": 1788481954186
+      },
+      {
+        "executionId": "bb8ddfd7-4620-4719-95af-1ce29f8d8694",
+        "chatSessionId": "sess_e13c57c9-05f1-4131-afc2-5745c7c075d8",
+        "timestamp": 1788482086502
+      }
+    ],
+    "Test multi-lini scoping — verify field users only see materials from assigned lini": [
+      {
+        "executionId": "4a59f8f9-f410-40b3-b507-6a41187e6b57",
+        "chatSessionId": "sess_75843df5-0075-480e-a36b-da673e8510c1",
+        "timestamp": 1788483977373
+      },
+      {
+        "executionId": "4a59f8f9-f410-40b3-b507-6a41187e6b57",
+        "chatSessionId": "sess_75843df5-0075-480e-a36b-da673e8510c1",
+        "timestamp": 1788484535228
+      }
+    ],
+    "Test multi-tenant isolation — verify zero cross-tenant data leakage via RLS": [
+      {
+        "executionId": "a72c2147-7920-4d8e-b3e5-7cde8a1a50db",
+        "chatSessionId": "sess_635ed8ec-94e0-462d-9275-63697efcb173",
+        "timestamp": 1788485393167
+      },
+      {
+        "executionId": "a72c2147-7920-4d8e-b3e5-7cde8a1a50db",
+        "chatSessionId": "sess_635ed8ec-94e0-462d-9275-63697efcb173",
+        "timestamp": 1788491808061
+      }
+    ],
+    "Test anti-spoofing pipeline — mock location, velocity anomaly, clock drift scenarios": [
+      {
+        "executionId": "cd7cb807-6989-46cb-baa2-f9e395f30624",
+        "chatSessionId": "sess_62c2c42c-819f-486f-bee8-55f779a2cd93",
+        "timestamp": 1788492075215
+      },
+      {
+        "executionId": "cd7cb807-6989-46cb-baa2-f9e395f30624",
+        "chatSessionId": "sess_62c2c42c-819f-486f-bee8-55f779a2cd93",
+        "timestamp": 1788492499850
+      }
+    ],
+    "Test ERP sync retry logic — simulate ERP downtime, verify BullMQ retries with backoff": [
+      {
+        "executionId": "4d84fba6-d608-4b96-be5f-4edfb12141a7",
+        "chatSessionId": "sess_b49e4914-bdde-4222-9e7c-24701d60805b",
+        "timestamp": 1788493455610
+      },
+      {
+        "executionId": "4d84fba6-d608-4b96-be5f-4edfb12141a7",
+        "chatSessionId": "sess_b49e4914-bdde-4222-9e7c-24701d60805b",
+        "timestamp": 1788493589192
+      }
+    ],
+    "Test concurrent session invalidation — login from two devices": [
+      {
+        "executionId": "5e8f33cf-5335-4b9e-9b91-7d5cab42c341",
+        "chatSessionId": "sess_6c1c26ad-54b8-42ad-ac65-bf35ae256cb2",
+        "timestamp": 1788493692249
+      },
+      {
+        "executionId": "5e8f33cf-5335-4b9e-9b91-7d5cab42c341",
+        "chatSessionId": "sess_6c1c26ad-54b8-42ad-ac65-bf35ae256cb2",
+        "timestamp": 1788497884012
+      }
+    ],
+    "Test geofence boundary conditions — exactly at radius, slightly outside": [
+      {
+        "executionId": "a8e1cc75-665e-49f8-b3dd-795057ad48c2",
+        "chatSessionId": "sess_2cbd1989-388c-4131-a67a-9024676e4d47",
+        "timestamp": 1788502521376
+      },
+      {
+        "executionId": "a8e1cc75-665e-49f8-b3dd-795057ad48c2",
+        "chatSessionId": "sess_2cbd1989-388c-4131-a67a-9024676e4d47",
+        "timestamp": 1788502755673
+      }
+    ],
+    "Test offline → online sync with network interruption during sync": [
+      {
+        "executionId": "77c75ea6-43ca-460b-8c9b-1aae06f26a45",
+        "chatSessionId": "sess_64d0e21a-7cd4-4de5-823b-a8d5701b398e",
+        "timestamp": 1788502950616
+      },
+      {
+        "executionId": "77c75ea6-43ca-460b-8c9b-1aae06f26a45",
+        "chatSessionId": "sess_64d0e21a-7cd4-4de5-823b-a8d5701b398e",
+        "timestamp": 1788503091896
+      }
+    ],
+    "Test bulk import with valid and invalid rows — verify partial success reporting": [
+      {
+        "executionId": "c3356685-e893-43ee-bfec-9fa29cc48cf6",
+        "chatSessionId": "sess_e08f9b90-f376-4441-b096-fed73d21bf86",
+        "timestamp": 1788504125091
+      },
+      {
+        "executionId": "c3356685-e893-43ee-bfec-9fa29cc48cf6",
+        "chatSessionId": "sess_e08f9b90-f376-4441-b096-fed73d21bf86",
+        "timestamp": 1788504364980
+      }
+    ],
+    "Performance test: API response times under load (target ≤ 100ms p95)": [
+      {
+        "executionId": "1f399f75-2a29-4da2-afe6-ce5d6d73ab9e",
+        "chatSessionId": "sess_c80c5345-68b7-4490-84bd-47b5a6ab4139",
+        "timestamp": 1788504503352
+      },
+      {
+        "executionId": "1f399f75-2a29-4da2-afe6-ce5d6d73ab9e",
+        "chatSessionId": "sess_c80c5345-68b7-4490-84bd-47b5a6ab4139",
+        "timestamp": 1788504805542
+      }
+    ],
+    "Performance test: materialized view dashboard queries (target ≤ 150ms)": [
+      {
+        "executionId": "ae1178f2-23bc-4432-910d-873da49ef305",
+        "chatSessionId": "sess_2f0c8f46-8ba8-4a86-bde6-052481c34763",
+        "timestamp": 1788504857006
+      },
+      {
+        "executionId": "ae1178f2-23bc-4432-910d-873da49ef305",
+        "chatSessionId": "sess_2f0c8f46-8ba8-4a86-bde6-052481c34763",
+        "timestamp": 1788505376252
+      }
     ]
   }
 }

@@ -24,10 +24,10 @@ export default defineNuxtConfig({
   ],
 
   // Forced Light Mode (mandatory steering requirement).
-  // Dark mode is explicitly disabled for outdoor readability and a consistent admin UI.
-  colorMode: {
-    preference: 'light',
-    fallback: 'light'
+  // Disable the color-mode module entirely so no `.dark` class is ever applied — this also
+  // prevents a stale `nuxt-color-mode: dark` value in localStorage from darkening the UI.
+  ui: {
+    colorMode: false
   },
 
   // Runtime configuration. `apiBase` is exposed to the client (public) so the centralized
@@ -54,8 +54,12 @@ export default defineNuxtConfig({
   nitro: {
     devProxy: {
       '/api': {
-        target: `${process.env.API_BASE_URL ?? 'http://localhost:3000'}/api`,
-        changeOrigin: true
+        // Strip the `/api` prefix: the browser calls `/api/<route>` (same-origin), and the
+        // Elysia backend mounts routes at the root (`/auth`, `/orders`, ...) with no `/api`
+        // prefix. `prependPath: false` + a bare target rewrites `/api/auth` -> `/auth`.
+        target: `${process.env.API_BASE_URL ?? 'http://localhost:3000'}`,
+        changeOrigin: true,
+        prependPath: false
       }
     }
   },

@@ -20,6 +20,8 @@ export interface JWTClaims {
   soffice_id: string
   role_label: RoleLabel
   lini_ids: string[]
+  /** Per-login identifier; must match the current Redis session (FR-AUTH-02). */
+  session_id: string
 }
 
 function isValidUUID(value: unknown): value is string {
@@ -43,13 +45,14 @@ function extractBearerToken(authorization: string | undefined): string | null {
 }
 
 function validateClaims(payload: Record<string, unknown>): JWTClaims | null {
-  const { user_id, company_id, soffice_id, role_label, lini_ids } = payload
+  const { user_id, company_id, soffice_id, role_label, lini_ids, session_id } = payload
   if (!isValidUUID(user_id)) return null
   if (!isValidUUID(company_id)) return null
   if (!isValidUUID(soffice_id)) return null
   if (!isValidRole(role_label)) return null
   if (!isStringArray(lini_ids)) return null
-  return { user_id, company_id, soffice_id, role_label, lini_ids }
+  if (!isValidUUID(session_id)) return null
+  return { user_id, company_id, soffice_id, role_label, lini_ids, session_id }
 }
 
 function getJWTSecret(): string {
@@ -100,7 +103,10 @@ export const tenantGuard = new Elysia({ name: 'tenantGuard' })
     }
 
     const session = await getSession(claims.company_id, claims.user_id)
-    if (!session) {
+    // Reject when no session exists (logout / expiry / kill-switch) OR when the
+    // token's session_id no longer matches the current session — i.e. a newer login
+    // from another device has superseded this token (single active session, FR-AUTH-02).
+    if (!session || session.session_id !== claims.session_id) {
       return {
         claims: null as JWTClaims | null,
         authError: 'Session has been invalidated. Please re-authenticate.' as string | null,

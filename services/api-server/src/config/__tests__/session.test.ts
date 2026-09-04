@@ -16,6 +16,7 @@ const TEST_PREFIX = 'session'
 
 function makeSessionData(overrides?: Partial<SessionData>): SessionData {
   return {
+    session_id: '00000000-0000-0000-0000-000000000004',
     company_id: TEST_COMPANY,
     user_id: TEST_USER,
     soffice_id: '00000000-0000-0000-0000-000000000003',

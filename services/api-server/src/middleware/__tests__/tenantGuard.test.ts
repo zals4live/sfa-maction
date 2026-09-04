@@ -7,6 +7,24 @@ const TEST_SECRET = 'test-secret-key-for-unit-tests'
 // Must set env before importing tenantGuard (reads JWT_SECRET on load)
 process.env['JWT_SECRET'] = TEST_SECRET
 
+const SESSION_ID = '440e8400-e29b-41d4-a716-446655440004'
+
+// tenantGuard confirms the token's session_id matches the current Redis session
+// (single active session, FR-AUTH-02). Return a session whose id matches the valid
+// token; a mismatched id would (correctly) yield SESSION_INVALIDATED.
+import { mock } from 'bun:test'
+mock.module('../../config/session', () => ({
+  getSession: async () => ({
+    session_id: SESSION_ID,
+    company_id: '660e8400-e29b-41d4-a716-446655440001',
+    user_id: '550e8400-e29b-41d4-a716-446655440000',
+    soffice_id: '770e8400-e29b-41d4-a716-446655440002',
+    role_label: 'SALESMAN',
+    ip: '127.0.0.1',
+    created_at: new Date().toISOString(),
+  }),
+}))
+
 const { tenantGuard } = await import('../tenantGuard')
 
 const validClaims = {
@@ -15,6 +33,7 @@ const validClaims = {
   soffice_id: '770e8400-e29b-41d4-a716-446655440002',
   role_label: 'SALESMAN',
   lini_ids: ['880e8400-e29b-41d4-a716-446655440003'],
+  session_id: SESSION_ID,
 }
 
 /** Helper to sign a token with the test secret */

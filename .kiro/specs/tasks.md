@@ -275,19 +275,19 @@ Reference: #[[file:docs/PRD_Maction_v2.md]]
 
 ## Phase 16: Integration Testing & End-to-End Validation
 
-- [ ] End-to-end test: full Salesman daily workflow (check-in → visits → orders → check-out → ERP sync)
-- [ ] End-to-end test: full MR daily workflow (check-in → visits → detailing → price/stock lookup → no orders → check-out)
-- [ ] Test MR order restriction — verify `403 Forbidden` on all order creation attempts (API + PWA UI)
-- [ ] Test multi-lini scoping — verify field users only see materials from assigned lini
-- [ ] Test multi-tenant isolation — verify zero cross-tenant data leakage via RLS
-- [ ] Test anti-spoofing pipeline — mock location, velocity anomaly, clock drift scenarios
-- [ ] Test ERP sync retry logic — simulate ERP downtime, verify BullMQ retries with backoff
-- [ ] Test concurrent session invalidation — login from two devices
-- [ ] Test geofence boundary conditions — exactly at radius, slightly outside
-- [ ] Test offline → online sync with network interruption during sync
-- [ ] Test bulk import with valid and invalid rows — verify partial success reporting
-- [ ] Performance test: API response times under load (target ≤ 100ms p95)
-- [ ] Performance test: materialized view dashboard queries (target ≤ 150ms)
+- [x] End-to-end test: full Salesman daily workflow (check-in → visits → orders → check-out → ERP sync)
+- [x] End-to-end test: full MR daily workflow (check-in → visits → detailing → price/stock lookup → no orders → check-out)
+- [x] Test MR order restriction — verify `403 Forbidden` on all order creation attempts (API + PWA UI)
+- [x] Test multi-lini scoping — verify field users only see materials from assigned lini
+- [x] Test multi-tenant isolation — verify zero cross-tenant data leakage via RLS
+- [x] Test anti-spoofing pipeline — mock location, velocity anomaly, clock drift scenarios
+- [x] Test ERP sync retry logic — simulate ERP downtime, verify BullMQ retries with backoff
+- [x] Test concurrent session invalidation — login from two devices
+- [x] Test geofence boundary conditions — exactly at radius, slightly outside
+- [x] Test offline → online sync with network interruption during sync
+- [x] Test bulk import with valid and invalid rows — verify partial success reporting
+- [x] Performance test: API response times under load (target ≤ 100ms p95)
+- [x] Performance test: materialized view dashboard queries (target ≤ 150ms)
 
 ---
 

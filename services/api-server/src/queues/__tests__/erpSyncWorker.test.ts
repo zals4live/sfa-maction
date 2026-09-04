@@ -302,3 +302,172 @@ describe('processErpOrderSyncJob — retryCount audit observability', () => {
     expect(txState.audits[0]?.['retryCount']).toBe(0)
   })
 })
+
+// =============================================================================
+// Phase 16 — Integration: ERP downtime → BullMQ retry with exponential backoff.
+//
+// Drives `processErpOrderSyncJob` through the FULL configured attempt sequence
+// via a stateful BullMQ-like runner that honors `attempts`, computes the
+// exponential backoff delay between retries, and re-owns the job's idempotency
+// key on every retry (as the real broker does). A downtime-simulating `fetch`
+// mock records the idempotency key + headers sent on each attempt so we can
+// assert at-most-once delivery semantics.
+//
+// Validates: Requirements FR-ERP-02, FR-AUD-03, NFR-SEC-02
+// =============================================================================
+
+/** Reproduces BullMQ's exponential backoff: delay * 2^(attemptsMade). */
+function expectedBackoffMs(attemptsMade: number): number {
+  return ERP_SYNC_BACKOFF_DELAY_MS * 2 ** attemptsMade
+}
+
+interface AttemptRecord {
+  attemptsMade: number
+  idempotencyKey: string | undefined
+  jobId: string | undefined
+}
+
+interface DowntimeRun {
+  attempts: AttemptRecord[]
+  backoffDelays: number[]
+  finalState: 'failed' | 'completed'
+  lastError: unknown
+}
+
+/**
+ * Runs a job through the retry lifecycle exactly as BullMQ would: invoke the
+ * processor, and on a thrown error either schedule the next attempt (recording
+ * the backoff delay) or land the job in a terminal `failed` state once
+ * `attempts` is exhausted. A completed run stops early. Nothing here talks to a
+ * real Redis or a real broker — it is a deterministic in-memory driver.
+ */
+async function runJobToTerminalState(
+  processor: (job: Job<never>) => Promise<void>,
+  attempts: number
+): Promise<DowntimeRun> {
+  const run: DowntimeRun = { attempts: [], backoffDelays: [], finalState: 'completed', lastError: null }
+
+  for (let attemptsMade = 0; attemptsMade < attempts; attemptsMade++) {
+    const job = makeJob(attemptsMade, attempts)
+    try {
+      await processor(job)
+      run.finalState = 'completed'
+      return run
+    } catch (err) {
+      run.lastError = err
+      const isLast = attemptsMade + 1 >= attempts
+      if (isLast) {
+        run.finalState = 'failed'
+      } else {
+        run.backoffDelays.push(expectedBackoffMs(attemptsMade))
+      }
+    }
+  }
+  return run
+}
+
+describe('processErpOrderSyncJob — ERP downtime retry integration', () => {
+  it('retries across every configured attempt on a network-error outage, then lands in a failed dead-state', async () => {
+    const seen: string[] = []
+    // Simulate total ERP downtime: every request is a network-level failure
+    // (fetch rejects), which postToErp normalizes to ERP_REQUEST_FAILED.
+    globalThis.fetch = mock(async (_url: unknown, init?: RequestInit) => {
+      const headers = (init?.headers ?? {}) as Record<string, string>
+      seen.push(headers['idempotency-key'] ?? 'MISSING')
+      throw new Error('ECONNREFUSED: ERP gateway unreachable')
+    }) as unknown as typeof fetch
+
+    const run = await runJobToTerminalState(processErpOrderSyncJob, ERP_SYNC_MAX_ATTEMPTS)
+
+    // 1. The job was attempted the full configured number of times.
+    expect(seen).toHaveLength(ERP_SYNC_MAX_ATTEMPTS)
+    expect(txState.audits).toHaveLength(ERP_SYNC_MAX_ATTEMPTS)
+
+    // 5. After exhausting attempts the job is in the failed dead-state, and the
+    //    order is marked REJECTED_ERP with the network error reflected.
+    expect(run.finalState).toBe('failed')
+    const rejected = txState.updates.find((u) => u.status === 'REJECTED_ERP')
+    expect(rejected).toBeDefined()
+    const errPayload = rejected?.values['erpErrorPayload'] as Record<string, unknown>
+    expect(errPayload['error_code']).toBe('ERP_REQUEST_FAILED')
+    expect(errPayload['http_status']).toBeNull()
+  })
+
+  it('keeps the idempotency key stable across every retry — at-most-once ERP delivery', async () => {
+    const seen: string[] = []
+    globalThis.fetch = mock(async (_url: unknown, init?: RequestInit) => {
+      const headers = (init?.headers ?? {}) as Record<string, string>
+      seen.push(headers['idempotency-key'] ?? 'MISSING')
+      return new Response('gateway down', { status: 503 })
+    }) as unknown as typeof fetch
+
+    await runJobToTerminalState(processErpOrderSyncJob, ERP_SYNC_MAX_ATTEMPTS)
+
+    // 3. Same idempotency key on every single attempt (no rotation on retry).
+    expect(seen).toHaveLength(ERP_SYNC_MAX_ATTEMPTS)
+    expect(new Set(seen).size).toBe(1)
+    expect(seen[0]).toBe(IDEMPOTENCY_KEY)
+    // Audit rows all carry the same idempotency key too.
+    const auditKeys = new Set(txState.audits.map((a) => a['idempotencyKey']))
+    expect(auditKeys.size).toBe(1)
+    expect(auditKeys.has(IDEMPOTENCY_KEY)).toBe(true)
+  })
+
+  it('follows an exponential backoff schedule between retries', async () => {
+    globalThis.fetch = mock(async () => new Response('down', { status: 502 })) as unknown as typeof fetch
+
+    const run = await runJobToTerminalState(processErpOrderSyncJob, ERP_SYNC_MAX_ATTEMPTS)
+
+    // 2. One backoff delay between each pair of attempts (attempts - 1 total),
+    //    each doubling from the configured base delay.
+    expect(run.backoffDelays).toEqual([
+      5_000, // after attempt 0
+      10_000, // after attempt 1
+      20_000, // after attempt 2
+      40_000, // after attempt 3
+    ])
+    // Config remains an exponential strategy with the expected base delay.
+    expect(ERP_SYNC_JOB_OPTIONS.backoff).toEqual({
+      type: 'exponential',
+      delay: ERP_SYNC_BACKOFF_DELAY_MS,
+    })
+  })
+
+  it('records every attempt in audit_erp_sync_logs with incrementing retry_count, HTTP status, and latency', async () => {
+    globalThis.fetch = mock(async () => new Response('server error', { status: 500 })) as unknown as typeof fetch
+
+    await runJobToTerminalState(processErpOrderSyncJob, ERP_SYNC_MAX_ATTEMPTS)
+
+    // 4. One audit row per attempt, retry_count = 0..max-1, each with the
+    //    observed HTTP status and a numeric latency measurement.
+    expect(txState.audits).toHaveLength(ERP_SYNC_MAX_ATTEMPTS)
+    txState.audits.forEach((audit, idx) => {
+      expect(audit['retryCount']).toBe(idx)
+      expect(audit['httpStatusCode']).toBe(500)
+      expect(audit['isSuccess']).toBe(false)
+      expect(audit['syncDirection']).toBe('OUTBOUND')
+      expect(typeof audit['latencyMs']).toBe('number')
+      expect(audit['latencyMs'] as number).toBeGreaterThanOrEqual(0)
+    })
+  })
+
+  it('recovers to SYNCED_ERP when the ERP endpoint comes back before attempts are exhausted', async () => {
+    let call = 0
+    // ERP is down for the first two attempts, then recovers on the third.
+    globalThis.fetch = mock(async () => {
+      call++
+      if (call < 3) return new Response('down', { status: 503 })
+      return new Response(JSON.stringify({ quotation_number: 'QN-RECOVER' }), { status: 200 })
+    }) as unknown as typeof fetch
+
+    const run = await runJobToTerminalState(processErpOrderSyncJob, ERP_SYNC_MAX_ATTEMPTS)
+
+    expect(run.finalState).toBe('completed')
+    expect(call).toBe(3)
+    // Two failed audits + one success audit; order ends SYNCED_ERP, never rejected.
+    expect(txState.audits).toHaveLength(3)
+    expect(txState.audits[2]?.['isSuccess']).toBe(true)
+    expect(txState.updates.find((u) => u.status === 'SYNCED_ERP')).toBeDefined()
+    expect(txState.updates.find((u) => u.status === 'REJECTED_ERP')).toBeUndefined()
+  })
+})

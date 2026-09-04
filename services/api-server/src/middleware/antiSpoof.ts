@@ -194,7 +194,14 @@ async function handleFraudDetected(
 
 // --- Core validation function ---
 
-async function validateGeoSubmissionImpl(
+/**
+ * Runs a GPS submission through all three anti-spoofing layers in order:
+ * mock provider → accuracy window → clock drift → velocity (PostGIS).
+ * On the first detected anomaly it soft-rejects (blocks the action, no ban)
+ * and logs graduated telemetry. Exported for integration testing; production
+ * code reaches it via the {@link antiSpoof} plugin's `validateGeoSubmission`.
+ */
+export async function validateGeoSubmissionImpl(
   claims: JWTClaims,
   gps: GpsSubmission,
   requestEndpoint?: string,

@@ -10,11 +10,15 @@ process.env['JWT_SECRET'] = TEST_SECRET
 const COMPANY_ID = '660e8400-e29b-41d4-a716-446655440001'
 const USER_ID = '550e8400-e29b-41d4-a716-446655440000'
 const SOFFICE_ID = '770e8400-e29b-41d4-a716-446655440002'
+const SESSION_ID = 'ce0e8400-e29b-41d4-a716-44665544000e'
 const IDEMPOTENCY_KEY = 'aa0e8400-e29b-41d4-a716-44665544000a'
 
-// Mock Redis session lookup to always return a valid session (auth passes)
+// Mock Redis session lookup to always return a valid session (auth passes).
+// session_id must match the token's claim — tenantGuard binds each token to its
+// originating login's session (single-session enforcement, FR-AUTH-02).
 mock.module('../../../config/session', () => ({
   getSession: async () => ({
+    session_id: SESSION_ID,
     company_id: COMPANY_ID,
     user_id: USER_ID,
     soffice_id: SOFFICE_ID,
@@ -118,6 +122,7 @@ const baseClaims = {
   company_id: COMPANY_ID,
   soffice_id: SOFFICE_ID,
   lini_ids: ['880e8400-e29b-41d4-a716-446655440003'],
+  session_id: SESSION_ID,
 }
 
 /** Helper to sign a JWT token with the test secret */

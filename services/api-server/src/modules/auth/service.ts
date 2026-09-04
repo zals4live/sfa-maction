@@ -170,10 +170,16 @@ export async function login(
   const liniIds = await fetchLiniIds(user.companyId, user.id)
   const ttl = getSessionTTL(user.roleLabel)
 
+  // Unique per-login identifier bound into both the Redis session and the JWT.
+  // A new login overwrites this value, so the prior device's token — carrying the
+  // old session_id — no longer matches and is rejected (FR-AUTH-02).
+  const sessionId = crypto.randomUUID()
+
   // Invalidate prior session (single-session enforcement) then create new one
   await deleteSession(user.companyId, user.id)
 
   const sessionData: SessionData = {
+    session_id: sessionId,
     company_id: user.companyId,
     user_id: user.id,
     soffice_id: user.sofficeId ?? '',
@@ -196,6 +202,7 @@ export async function login(
       soffice_id: user.sofficeId ?? '',
       role_label: user.roleLabel,
       lini_ids: liniIds,
+      session_id: sessionId,
     },
     ttl
   )

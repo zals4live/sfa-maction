@@ -19,8 +19,12 @@
  * throwing. The route it protects always redirects to {@link AUTH_LOGIN_ROUTE}.
  */
 
-/** Local-storage key holding the opaque JWT (shared with the API client). */
-export const AUTH_TOKEN_STORAGE_KEY = 'maction_auth_token'
+/**
+ * Local-storage key holding the opaque JWT.
+ * MUST match the key written by `useAuthStore` (`maction_admin_auth_token`), otherwise the
+ * middleware would never see the token the store just persisted and would loop back to login.
+ */
+export const AUTH_TOKEN_STORAGE_KEY = 'maction_admin_auth_token'
 
 /** Route unauthenticated visitors are redirected to. */
 export const AUTH_LOGIN_ROUTE = '/auth/login'

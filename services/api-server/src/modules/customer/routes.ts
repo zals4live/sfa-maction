@@ -27,14 +27,19 @@ import {
 } from './service'
 import type { CreateCustomerInput } from './schemas'
 
-interface BulkRowError {
+export interface BulkRowError {
   row: number
   field: string | null
   message: string
 }
 
+export interface BulkImportResult {
+  imported: number
+  errors: BulkRowError[]
+}
+
 /** Validates and maps a spreadsheet row to CreateCustomerInput. */
-function parseImportRow(
+export function parseImportRow(
   row: Record<string, unknown>,
   rowIndex: number
 ): { input: CreateCustomerInput; errors: BulkRowError[] } {
@@ -97,6 +102,45 @@ function parseImportRow(
   }
 
   return { input, errors }
+}
+
+/**
+ * Processes parsed spreadsheet rows into a partial-success result: valid rows are
+ * created via `createOne`, invalid rows are rejected with per-row error details, and
+ * both are tallied. Persistence is injected so the reporting logic can be exercised
+ * without a live database (external DB is mocked in tests).
+ *
+ * Row numbers are 1-based over the data rows shifted by +2 (row 1 = header).
+ */
+export async function processBulkImportRows(
+  rows: Record<string, unknown>[],
+  createOne: (input: CreateCustomerInput) => Promise<void>
+): Promise<BulkImportResult> {
+  const allErrors: BulkRowError[] = []
+  let imported = 0
+
+  for (let i = 0; i < rows.length; i++) {
+    const rowIndex = i + 2 // row 1 = header, data starts at row 2
+    const { input, errors } = parseImportRow(rows[i]!, rowIndex)
+
+    if (errors.length > 0) {
+      allErrors.push(...errors)
+      continue
+    }
+
+    try {
+      await createOne(input)
+      imported++
+    } catch (err) {
+      if (err instanceof ServiceError) {
+        allErrors.push({ row: rowIndex, field: null, message: err.message })
+      } else {
+        allErrors.push({ row: rowIndex, field: null, message: 'Unexpected error during import' })
+      }
+    }
+  }
+
+  return { imported, errors: allErrors }
 }
 
 export const customerRoutes = new Elysia({ prefix: '/customers' })
@@ -297,34 +341,12 @@ export const customerRoutes = new Elysia({ prefix: '/customers' })
         return { imported: 0, errors: [] }
       }
 
-      const allErrors: BulkRowError[] = []
-      let imported = 0
-
-      for (let i = 0; i < rows.length; i++) {
-        const rowIndex = i + 2 // row 1 = header, data starts at row 2
-        const { input, errors } = parseImportRow(rows[i]!, rowIndex)
-
-        if (errors.length > 0) {
-          allErrors.push(...errors)
-          continue
-        }
-
-        try {
-          await withRLS(
-            { companyId: claims!.company_id, userId: claims!.user_id, userRole: claims!.role_label },
-            (tx) => createCustomer(tx, claims!.company_id, input)
-          )
-          imported++
-        } catch (err) {
-          if (err instanceof ServiceError) {
-            allErrors.push({ row: rowIndex, field: null, message: err.message })
-          } else {
-            allErrors.push({ row: rowIndex, field: null, message: 'Unexpected error during import' })
-          }
-        }
-      }
-
-      return { imported, errors: allErrors }
+      return processBulkImportRows(rows, (input) =>
+        withRLS(
+          { companyId: claims!.company_id, userId: claims!.user_id, userRole: claims!.role_label },
+          (tx) => createCustomer(tx, claims!.company_id, input)
+        ).then(() => undefined)
+      )
     },
     { body: t.Object({ file: t.File({ maxSize: '10m' }) }) }
   )
